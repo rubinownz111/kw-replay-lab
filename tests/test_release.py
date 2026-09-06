@@ -79,7 +79,7 @@ class ReleaseTests(unittest.TestCase):
         self.assertEqual(report["evidence"]["asset_catalog"], "disabled")
         self.assertFalse(report["commands"]["items"][0]["asset"]["resolved"])
         self.assertEqual(report["strategy"]["production_state"]["engine_model"]["payment"], "unverified_for_1.02")
-        self.assertEqual(report["schema_version"], 7)
+        self.assertEqual(report["schema_version"], 8)
 
     def test_exact_command_names_include_additional_102_case(self):
         self.assertEqual(len(GAME_MESSAGE_NAMES), 233)
@@ -133,7 +133,7 @@ class ReleaseTests(unittest.TestCase):
             source.write_bytes(build_replay())
             output, commands, records = root / "report.json", root / "commands.csv", root / "records.csv"
             self.assertEqual(main(["--analyze", str(source), "--output", str(output), "--commands-csv", str(commands), "--records-csv", str(records)]), 0)
-            self.assertEqual(json.loads(output.read_text())["schema_version"], 7)
+            self.assertEqual(json.loads(output.read_text())["schema_version"], 8)
             self.assertIn("MSG_DO_MOVETO", commands.read_text(encoding="utf-8-sig"))
             self.assertIn("game_commands", records.read_text(encoding="utf-8-sig"))
             self.assertEqual(main(["--analyze", str(source), "--output", str(source)]), 1)

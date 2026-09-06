@@ -62,7 +62,7 @@ def main():
                 else:
                     raise RuntimeError("Extracted server did not become ready")
                 assert health["supported_game_version"] == "1.2.0.0"
-                assert health["report_schema_version"] == 7
+                assert health["report_schema_version"] == 8
                 with urllib.request.urlopen(base + "/", timeout=10) as response:
                     assert response.status == 200 and b"KW Replay" in response.read()
                 with urllib.request.urlopen(base + "/api/demo", timeout=10) as response:

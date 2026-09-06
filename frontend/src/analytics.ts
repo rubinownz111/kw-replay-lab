@@ -1,3 +1,4 @@
+import {compareDesync} from './desync';
 import type {Command, ReplayReport, Row} from './types';
 export const escapeHtml = (value: unknown): string => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
 export const display = (v: unknown): string => v == null ? '-' : typeof v === 'object' ? JSON.stringify(v) : String(v);
@@ -14,7 +15,7 @@ export function objectReferences(commands: Command[], id: number): Command[] {
 }
 export function compareReports(a: ReplayReport, b: ReplayReport) {
  const session = a.match.game_session_id;
- const sameSession = session != null && session !== '' && session !== 0 && session === b.match.game_session_id && a.match.map_id === b.match.map_id && a.match.seed === b.match.seed;
+ let sameSession = session != null && session !== '' && session !== 0 && session === b.match.game_session_id && a.match.map_id === b.match.map_id && a.match.seed === b.match.seed;
  const ac = a.commands.items, bc = b.commands.items;
  let firstCommandDifference: {index: number; left: Command | null; right: Command | null} | null = null;
  for(let i=0;i<Math.max(ac.length,bc.length);i++) {
@@ -30,6 +31,12 @@ export function compareReports(a: ReplayReport, b: ReplayReport) {
   if(normalize(l)!==normalize(r)) crcDifferences.push({frame:l.frame,left:l.crc_values,right:r.crc_values});
  }
  for(const r of b.network.crc_checkpoints) if(!framesA.has(Number(r.frame))) missingLeft.push(Number(r.frame));
+ if(a.desync&&b.desync){
+  const comparison=compareDesync(a,b);sameSession=comparison.sameSession;
+  crcDifferences.splice(0,crcDifferences.length,...comparison.crcDifferences);
+  missingLeft.length=0;missingRight.length=0;
+  for(const row of comparison.crcDifferences){if(!row.left.length)missingLeft.push(row.frame);if(!row.right.length)missingRight.push(row.frame);}
+ }
  return {sameSession, byteIdentical:a.file.sha256===b.file.sha256, commandSequencesEqual:!firstCommandDifference, firstCommandDifference, crcDifferences, missingLeft, missingRight,
   metrics:[['Duration (logic seconds)',a.match.duration_seconds,b.match.duration_seconds],['Commands',ac.length,bc.length],['Actions',a.summary.action_count,b.summary.action_count],['Build requests',a.strategy.build_order.length,b.strategy.build_order.length],['Decode errors',a.summary.decode_error_count,b.summary.decode_error_count]]};
 }

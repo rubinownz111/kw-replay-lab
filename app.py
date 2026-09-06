@@ -16,12 +16,13 @@ from werkzeug.exceptions import RequestEntityTooLarge
 
 from replay_analyzer import analyze_replay
 from replay_analyzer.demo import build_auxiliary_replay
+from replay_analyzer.diagnostics import parse_diagnostic, MAX_BYTES
 from tools.kwreplay_inspect import ReplayFormatError, MAX_FILE_BYTES, inspect
 
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = MAX_FILE_BYTES + 1024 * 1024
 app.json.ensure_ascii = True
-REPORT_SCHEMA_VERSION = 7
+REPORT_SCHEMA_VERSION = 8
 analysis_slot = BoundedSemaphore(1)
 
 
@@ -98,6 +99,44 @@ def demo():
     return Response(encode_report(report), mimetype="application/json")
 
 
+@app.post('/api/desync/diagnostics')
+def diagnostics():
+    uploads = request.files.getlist('diagnostics')
+    if not 1 <= len(uploads) <= 8:
+        return jsonify(error='Choose one to eight diagnostic files.'), 400
+    if not analysis_slot.acquire(blocking=False):
+        return jsonify(error='Another analysis is running. Try again shortly.'), 429
+    try:
+        results, errors, total = [], [], 0
+        for upload in uploads:
+            try:
+                data = upload.read(MAX_BYTES + 1)
+                total += len(data)
+                if total > 32 * 1024 * 1024:
+                    return jsonify(error='Diagnostic uploads exceed 32 MiB combined.'), 413
+                results.append(parse_diagnostic(data, upload.filename or 'capture'))
+            except ValueError as exc:
+                errors.append({'name': upload.filename, 'error': str(exc)})
+        return Response(encode_report({'diagnostics': results, 'errors': errors}), mimetype='application/json')
+    finally:
+        analysis_slot.release()
+
+
+@app.get('/api/desync/demo')
+def desync_demo():
+    from replay_analyzer.demo import build_desync_replay, build_desync_capture
+    with tempfile.TemporaryDirectory(prefix='kw-desync-demo-') as directory:
+        path = Path(directory) / 'synthetic-desync.KWReplay'
+        path.write_bytes(build_desync_replay())
+        report = analyze_replay(path)
+    report['evidence']['sample_kind'] = 'synthetic_not_engine_recorded'
+    report['desync_case'] = {'peers': [], 'diagnostics': [
+        parse_diagnostic(build_desync_capture(value), f'Synthetic-{label}-Frame900.bin')
+        for label, value in [('A', 100.0), ('B', 90.0)]],
+        'notes': 'Synthetic example: CRCs differ at frame 900. The example captures differ at Object 204 / Health. No game session was recorded.'}
+    return Response(encode_report(report), mimetype='application/json')
+
+
 @app.errorhandler(RequestEntityTooLarge)
 def too_large(_error):
     return jsonify(error="Upload exceeds the 64 MiB replay limit (65 MiB combined request)."), 413
@@ -108,7 +147,8 @@ def health():
     return jsonify(status="ok", target="KW 1.02", supported_game_version="1.2.0.0",
         report_schema_version=REPORT_SCHEMA_VERSION, production_analysis=False,
         telemetry_sidecars=True, telemetry_status="experimental",
-        auxiliary_stream_analysis=True, forensic_record_index=True)
+        auxiliary_stream_analysis=True, forensic_record_index=True,
+        desync_lab=True, native_diagnostic_reader=True, command_semantics=True)
 
 
 def main(argv=None) -> int:
@@ -125,16 +165,22 @@ def main(argv=None) -> int:
     parser.add_argument("--output", type=Path, help="JSON file, or report directory for --batch.")
     parser.add_argument("--commands-csv", type=Path, help="Command export for --analyze.")
     parser.add_argument("--records-csv", type=Path, help="Record export for --analyze.")
+    parser.add_argument("--peer-replay", type=Path, action="append", default=[], help="Add a player recording to the case (up to three).")
+    parser.add_argument("--diagnostic", type=Path, action="append", default=[], help="Add a native .txt/.bin capture to the case (up to eight).")
     args = parser.parse_args(argv)
     if args.batch and not args.output:
         parser.error("--batch requires --output DIRECTORY")
     if (args.telemetry or args.commands_csv or args.records_csv) and not args.analyze:
         parser.error("--telemetry and CSV outputs require --analyze")
+    if (args.peer_replay or args.diagnostic) and not args.analyze:
+        parser.error("Case inputs require --analyze")
+    if len(args.peer_replay) > 3 or len(args.diagnostic) > 8:
+        parser.error("A case supports three player recordings and eight diagnostic files")
     if args.output and not (args.analyze or args.inspect or args.batch):
         parser.error("--output requires --analyze, --inspect or --batch")
     try:
         destinations = [p.resolve() for p in (args.output, args.commands_csv, args.records_csv) if p]
-        inputs = {p.resolve() for p in (args.analyze, args.inspect, args.telemetry) if p}
+        inputs = {p.resolve() for p in (args.analyze, args.inspect, args.telemetry, *args.peer_replay, *args.diagnostic) if p}
         if len(destinations) != len(set(destinations)) or any(p in inputs for p in destinations):
             raise ValueError("All output paths must be distinct and must not overwrite inputs.")
         if args.batch:
@@ -158,6 +204,17 @@ def main(argv=None) -> int:
         if args.analyze or args.inspect:
             report = inspect(args.inspect) if args.inspect else analyze_replay(
                 args.analyze, telemetry_path=args.telemetry, reference_catalog=args.reference_catalog)
+            if args.peer_replay or args.diagnostic:
+                captures, total = [], 0
+                for path in args.diagnostic:
+                    with path.open('rb') as stream:
+                        data = stream.read(MAX_BYTES + 1)
+                    total += len(data)
+                    if total > 32 * 1024 * 1024:
+                        raise ValueError('Diagnostic inputs exceed 32 MiB combined.')
+                    captures.append(parse_diagnostic(data, path.name))
+                peers = [analyze_replay(path, reference_catalog=args.reference_catalog) for path in args.peer_replay]
+                report['desync_case'] = {'peers': peers, 'diagnostics': captures, 'notes': ''}
             payload = encode_report(report)
             if args.output:
                 if args.output.resolve() in {p.resolve() for p in (args.analyze, args.inspect, args.telemetry) if p}:

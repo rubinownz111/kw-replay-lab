@@ -27,6 +27,8 @@ from tools.kwreplay_inspect import (
     parse_voice_payload,
 )
 from replay_analyzer.telemetry import analyze_telemetry
+from replay_analyzer.command_semantics import annotate_command
+from replay_analyzer.desync import analyze_desync
 
 
 # Exact KW 1.02: GameLogic_SecondsToLogicFrames 0x472FC1, g_logicFPS 0xB72ADC.
@@ -668,7 +670,6 @@ def analyze_replay(
     resolved_asset_count = 0
     command_decode_errors: list[dict[str, Any]] = []
     stream_decode_errors: list[dict[str, Any]] = []
-    crc_by_checkpoint: dict[int, list[dict[str, Any]]] = defaultdict(list)
     rtt_points: list[dict[str, Any]] = []
     camera_path: list[dict[str, Any]] = []
     camera_stream_states: dict[int, dict[str, Any]] = {}
@@ -756,9 +757,7 @@ def analyze_replay(
                         source, participants
                     )
                     command_counts[display_message_name] += 1
-                    category_counts[category] += 1
                     source_command_counts[source] += 1
-                    source_category_counts[source][category] += 1
                     if name is None:
                         unknown_message_count += 1
                     if is_action:
@@ -782,6 +781,7 @@ def analyze_replay(
                         "wire_offset": record_offset + 13 + message["wire_offset"],
                         "wire_size": message["wire_size"],
                         "wire_sha256": hashlib.sha256(payload[message["wire_offset"]:message["wire_offset"] + message["wire_size"]]).hexdigest(),
+                        "argument_sha256": hashlib.sha256(payload[message["wire_offset"] + 2:message["wire_offset"] + message["wire_size"]]).hexdigest(),
                         "frame": frame,
                         "time_seconds": round(frame / SIMULATION_FPS, 3),
                         "time": _duration_label(frame / SIMULATION_FPS),
@@ -796,19 +796,26 @@ def analyze_replay(
                         "arguments": safe_arguments,
                     }
 
+                    annotate_command(command)
+                    category_counts[command["category"]] += 1
+                    source_category_counts[source][command["category"]] += 1
                     asset_spec = ASSET_COMMANDS.get(name)
+                    production_index = name in ("MSG_QUEUE_UNIT_CREATE", "MSG_CANCEL_UNIT_CREATE") and len(raw_values) > 1 and raw_values[1] is True
                     if asset_spec:
                         event_name, argument_index = asset_spec
                         if (
                             argument_index < len(raw_values)
-                            and isinstance(raw_values[argument_index], int)
+                            and type(raw_values[argument_index]) is int
+                            and safe_arguments[argument_index]["type"] == "integer"
                         ):
                             asset_hash = f"{raw_values[argument_index] & 0xFFFFFFFF:08X}"
-                            asset = asset_catalog.get(asset_hash)
+                            asset = None if production_index else asset_catalog.get(asset_hash)
                             compact_asset = _compact_asset(asset_hash, asset)
+                            if production_index:
+                                compact_asset = {"hash": None, "name": f"Production index {raw_values[argument_index]}", "resolved": False, "production_index": raw_values[argument_index]}
                             command["asset"] = compact_asset
                             command["event"] = event_name
-                            asset_reference_count += 1
+                            asset_reference_count += not production_index
                             resolved_asset_count += bool(asset)
 
                             if (
@@ -965,17 +972,7 @@ def analyze_replay(
 
                     commands.append(command)
 
-                    if name == "MSG_LOGIC_CRC" and len(raw_values) == 5:
-                        crc_by_checkpoint[int(raw_values[2])].append(
-                            {
-                                "source_index": source,
-                                "player": source_label,
-                                "crc": int(raw_values[0]) & 0xFFFFFFFF,
-                                "record_frame": frame,
-                                "mismatch_reporting": bool(raw_values[4]),
-                            }
-                        )
-                    elif name == "MSG_ANNOUNCE_RTT" and len(raw_values) == 9:
+                    if name == "MSG_ANNOUNCE_RTT" and len(raw_values) == 9:
                         valid_rtts = [
                             int(value)
                             for value in raw_values[1:]
@@ -1457,30 +1454,6 @@ def analyze_replay(
         event for event in metadata_events if event.get("duplicate_channel_ids")
     ]
 
-    crc_checkpoints: list[dict[str, Any]] = []
-    disagreement_frames: list[int] = []
-    mismatch_flag_frames: list[int] = []
-    for checkpoint, reports in sorted(crc_by_checkpoint.items()):
-        values = sorted({report["crc"] for report in reports})
-        disagrees = len(values) > 1
-        mismatch_flagged = any(report["mismatch_reporting"] for report in reports)
-        if disagrees:
-            disagreement_frames.append(checkpoint)
-        if mismatch_flagged:
-            mismatch_flag_frames.append(checkpoint)
-        crc_checkpoints.append(
-            {
-                "frame": checkpoint,
-                "time": _duration_label(checkpoint / SIMULATION_FPS),
-                "report_count": len(reports),
-                "unique_crc_count": len(values),
-                "crc_values": [f"0x{value:08X}" for value in values],
-                "agreement": not disagrees,
-                "mismatch_reporting": mismatch_flagged,
-                "reports": reports,
-            }
-        )
-
     findings: list[dict[str, Any]] = []
 
     def add_finding(
@@ -1534,7 +1507,7 @@ def analyze_replay(
         player_name = _source_label(source, participants)[0]
         examples = ", ".join(
             (
-                f"{check['message']} → ObjectID {check['target_object_id']} "
+                f"{check['message']} -> ObjectID {check['target_object_id']} "
                 f"at frame {check['frame']}"
             )
             for check in checks[:4]
@@ -1558,7 +1531,7 @@ def analyze_replay(
         examples = ", ".join(
             (
                 f"0x{item['offset']:X}: "
-                f"{item['previous_frame']}→{item['frame']}"
+                f"{item['previous_frame']}->{item['frame']}"
             )
             for item in frame_order_violations[:5]
         )
@@ -1723,31 +1696,6 @@ def analyze_replay(
             f"{reserved_nonzero} records have a nonzero reserved field.",
             "Known validation replays use zero; this deserves manual inspection.",
         )
-    if disagreement_frames:
-        add_finding(
-            "crc_agreement",
-            "critical",
-            "high",
-            "Deterministic CRC disagreement",
-            (
-                f"Players reported different CRC values at "
-                f"{len(disagreement_frames)} checkpoint frame(s): "
-                + ", ".join(str(frame) for frame in disagreement_frames[:8])
-            ),
-            "The synchronized game states diverged. This can result from a state-changing cheat, a bug, corruption, or incompatible game data.",
-        )
-    if mismatch_flag_frames:
-        add_finding(
-            "crc_mismatch_routing",
-            "high",
-            "high",
-            "CRC mismatch-reporting flag observed",
-            (
-                f"The engine's mismatch-reporting path was marked at "
-                f"{len(mismatch_flag_frames)} checkpoint(s)."
-            ),
-            "This is engine-generated desynchronization evidence, not by itself proof of cheating.",
-        )
     if unknown_message_count:
         add_finding(
             "unknown_commands",
@@ -1814,7 +1762,7 @@ def analyze_replay(
                 f"{len(extreme_timing)} structure(s) completed in under half "
                 f"their catalog base time; fastest was {fastest['player']}'s "
                 f"{fastest['asset']['name']} at "
-                f"{fastest['base_time_ratio']:.2f}×."
+                f"{fastest['base_time_ratio']:.2f}x."
             ),
             (
                 "The native 15 Hz clock and queue/placement producer identity "
@@ -1920,8 +1868,6 @@ def analyze_replay(
         + min(sum(undeclared_channel_counts.values()) * 5, 20)
         + min(sum(unknown_channel_counts.values()) * 3, 15)
         + min(len(command_schema_anomalies) * 5, 20)
-        + len(disagreement_frames) * 20
-        + len(mismatch_flag_frames) * 10
         + min(unknown_message_count, 10)
     )
     integrity_score = max(0, 100 - integrity_deductions)
@@ -1943,7 +1889,7 @@ def analyze_replay(
         assessment = "Statistical signals need review"
         assessment_tone = "warning"
     else:
-        assessment = "Findings available for review" if findings else "No checked structural or CRC anomalies detected"
+        assessment = "Findings available for review" if findings else "No checked structural anomalies detected"
         assessment_tone = "warning" if findings else "clear"
 
     timeline = []
@@ -2012,8 +1958,8 @@ def analyze_replay(
         }
         for stream_id, points in sorted(camera_by_stream.items())
     ]
-    return {
-        "schema_version": 7,
+    report = {
+        "schema_version": 8,
         "target": "KW 1.02",
         "evidence": {
             "format": "exact_kw102_static_binary_and_fixture_evidence",
@@ -2074,8 +2020,8 @@ def analyze_replay(
                 if telemetry.get("present")
                 else 0
             ),
-            "crc_checkpoint_count": len(crc_checkpoints),
-            "crc_disagreement_count": len(disagreement_frames),
+            "crc_checkpoint_count": 0,
+            "crc_disagreement_count": 0,
             "rtt_sample_count": len(rtt_points),
             "unknown_message_count": unknown_message_count,
             "decode_error_count": (
@@ -2224,7 +2170,7 @@ def analyze_replay(
         },
         "timeline": timeline,
         "network": {
-            "crc_checkpoints": crc_checkpoints,
+            "crc_checkpoints": [],
             "rtt_points": rtt_points[::rtt_sample_step],
             "rtt_points_total": len(rtt_points),
             "rtt_points_sampled": rtt_sample_step > 1,
@@ -2302,11 +2248,9 @@ def analyze_replay(
         },
         "methodology": {
             "facts": (
-                "Container, command, camera, CRC, RTT, and auxiliary stream "
-                "formats were recovered from Kane's Wrath native code. Asset "
-                "arguments are resolved with the installed SAGE string-hash "
-                "dictionary and Kane's Wrath XML definitions; all features are "
-                "validated against supplied replay fixtures."
+                "Native formats and selected argument meanings were reviewed against KW 1.02. "
+                "Unknown meanings remain explicit. Optional asset hints are unverified. "
+                "Replay and synthetic fixture validation do not establish full game-state agreement."
             ),
             "action_definition": (
                 "APM excludes CRC, RTT, stats/auth, player destruction, "
@@ -2317,9 +2261,13 @@ def analyze_replay(
                 f"{SIMULATION_FPS} simulation frames per second."
             ),
             "production_definition": (
-                "Queue commands are attempts. Structure placement confirms "
-                "completion; catalog value, paid-to-date refund behavior, and "
-                "base-time comparisons are kept distinct."
+                "Queue and placement commands are requests, not proof of completion. "
+                "Reference costs and timing remain unverified."
             ),
         },
     }
+
+    report["desync"] = analyze_desync(report)
+    report["summary"]["verified_command_count"] = sum(c["semantic_status"] == "verified_fields" for c in commands)
+    report["summary"]["command_schema_issue_count"] = sum(bool(c["schema_issues"]) for c in commands)
+    return report

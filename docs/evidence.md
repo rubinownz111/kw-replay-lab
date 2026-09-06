@@ -8,6 +8,8 @@ All supported decoding targets the exact KW 1.02 executable. Its hash and addres
 | `evidence/reviewed-artifacts/` | Reader, stream and shared-runtime review records; listed in `index.json` |
 | `evidence/command-switch-cases.json` | 233 names recovered from the 1.02 switch at `0x575913`, including ID 1305 (`MSG_OBJECT_JOINED_TEAM`) |
 | `tools/kw_game_message_names.json` | Runtime command-name table |
+| `replay_analyzer/data/command_semantics.json` | Verified selected fields for 36 commands; exact function and case references |
+| `evidence/desync-command-review.json` | CRC, tagged-stream and command review scope and limitations |
 | `evidence/local-corpus-validation.json` | Tested file hashes and decoding counts; no player captures |
 
 The tests run the Python parser, not the game. Command names alone do not establish each command's behavior or argument meaning.

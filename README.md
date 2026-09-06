@@ -19,6 +19,8 @@ Open http://127.0.0.1:8765. Choose a `.KWReplay` file or try **Explore a synthet
 
 - Filter commands, build requests and checkpoints by time.
 - Inspect command arguments, raw bytes and ObjectID references.
+- Read verified argument labels for 36 command types, with unknown fields kept explicit.
+- Use **Desync Lab** to find CRC investigation windows and compare player recordings or captured fields.
 - View camera paths and sample density.
 - Compare commands, openings and recorded CRCs across two replays.
 - Save and search replays in a browser library.
@@ -34,6 +36,7 @@ python app.py --analyze match.KWReplay --output report.json
 python app.py --analyze match.KWReplay --commands-csv commands.csv
 python app.py --inspect match.KWReplay --output container.json
 python app.py --batch ./replays --output ./reports
+python app.py --analyze match.KWReplay --diagnostic DESYNC.txt --output case.json
 ```
 
 Batch mode continues after invalid files and lists results in `batch-summary.json`.
@@ -45,6 +48,7 @@ Supports complete files up to 64 MiB with headers declaring `1.2.0.0`. Commands 
 ## Documentation
 
 - [Setup, development and tests](CONTRIBUTING.md)
+- [Desync Lab](docs/desync-lab.md)
 - [1.02 format](docs/format-1.02.md) and [report schema](docs/report-schema.md)
 - [RE evidence](docs/evidence.md), [validation](docs/validation.md) and [telemetry](docs/telemetry.md)
 

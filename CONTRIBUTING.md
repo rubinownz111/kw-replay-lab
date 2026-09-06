@@ -25,6 +25,7 @@ python -m unittest discover -s tests -v
 npm run test:frontend
 python -m playwright install chromium
 python scripts/smoke_browser.py
+python scripts/smoke_desync.py
 ```
 
 Add a regression test for parser changes. Run browser checks for UI/API changes. Screenshots go in `.artifacts/`.

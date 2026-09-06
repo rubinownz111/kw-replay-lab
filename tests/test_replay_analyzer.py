@@ -353,9 +353,9 @@ class ReplayAnalyzerTests(unittest.TestCase):
         )
         self.assertEqual(
             report["cheat_analysis"]["assessment"],
-            "No checked structural or CRC anomalies detected",
+            "No checked structural anomalies detected",
         )
-        self.assertEqual(report["schema_version"], 7)
+        self.assertEqual(report["schema_version"], 8)
         self.assertEqual(report["forensics"]["record_count"], 1)
         self.assertTrue(report["integrity"]["footer_last_frame_matches_body"])
 
@@ -422,7 +422,7 @@ class ReplayAnalyzerTests(unittest.TestCase):
     def test_health_reports_analyzer_schema(self) -> None:
         response = app.test_client().get("/api/health")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get_json()["report_schema_version"], 7)
+        self.assertEqual(response.get_json()["report_schema_version"], 8)
         self.assertFalse(response.get_json()["production_analysis"])
         self.assertTrue(response.get_json()["telemetry_sidecars"])
 

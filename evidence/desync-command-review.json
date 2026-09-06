@@ -1,0 +1,30 @@
+{
+  "target": "KW 1.02",
+  "input_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "scope": "Read-only exact-target review; no canonical database publication.",
+  "functions": {
+    "0x518107": "Command dispatch and argument consumers",
+    "0x57DCBA": "Native command diagnostics",
+    "0x4DB1D6": "CRC epoch/frame comparison and source accounting",
+    "0x51BED6": "Checksum message production",
+    "0x859346": "Tagged stream header",
+    "0x8596B1": "Block start",
+    "0x858DF3": "Absolute block end offset",
+    "0x859166": "Description tokens",
+    "0x859890": "Tagged stream text decoding",
+    "0x859782": "Per-transfer rotate-add checksum"
+  },
+  "reviewed_instruction_exports": {
+    "native-0x518107": "6827011b3c892ecdf5a9ed52c35a9b3518350c74b3c8deb3315cea2ddb57e0a9",
+    "native-0x858df3": "a2835b6007a3936d2919f1f7707d278ed719341accad4f9dee2514adaa0d6087",
+    "native-0x8596b1": "0f4060c699fe71f3c8d6741ecf78256f17754baf49b7db83ec80b0aa65114299",
+    "native-0x859890": "fc25ed1b26a7bf6adb6bdef5644efeb47610fb2d69479c65d23b8b2da6a999e2"
+  },
+  "command_schema_count": 36,
+  "diagnostic_validation": "Synthetic fixtures; no paired native diagnostic captures available.",
+  "limitations": [
+    "No game simulation",
+    "Diagnostic format does not authenticate build",
+    "No automatic root-cause or player-blame verdict"
+  ]
+}

@@ -1,0 +1,810 @@
+{
+  "target": "KW 1.02",
+  "input_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "version": 1,
+  "scope": "Verified labels for selected fields, not complete command execution or asset identity.",
+  "commands": {
+    "582": {
+      "name": "MSG_DO_MOVETO",
+      "title": "Move to position",
+      "meaning": "Requests movement of the selected group to the destination.",
+      "category": "Movement",
+      "evidence": {
+        "function": "0x518107",
+        "case": 582,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Destination",
+          "type": "coord3d"
+        }
+      ]
+    },
+    "583": {
+      "name": "MSG_DO_ATTACKMOVETO",
+      "title": "Attack-move to position",
+      "meaning": "Requests attack-move handling for the selected group at the destination.",
+      "category": "Movement",
+      "evidence": {
+        "function": "0x518107",
+        "case": 583,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Destination",
+          "type": "coord3d"
+        }
+      ]
+    },
+    "584": {
+      "name": "MSG_DO_FORCEMOVETO",
+      "title": "Force move to position",
+      "meaning": "Requests force-move handling for the selected group at the destination.",
+      "category": "Movement",
+      "evidence": {
+        "function": "0x518107",
+        "case": 584,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Destination",
+          "type": "coord3d"
+        }
+      ]
+    },
+    "601": {
+      "name": "MSG_DO_SALVAGE",
+      "title": "Salvage",
+      "meaning": "Requests salvage movement toward the supplied position.",
+      "category": "Movement",
+      "evidence": {
+        "function": "0x518107",
+        "case": 601,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Destination",
+          "type": "coord3d"
+        }
+      ]
+    },
+    "654": {
+      "name": "MSG_DO_REVERSEMOVETO",
+      "title": "Reverse move to position",
+      "meaning": "Requests reverse movement for the selected group toward the destination.",
+      "category": "Movement",
+      "evidence": {
+        "function": "0x518107",
+        "case": 654,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Destination",
+          "type": "coord3d"
+        }
+      ]
+    },
+    "656": {
+      "name": "MSG_DO_FORCEATTACKMOVETO",
+      "title": "Force attack-move to position",
+      "meaning": "Requests force attack-move handling at the destination.",
+      "category": "Movement",
+      "evidence": {
+        "function": "0x518107",
+        "case": 656,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Destination",
+          "type": "coord3d"
+        }
+      ]
+    },
+    "572": {
+      "name": "MSG_DO_ATTACK_OBJECT",
+      "title": "Attack Object",
+      "meaning": "Requests an attack on the target object.",
+      "category": "Combat",
+      "evidence": {
+        "function": "0x518107",
+        "case": 572,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Target object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "573": {
+      "name": "MSG_DO_FORCE_ATTACK_OBJECT",
+      "title": "Force Attack Object",
+      "meaning": "Requests a forced attack on the target object.",
+      "category": "Combat",
+      "evidence": {
+        "function": "0x518107",
+        "case": 573,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Target object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "575": {
+      "name": "MSG_GET_REPAIRED",
+      "title": "Get Repaired",
+      "meaning": "Requests repair service from the target object.",
+      "category": "Support",
+      "evidence": {
+        "function": "0x518107",
+        "case": 575,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Target object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "576": {
+      "name": "MSG_GET_HEALED",
+      "title": "Get Healed",
+      "meaning": "Requests healing from the target object.",
+      "category": "Support",
+      "evidence": {
+        "function": "0x518107",
+        "case": 576,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Target object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "577": {
+      "name": "MSG_DO_REPAIR",
+      "title": "Repair",
+      "meaning": "Requests repair of the target object.",
+      "category": "Support",
+      "evidence": {
+        "function": "0x518107",
+        "case": 577,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Target object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "578": {
+      "name": "MSG_RESUME_CONSTRUCTION",
+      "title": "Resume Construction",
+      "meaning": "Requests continued construction of the target object.",
+      "category": "Support",
+      "evidence": {
+        "function": "0x518107",
+        "case": 578,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Target object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "580": {
+      "name": "MSG_DOCK",
+      "title": "Dock",
+      "meaning": "Requests docking with the target object.",
+      "category": "Support",
+      "evidence": {
+        "function": "0x518107",
+        "case": 580,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Target object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "587": {
+      "name": "MSG_DO_GUARD_OBJECT",
+      "title": "Guard Object",
+      "meaning": "Requests guarding of the target object.",
+      "category": "Combat",
+      "evidence": {
+        "function": "0x518107",
+        "case": 587,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Target object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "658": {
+      "name": "MSG_DO_ATTACKMOVETO_OBJECT",
+      "title": "Attack-move to object",
+      "meaning": "Requests attack-move handling toward the target object.",
+      "category": "Combat",
+      "evidence": {
+        "function": "0x518107",
+        "case": 658,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Target object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "659": {
+      "name": "MSG_DO_FORCEATTACKMOVETO_OBJECT",
+      "title": "Force attack-move to object",
+      "meaning": "Requests force attack-move handling toward the target object.",
+      "category": "Combat",
+      "evidence": {
+        "function": "0x518107",
+        "case": 659,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Target object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "574": {
+      "name": "MSG_DO_FORCE_ATTACK_GROUND",
+      "title": "Force attack ground",
+      "meaning": "Requests an attack at a world position.",
+      "category": "Combat",
+      "evidence": {
+        "function": "0x518107",
+        "case": 574,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Target position",
+          "type": "coord3d"
+        }
+      ]
+    },
+    "586": {
+      "name": "MSG_DO_GUARD_POSITION",
+      "title": "Guard position",
+      "meaning": "Requests guarding at a world position.",
+      "category": "Combat",
+      "evidence": {
+        "function": "0x518107",
+        "case": 586,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Guard position",
+          "type": "coord3d"
+        }
+      ]
+    },
+    "579": {
+      "name": "MSG_ENTER",
+      "title": "Enter object",
+      "meaning": "Requests entry into the destination object.",
+      "category": "Control",
+      "evidence": {
+        "function": "0x518107",
+        "case": 579,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 1,
+          "label": "Destination object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "581": {
+      "name": "MSG_HARVEST",
+      "title": "Harvest",
+      "meaning": "Uses the resource object if it resolves; otherwise uses the supplied world position.",
+      "category": "Economy",
+      "evidence": {
+        "function": "0x518107",
+        "case": 581,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Resource position",
+          "type": "coord3d"
+        },
+        {
+          "index": 1,
+          "label": "Resource object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "550": {
+      "name": "MSG_DO_SPECIAL_POWER",
+      "title": "Use special power",
+      "meaning": "Requests a special power; additional fields depend on the power.",
+      "category": "Combat",
+      "evidence": {
+        "function": "0x518107",
+        "case": 550,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Special-power key",
+          "type": "integer"
+        }
+      ]
+    },
+    "551": {
+      "name": "MSG_DO_SPECIAL_POWER_AT_LOCATION",
+      "title": "Use power at position",
+      "meaning": "Requests a special power at a world position; argument 2 can reference an object.",
+      "category": "Combat",
+      "evidence": {
+        "function": "0x518107",
+        "case": 551,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Special-power key",
+          "type": "integer"
+        },
+        {
+          "index": 1,
+          "label": "Target position",
+          "type": "coord3d"
+        },
+        {
+          "index": 2,
+          "label": "Related object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "552": {
+      "name": "MSG_DO_SPECIAL_POWER_AT_OBJECT",
+      "title": "Use power on object",
+      "meaning": "Requests a special power on a referenced object.",
+      "category": "Combat",
+      "evidence": {
+        "function": "0x518107",
+        "case": 552,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Special-power key",
+          "type": "integer"
+        },
+        {
+          "index": 1,
+          "label": "Target object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "553": {
+      "name": "MSG_SET_RALLY_POINT",
+      "title": "Set rally point",
+      "meaning": "Sets rally information for the producer; position and optional object are resolved separately.",
+      "category": "Control",
+      "evidence": {
+        "function": "0x518107",
+        "case": 553,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Producer object",
+          "type": "object_id"
+        },
+        {
+          "index": 1,
+          "label": "Rally position",
+          "type": "coord3d"
+        },
+        {
+          "index": 3,
+          "label": "Related object",
+          "type": "object_id"
+        }
+      ]
+    },
+    "554": {
+      "name": "MSG_PURCHASE_SCIENCE",
+      "title": "Purchase science",
+      "meaning": "Requests purchase of the science key for the specified player index.",
+      "category": "Control",
+      "evidence": {
+        "function": "0x518107",
+        "case": 554,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Player index",
+          "type": "integer"
+        },
+        {
+          "index": 1,
+          "label": "Science key",
+          "type": "integer"
+        }
+      ]
+    },
+    "555": {
+      "name": "MSG_QUEUE_UPGRADE",
+      "title": "Queue Upgrade",
+      "meaning": "Resolves the upgrade key and requests queueing for the selected group.",
+      "category": "Production",
+      "evidence": {
+        "function": "0x518107",
+        "case": 555,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Upgrade key",
+          "type": "integer"
+        }
+      ]
+    },
+    "556": {
+      "name": "MSG_CANCEL_UPGRADE",
+      "title": "Cancel Upgrade",
+      "meaning": "Resolves the upgrade key and requests cancellation for the selected group.",
+      "category": "Production",
+      "evidence": {
+        "function": "0x518107",
+        "case": 556,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Upgrade key",
+          "type": "integer"
+        }
+      ]
+    },
+    "557": {
+      "name": "MSG_QUEUE_UNIT_CREATE",
+      "title": "Queue unit",
+      "meaning": "Requests production. Argument 1 selects whether argument 2 is an index or a template key.",
+      "category": "Production",
+      "evidence": {
+        "function": "0x518107",
+        "case": 557,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Producer object",
+          "type": "object_id"
+        },
+        {
+          "index": 1,
+          "label": "Use index",
+          "type": "boolean"
+        },
+        {
+          "index": 2,
+          "label": "Template key or index",
+          "type": "integer"
+        },
+        {
+          "index": 5,
+          "label": "Queue selector",
+          "type": "integer"
+        }
+      ]
+    },
+    "558": {
+      "name": "MSG_CANCEL_UNIT_CREATE",
+      "title": "Cancel unit",
+      "meaning": "Requests cancellation. Argument 1 selects index-based or template-based cancellation.",
+      "category": "Production",
+      "evidence": {
+        "function": "0x518107",
+        "case": 558,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Producer object",
+          "type": "object_id"
+        },
+        {
+          "index": 1,
+          "label": "Use index",
+          "type": "boolean"
+        },
+        {
+          "index": 2,
+          "label": "Template key or index",
+          "type": "integer"
+        },
+        {
+          "index": 4,
+          "label": "Queue selector",
+          "type": "integer"
+        }
+      ]
+    },
+    "559": {
+      "name": "MSG_QUEUE_STRUCTURE_CREATE",
+      "title": "Queue structure",
+      "meaning": "Resolves a producer, structure template and production interface before requesting construction.",
+      "category": "Production",
+      "evidence": {
+        "function": "0x518107",
+        "case": 559,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Producer object",
+          "type": "object_id"
+        },
+        {
+          "index": 1,
+          "label": "Structure template key",
+          "type": "integer"
+        },
+        {
+          "index": 2,
+          "label": "Queue selector",
+          "type": "integer"
+        }
+      ]
+    },
+    "560": {
+      "name": "MSG_CANCEL_STRUCTURE_CREATE",
+      "title": "Cancel structure",
+      "meaning": "Resolves the producer and queue, then requests cancellation for the structure template.",
+      "category": "Production",
+      "evidence": {
+        "function": "0x518107",
+        "case": 560,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Producer object",
+          "type": "object_id"
+        },
+        {
+          "index": 1,
+          "label": "Queue selector",
+          "type": "integer"
+        },
+        {
+          "index": 2,
+          "label": "Structure template key",
+          "type": "integer"
+        }
+      ]
+    },
+    "562": {
+      "name": "MSG_FOUNDATION_CONSTRUCT",
+      "title": "Construct foundation",
+      "meaning": "Resolves the template key for a foundation-construction request.",
+      "category": "Production",
+      "evidence": {
+        "function": "0x57DCBA",
+        "case": 562,
+        "basis": "Native diagnostic formatter explicitly labels argument 0 ThingTemplate."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Foundation template key",
+          "type": "integer"
+        }
+      ]
+    },
+    "598": {
+      "name": "MSG_CASTLE_UNPACK_EXPLICIT_OBJECT",
+      "title": "Unpack chosen template",
+      "meaning": "Resolves the requested template and checks the unpack module before dispatch.",
+      "category": "Production",
+      "evidence": {
+        "function": "0x518107",
+        "case": 598,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Object template key",
+          "type": "integer"
+        }
+      ]
+    },
+    "609": {
+      "name": "MSG_LOGIC_CRC",
+      "title": "Logic checksum",
+      "meaning": "Reports the simulation checksum for a checkpoint. Reports must be grouped by epoch and frame.",
+      "category": "Network",
+      "evidence": {
+        "function": "0x518107",
+        "case": 609,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled.",
+        "related_functions": [
+          "0x51BED6",
+          "0x4DB1D6"
+        ]
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Checksum",
+          "type": "integer"
+        },
+        {
+          "index": 1,
+          "label": "Epoch token",
+          "type": "timestamp"
+        },
+        {
+          "index": 2,
+          "label": "Checkpoint frame",
+          "type": "timestamp"
+        },
+        {
+          "index": 3,
+          "label": "Recorded during playback",
+          "type": "boolean"
+        },
+        {
+          "index": 4,
+          "label": "Mismatch-reporting flag",
+          "type": "boolean"
+        }
+      ]
+    },
+    "655": {
+      "name": "MSG_ANNOUNCE_RTT",
+      "title": "Round-trip times",
+      "meaning": "Reports a local network slot and eight slot-indexed latency values.",
+      "category": "Network",
+      "evidence": {
+        "function": "0x518107",
+        "case": 655,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Local network slot",
+          "type": "integer"
+        },
+        {
+          "index": 1,
+          "label": "RTT for slot 0",
+          "type": "integer"
+        },
+        {
+          "index": 2,
+          "label": "RTT for slot 1",
+          "type": "integer"
+        },
+        {
+          "index": 3,
+          "label": "RTT for slot 2",
+          "type": "integer"
+        },
+        {
+          "index": 4,
+          "label": "RTT for slot 3",
+          "type": "integer"
+        },
+        {
+          "index": 5,
+          "label": "RTT for slot 4",
+          "type": "integer"
+        },
+        {
+          "index": 6,
+          "label": "RTT for slot 5",
+          "type": "integer"
+        },
+        {
+          "index": 7,
+          "label": "RTT for slot 6",
+          "type": "integer"
+        },
+        {
+          "index": 8,
+          "label": "RTT for slot 7",
+          "type": "integer"
+        }
+      ]
+    },
+    "657": {
+      "name": "MSG_DESTRUCT_PLAYER",
+      "title": "Remove player",
+      "meaning": "Routes a player-removal request to Network_DestroyPlayerBySlot.",
+      "category": "Network",
+      "evidence": {
+        "function": "0x518107",
+        "case": 657,
+        "basis": "Exact 1.02 dispatch, argument access and downstream data flow; unknown fields stay unlabeled."
+      },
+      "arguments": [
+        {
+          "index": 0,
+          "label": "Network slot",
+          "type": "integer"
+        },
+        {
+          "index": 1,
+          "label": "Destruct flag",
+          "type": "boolean"
+        }
+      ]
+    }
+  }
+}

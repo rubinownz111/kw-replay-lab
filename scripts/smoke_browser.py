@@ -139,7 +139,7 @@ def main():
             expect(page.locator('#library-rows')).to_contain_text('No matching records')
             browser.close()
         assert not errors,errors
-        checks=['all_14_tabs','malformed_upload_recovery','command_filters','byte_inspector','typed_object_search','synchronized_time_range','camera_density','library_save_duplicate_reload_remove','replay_comparison','json_csv_exports','portable_html_without_network','light_dark_themes','mobile_all_tabs','html_escaping']
+        checks=['all_15_tabs','malformed_upload_recovery','command_filters','byte_inspector','typed_object_search','synchronized_time_range','camera_density','library_save_duplicate_reload_remove','replay_comparison','json_csv_exports','portable_html_without_network','light_dark_themes','mobile_all_tabs','html_escaping']
         (output/'browser-validation.json').write_text(json.dumps({'passed':True,'url':url,'javascript_errors':errors,'checks':checks},indent=2),encoding='utf-8')
         print('Browser workspace checks passed: '+', '.join(checks))
     finally:

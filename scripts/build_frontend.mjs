@@ -12,4 +12,5 @@ const shared={bundle:true,target:'es2022',minify:true,legalComments:'eof',plugin
 await build({...shared,entryPoints:[path.join(root,'frontend/src/index.ts')],outfile:path.join(out,'replay-lab.js'),format:'esm'});
 await build({...shared,entryPoints:[path.join(root,'frontend/src/portable.ts')],outfile:path.join(out,'portable.js'),format:'iife'});
 await build({...shared,entryPoints:[path.join(root,'frontend/src/analytics.ts')],outfile:path.join(root,'.artifacts/analytics.mjs'),format:'esm'});
+await build({...shared,entryPoints:[path.join(root,'frontend/src/desync.ts')],outfile:path.join(root,'.artifacts/desync.mjs'),format:'esm'});
 console.log('Built Replay Lab and offline reports.');

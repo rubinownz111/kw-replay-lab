@@ -2,6 +2,45 @@
 import struct
 from tools.kwreplay_inspect import HEADER_MAGIC, FOOTER_MAGIC, END_FRAME
 
+
+def build_desync_capture(health=100.0):
+    """Synthetic tagged capture for exploring field comparison."""
+    def tag(value):
+        return value.encode().rjust(4, b'\0')[::-1]
+    data = bytearray(b'ALAE2STR' + struct.pack('<II', 1, 1))
+    data += tag('BLOK') + b'\x0aObject 204'
+    boundary = len(data)
+    data += b'\0' * 4
+    data += tag('DSCR') + b'\x06Health' + tag('real') + struct.pack('<f', health)
+    data += tag('EBLK')
+    struct.pack_into('<I', data, boundary, len(data))
+    return bytes(data) + tag('END')
+
+
+def build_desync_replay():
+    metadata = build_metadata()
+    config = b'M=00test-map;MC=123;SD=42;GSID=700;S=HPlayer A,0,0,TT,0,1,0,0,0,:HPlayer B,0,0,TT,0,1,0,0,0,:;'
+    metadata = metadata.replace(struct.pack('<I', 3) + b'cfg', struct.pack('<I', len(config)) + config)
+    header = (HEADER_MAGIC + b'\x05' + struct.pack('<4IH', 1, 2, 0, 0, 2)
+              + utf16z('Synthetic desync investigation') + utf16z('Generated test data')
+              + utf16z('Test Map') + utf16z('test-map') + b'\x02'
+              + struct.pack('<I', 1) + utf16z('Player A') + b'\x01'
+              + struct.pack('<I', 2) + utf16z('Player B') + b'\x02'
+              + struct.pack('<I', 0) + utf16z('') + b'\x00'
+              + struct.pack('<I', len(metadata)) + metadata)
+    records = []
+    for frame, source, value in [(450, 3, 100), (450, 4, 100), (900, 3, 200), (900, 4, 201)]:
+        command = struct.pack('<H', (source << 11) | 609) + b'\x00' + struct.pack('<I', value) + b'\x19' + struct.pack('<II', 0, frame) + b'\x12\x00\x00\xff'
+        records.append((frame + 3, command))
+    records += [(520, struct.pack('<H', (3 << 11) | 582) + b'\x06' + struct.pack('<3f', 10, 20, 0) + b'\xff'),
+                (780, struct.pack('<H', (4 << 11) | 572) + b'\x03' + struct.pack('<I', 204) + b'\x06' + struct.pack('<3f', 10, 20, 0) + b'\xff')]
+    body = b''
+    for frame, command in sorted(records):
+        payload = b'\x01' + struct.pack('<I', 1) + command
+        body += struct.pack('<IIBI', 0, frame, 1, len(payload)) + payload
+    footer = FOOTER_MAGIC + struct.pack('<IB', 1024, 2)
+    return header + body + struct.pack('<II', 0, END_FRAME) + footer + struct.pack('<I', len(footer) + 4)
+
 def utf16z(text: str) -> bytes:
     return text.encode("utf-16-le") + b"\0\0"
 
