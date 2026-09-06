@@ -27,7 +27,9 @@ Open http://127.0.0.1:8765. Choose a `.KWReplay` file or try **Explore a synthet
 - Export JSON, CSV or an HTML report that opens offline.
 - Switch between light and dark mode.
 
-The library stores up to 50 entries / 256 MiB. Clearing browser data removes it, so export reports you want to keep.
+The current replay is kept automatically in this browser, including notes and added captures. Back/Forward and refresh keep your place. Use **Resume replay** from the upload page or library, and **Close replay** when finished.
+
+The library stores separate saved copies, up to 50 entries / 256 MiB. Clearing browser data removes local copies, so export reports you want to keep.
 
 ## Command line
 

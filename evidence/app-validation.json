@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.3.1",
   "date": "2026-09-06",
   "platform": "Windows",
   "python": "3.14.6",
@@ -88,5 +88,22 @@
   "github_ci": {
     "workflow_url": "https://github.com/rubinownz111/kw-replay-lab/actions/workflows/test.yml",
     "scope": "See the current commit run for Windows and Ubuntu results."
+  },
+  "navigation_browser": {
+    "passed": true,
+    "uploads": 1,
+    "javascript_errors": [],
+    "checks": [
+      "existing_library_migration",
+      "browser_back_forward",
+      "context_back_button",
+      "reload_preserves_view_range_object_and_bytes",
+      "capture_and_note_recovery",
+      "resume_from_upload_and_library",
+      "library_removal_keeps_active_replay",
+      "explicit_close_clears_recovery",
+      "storage_failure_keeps_live_navigation",
+      "mobile_navigation"
+    ]
   }
 }

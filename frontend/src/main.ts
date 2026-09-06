@@ -2,7 +2,7 @@ import styles from './styles.css';
 import {renderDesync} from './desync_view';
 import {caseMarkdown} from './desync';
 import {escapeHtml as esc, display, timeLabel, inRange, objectReferences, compareReports, csv, actionBuckets, recordedDate} from './analytics';
-import {listSaved, saveReplay, removeReplay} from './storage';
+import {listSaved, saveReplay, removeReplay, loadWorkspace, writeWorkspace} from './storage';
 import {validateReport} from './types';
 import type {Command, ReplayReport, Row, MountOptions, SavedReplay, CameraPoint, Diagnostic} from './types';
 
@@ -35,29 +35,82 @@ class ReplayLab {
  private libraryQuery=''; private libraryMap=''; private libraryDate=''; private librarySort='newest';
  private theme:'system'|'light'|'dark'; private busy=false; private timer:ReturnType<typeof setInterval>|null=null;
  private notice=''; private error=false; private rawToken=0;
+ private historyDepth=0; private backLabel=''; private restoring=false; private workspaceDirty=false; private workspaceSaved=false; private workspaceError=false;
+ private saveTimer:ReturnType<typeof setTimeout>|null=null; private saveQueue:Promise<void>=Promise.resolve();
  private readonly abort=new AbortController();
  constructor(private host:HTMLElement,private options:MountOptions,private assetsBase:string){
   this.root=host.shadowRoot??host.attachShadow({mode:'open'});
   this.theme=options.theme??'system';
   try{if(!options.theme){const saved=localStorage.getItem('kw-replay-theme');if(saved==='dark'||saved==='light')this.theme=saved;}}catch{/* Storage is optional. */}
   this.root.innerHTML=`<style>${css}</style><div class="lab"><div id="shell"></div><dialog aria-labelledby="inspector-title"><div id="inspector"></div></dialog></div>`;
-  this.root.addEventListener('click',e=>{const el=(e.target as Element).closest<HTMLElement>('[data-action]');if(el)void this.action(el.dataset.action!,el).catch(x=>this.message(String(x.message??x),true));},{signal:this.abort.signal});
-  this.root.addEventListener('change',e=>void this.change(e.target as HTMLInputElement).catch(x=>this.message(String(x.message??x),true)),{signal:this.abort.signal});
-  this.root.addEventListener('input',e=>this.input(e.target as HTMLInputElement),{signal:this.abort.signal});
+  this.root.addEventListener('click',e=>{const el=(e.target as Element).closest<HTMLElement>('[data-action]');if(el)void this.action(el.dataset.action!,el).catch(x=>this.message(String(x.message??x),true)).finally(()=>this.rememberPosition());},{signal:this.abort.signal});
+  this.root.addEventListener('change',e=>void this.change(e.target as HTMLInputElement).catch(x=>this.message(String(x.message??x),true)).finally(()=>this.rememberPosition()),{signal:this.abort.signal});
+  this.root.addEventListener('input',e=>{this.input(e.target as HTMLInputElement);this.rememberPosition();},{signal:this.abort.signal});
   this.root.addEventListener('keydown',e=>{if((e as KeyboardEvent).key==='Escape')this.stop();},{signal:this.abort.signal});
+  window.addEventListener('popstate',e=>void this.restoreHistory(e.state),{signal:this.abort.signal});
+  window.addEventListener('pagehide',()=>void this.flushWorkspace(),{signal:this.abort.signal});
   if(options.report){validateReport(options.report);this.openReport(options.report);}
-  else this.render();
+  else {this.restoring=true;this.busy=true;this.render();void this.restoreWorkspace();}
  }
- destroy(){this.stop();this.abort.abort();this.root.innerHTML='';}
+ destroy(){this.stop();void this.flushWorkspace();this.abort.abort();this.root.innerHTML='';}
  private q<T extends Element=HTMLElement>(selector:string):T{return this.root.querySelector<T>(selector)!;}
  private message(text:string,error=false){this.notice=text;this.error=error;const n=this.q('#notice');if(n){n.textContent=text;n.className=`notice ${error?'error':''}`;n.hidden=!text;}}
  private stop(){if(this.timer){clearInterval(this.timer);this.timer=null;}const b=this.q<HTMLButtonElement>('[data-action="play"]');if(b)b.textContent='Play timeline';}
+ private position():Row{return {view:this.view,tab:this.tab,start:this.start,end:this.end,cursor:this.cursor,search:this.search,player:this.player,category:this.category,actionsOnly:this.actionsOnly,page:this.page,desyncIncident:this.desyncIncident,desyncCheckpoint:this.desyncCheckpoint,diagnosticA:this.diagnosticA,diagnosticB:this.diagnosticB,diagnosticQuery:this.diagnosticQuery,objectId:this.objectId,cameraStream:this.cameraStream,cameraMode:this.cameraMode};}
+ private applyPosition(position:Row){
+  const current=this.position();for(const key of Object.keys(current)){const value=position[key];if(typeof value===typeof current[key]&&(typeof value!=='number'||Number.isFinite(value)))(this as unknown as Row)[key]=value;}
+  if(!['upload','report','library'].includes(this.view))this.view='report';if(!tabs.includes(this.tab))this.tab='Overview';
+  const last=this.report?.match.last_frame??0;this.start=Math.max(0,Math.min(this.start,last));this.end=Math.max(this.start,Math.min(this.end,last));this.cursor=Math.max(this.start,Math.min(this.cursor,this.end));
+ }
+ private historyEntry(){return {app:'kw-replay-lab',hash:this.report?.file.sha256??null,position:this.position(),depth:this.historyDepth,backLabel:this.backLabel};}
+ private replaceHistory(){history.replaceState(this.historyEntry(),'');}
+ private navigate(update:()=>void){
+  this.stop();this.replaceHistory();const label=this.view==='report'?this.tab:this.view==='library'?'Library':'Open replay';
+  update();this.historyDepth++;this.backLabel=label;history.pushState(this.historyEntry(),'');this.render();this.rememberPosition();
+ }
+ private async restoreHistory(entry:unknown){
+  this.stop();this.q<HTMLDialogElement>('dialog')?.close();const state=entry as ReturnType<ReplayLab['historyEntry']>|null;
+  if(state?.app==='kw-replay-lab'&&state.hash===(this.report?.file.sha256??null)){
+   this.historyDepth=Number.isInteger(state.depth)?Math.max(0,state.depth):0;this.backLabel=String(state.backLabel??'');this.applyPosition(state.position??{});
+  }else{this.historyDepth=0;this.backLabel='';this.view=this.report?'report':'upload';this.replaceHistory();}
+  if(!this.report&&this.view==='report')this.view='upload';
+  if(this.view==='library'){try{this.saved=await listSaved();}catch(e){this.message((e as Error).message,true);}}
+  this.render();this.rememberPosition();
+ }
+ private async restoreWorkspace(){
+  try{
+   const active=await loadWorkspace();if(this.abort.signal.aborted)return;
+   if(active){validateReport(active.report);if(active.comparison)validateReport(active.comparison);this.report=active.report;this.file=active.file;this.comparison=active.comparison;this.applyPosition(active.position);this.workspaceSaved=true;
+    const state=history.state;if(state?.app==='kw-replay-lab'&&state.hash===this.report.file.sha256){this.applyPosition(state.position??{});this.historyDepth=Number.isInteger(state.depth)?Math.max(0,state.depth):0;this.backLabel=String(state.backLabel??'');}
+    try{const note=JSON.parse(sessionStorage.getItem('kw-replay-current-notes')??'null');if(note?.hash===this.report.file.sha256&&typeof note.notes==='string'){this.caseData().notes=note.notes.slice(0,10000);}}catch{}
+    if(this.view==='library')this.saved=await listSaved();
+   }
+  }catch(e){this.notice=(e as Error).message;this.error=true;}
+  finally{if(!this.abort.signal.aborted){this.restoring=false;this.busy=false;this.replaceHistory();this.render();}}
+ }
+ private rememberPosition(){
+  if(this.restoring||this.abort.signal.aborted)return;this.replaceHistory();
+  if(this.options.offline||!this.report)return;
+  if(this.saveTimer)clearTimeout(this.saveTimer);this.saveTimer=setTimeout(()=>void this.flushWorkspace(),250);
+ }
+ private flushWorkspace():Promise<void>{
+  if(this.saveTimer){clearTimeout(this.saveTimer);this.saveTimer=null;}
+  if(this.options.offline||this.restoring)return this.saveQueue;
+  const position=this.position(),active=this.report?(this.workspaceDirty?{report:this.report,file:this.file,comparison:this.comparison}:undefined):null;
+  this.workspaceDirty=false;
+  this.saveQueue=this.saveQueue.then(()=>writeWorkspace(position,active)).then(()=>{this.workspaceSaved=!!this.report;this.workspaceError=false;this.sessionStatus();}).catch(e=>{this.workspaceDirty=!!this.report;this.workspaceSaved=false;this.workspaceError=true;this.sessionStatus();this.message((e as Error).message,true);});
+  return this.saveQueue;
+ }
+ private sessionStatus(){const el=this.q('#session-status');if(el)el.textContent=this.workspaceError?'Browser recovery is unavailable. Keep this tab open or export your work.':this.workspaceSaved?'Replay kept in this browser until you close it.':'Keeping the current replay in this browser...';}
  private async action(action:string,el:HTMLElement){
+  if(this.restoring)return;
+  if(action==='back-view'){history.back();return;}
+  if(action==='close-replay'){this.stop();this.q<HTMLDialogElement>('dialog').close();this.report=null;this.file=undefined;this.comparison=null;this.workspaceDirty=false;this.workspaceSaved=false;this.historyDepth=0;this.backLabel='';this.view='upload';this.notice='';try{sessionStorage.removeItem('kw-replay-current-notes');}catch{}await this.flushWorkspace();this.replaceHistory();this.render();return;}
   if(action==='desync-checkpoint'){this.desyncCheckpoint=el.dataset.key!;this.renderPanel();return;}
   if(action==='desync-window'||action==='desync-object'){
    const incident=this.report?.desync?.incidents[this.desyncIncident];if(!incident)return;
-   this.stop();this.start=incident.start_frame;this.end=incident.frame;this.cursor=this.end;this.search='';this.player='';this.category='';this.actionsOnly=false;this.page=0;
-   this.tab=action==='desync-object'?'Objects':el.dataset.view??'Commands';if(action==='desync-object')this.objectId=el.dataset.id!;this.render();return;
+   this.navigate(()=>{this.start=incident.start_frame;this.end=incident.frame;this.cursor=this.end;this.search='';this.player='';this.category='';this.actionsOnly=false;this.page=0;
+   this.tab=action==='desync-object'?'Objects':el.dataset.view??'Commands';if(action==='desync-object')this.objectId=el.dataset.id!;});return;
   }
   if(action==='desync-export'){this.download(caseMarkdown(this.report!,this.diagnosticA,this.diagnosticB),'desync-case.md','text/markdown');return;}
   if(action==='desync-remove-peer'){this.caseData().peers.splice(Number(el.dataset.peer),1);this.renderPanel();return;}
@@ -70,10 +123,10 @@ class ReplayLab {
   if(action==='desync-demo'){await this.task(async()=>{const response=await fetch(this.api('/desync/demo'));if(!response.ok)throw new Error('Could not load the desync demo.');const report:unknown=await response.json();validateReport(report);this.openReport(report);this.tab='Desync Lab';this.render();});return;}
   if(action==='theme'){this.theme=this.theme==='system'?'light':this.theme==='light'?'dark':'system';try{localStorage.setItem('kw-replay-theme',this.theme);}catch{}this.applyTheme();el.textContent=`Theme: ${this.theme}`;return;}
   if(action==='close-inspector'){this.q<HTMLDialogElement>('dialog').close();return;}
-  if(action==='tab'){this.stop();this.tab=el.dataset.tab!;this.page=0;this.render();return;}
+  if(action==='tab'){if(this.tab!==el.dataset.tab)this.navigate(()=>{this.tab=el.dataset.tab!;this.page=0;});return;}
   if(action==='inspect'){await this.inspect(Number(el.dataset.index));return;}
   if(action==='record'){await this.inspectRecord(Number(el.dataset.index));return;}
-  if(action==='object'){this.objectId=el.dataset.id!;this.tab='Objects';this.page=0;this.q<HTMLDialogElement>('dialog').close();this.render();return;}
+  if(action==='object'){this.q<HTMLDialogElement>('dialog').close();this.navigate(()=>{this.objectId=el.dataset.id!;this.tab='Objects';this.page=0;});return;}
   if(action==='play'){if(this.timer){this.stop();return;}if(this.cursor>=this.end)this.cursor=this.start;el.textContent='Pause timeline';this.timer=setInterval(()=>{this.cursor=Math.min(this.end,this.cursor+15);this.updateScope();if(this.cursor>=this.end)this.stop();},250);return;}
   if(action==='reset-range'){this.stop();this.start=0;this.end=this.report!.match.last_frame;this.cursor=this.end;this.updateScope();return;}
   if(action==='previous'||action==='next'){this.page=Math.max(0,this.page+(action==='next'?1:-1));this.renderPanel();return;}
@@ -83,16 +136,16 @@ class ReplayLab {
   if(action==='html'){await this.exportHtml();return;}
   if(action==='save'){await this.saveCurrent();return;}
   if(action==='open-saved'){const item=this.saved.find(x=>x.hash===el.dataset.hash)!;this.openReport(item.report,item.file);return;}
-  if(action==='compare-saved'){this.comparison=this.saved.find(x=>x.hash===el.dataset.hash)!.report;this.view='report';this.tab='Compare';this.render();return;}
+  if(action==='compare-saved'){this.comparison=this.saved.find(x=>x.hash===el.dataset.hash)!.report;this.workspaceDirty=true;this.navigate(()=>{this.view='report';this.tab='Compare';});return;}
   if(action==='remove-saved'){await removeReplay(el.dataset.hash!);this.saved=await listSaved();this.renderLibrary();this.message('Saved copy removed. The original file is unchanged.');return;}
-  if(action==='library'){this.stop();this.saved=await listSaved();this.view='library';this.render();return;}
-  if(action==='report'&&this.report){this.view='report';this.render();return;}
-  if(action==='upload'){this.stop();this.view='upload';this.notice='';this.render();return;}
+  if(action==='library'){this.stop();this.saved=await listSaved();this.navigate(()=>{this.view='library';});return;}
+  if(action==='report'&&this.report){this.navigate(()=>{this.view='report';});return;}
+  if(action==='upload'){if(this.view!=='upload')this.navigate(()=>{this.view='upload';this.notice='';});return;}
   if(action==='demo'){await this.task(async()=>{const response=await fetch(this.api('/demo'));if(!response.ok)throw new Error('The analyzer service could not load the demo.');const report:unknown=await response.json();validateReport(report);this.openReport(report);});}
  }
  private api(path:string){return (this.options.apiBase??'/api').replace(/\/$/,'')+path;}
- private async task(callback:()=>Promise<void>){if(this.busy)return;this.busy=true;this.setBusy();try{await callback();}finally{this.busy=false;this.setBusy();}}
- private setBusy(){this.root.querySelectorAll<HTMLInputElement|HTMLButtonElement>('[data-upload], [data-action="demo"], [data-action="save"], [data-action="desync-demo"]').forEach(x=>x.disabled=this.busy);const n=this.q('#busy');if(n){n.hidden=!this.busy;n.textContent='Decoding replay data. Please wait...';}}
+ private async task(callback:()=>Promise<void>){if(this.busy)return;this.busy=true;this.setBusy();try{await callback();}finally{await this.flushWorkspace();this.busy=false;this.setBusy();}}
+ private setBusy(){this.root.querySelectorAll<HTMLInputElement|HTMLButtonElement>('[data-upload], [data-action="demo"], [data-action="save"], [data-action="desync-demo"], [data-action="close-replay"]').forEach(x=>x.disabled=this.busy);const n=this.q('#busy');if(n){n.hidden=!this.busy;n.textContent='Decoding replay data. Please wait...';}}
  private async analyze(file:File):Promise<ReplayReport>{
   if(!/\.kwreplay$/i.test(file.name))throw new Error('Choose a .KWReplay file. Only 1.02 is supported.');
   if(file.size>64*1024*1024)throw new Error('Replay exceeds the 64 MiB limit.');
@@ -102,7 +155,7 @@ class ReplayLab {
   const payload:unknown=await response.json().catch(()=>{throw new Error(`Analyzer service returned HTTP ${response.status}. Check the replay service configuration.`);});
   if(!response.ok)throw new Error(String((payload as Row).error??`Analysis failed (${response.status}).`));validateReport(payload);return payload;
  }
- private caseData(){return this.report!.desync_case??(this.report!.desync_case={peers:[],diagnostics:[],notes:''});}
+ private caseData(){this.workspaceDirty=true;return this.report!.desync_case??(this.report!.desync_case={peers:[],diagnostics:[],notes:''});}
  private addPeer(report:ReplayReport){
   if(report.file.sha256===this.report!.file.sha256)throw new Error('This is the current replay. Choose another recording.');
   const data=this.caseData();if(data.peers.some(p=>p.file.sha256===report.file.sha256))return;
@@ -129,7 +182,7 @@ class ReplayLab {
      const messages:string[]=[];let completed=0;
      for(const file of files){try{const report=await this.analyze(file);const duplicate=await this.save(report,file);messages.push(`${file.name}: ${duplicate?'duplicate updated':'saved'}`);completed++;}catch(e){messages.push(`${file.name}: ${(e as Error).message}`);}this.message(`${completed}/${files.length} saved. ${messages.at(-1)}`);}
      this.saved=await listSaved();this.renderLibrary();this.message(messages.join('\n'),completed<files.length);
-    }else{const report=await this.analyze(files[0]);if(kind==='compare-input'){this.comparison=report;this.renderPanel();}else this.openReport(report,files[0]);this.message('');}
+    }else{const report=await this.analyze(files[0]);if(kind==='compare-input'){this.comparison=report;this.workspaceDirty=true;this.renderPanel();}else this.openReport(report,files[0]);this.message('');}
    });return;
   }
   if(input.id==='player-filter'){this.player=input.value;this.page=0;this.renderPanel();}
@@ -141,7 +194,7 @@ class ReplayLab {
   if(input.id==='library-sort'){this.librarySort=input.value;this.renderLibraryRows();}
  }
  private input(input:HTMLInputElement){
-  if(input.id==='desync-notes'){this.caseData().notes=input.value;return;}
+  if(input.id==='desync-notes'){this.caseData().notes=input.value;try{sessionStorage.setItem('kw-replay-current-notes',JSON.stringify({hash:this.report!.file.sha256,notes:input.value}));}catch{}return;}
   if(input.id==='diagnostic-search'){const pos=input.selectionStart;this.diagnosticQuery=input.value;this.renderPanel();const next=this.q<HTMLInputElement>('#diagnostic-search');next.focus();next.setSelectionRange(pos,pos);return;}
   if(['range-start','range-end','cursor'].includes(input.id)){
    const n=Math.max(0,Math.min(this.report!.match.last_frame,Number(input.value)||0));this.stop();
@@ -153,10 +206,10 @@ class ReplayLab {
   if(input.id==='library-search'){this.libraryQuery=input.value;this.renderLibraryRows();}
   if(input.id==='library-date'){this.libraryDate=input.value;this.renderLibraryRows();}
  }
- private openReport(report:ReplayReport,file?:Blob){this.stop();this.report=report;this.file=file;this.view='report';this.start=0;this.end=report.match.last_frame;this.cursor=this.end;this.search='';this.player='';this.category='';this.page=0;this.objectId='';this.cameraStream='';this.actionsOnly=false;this.tab='Overview';this.desyncIncident=0;this.desyncCheckpoint='';this.diagnosticA=0;this.diagnosticB=1;this.diagnosticQuery='';this.render();}
+ private openReport(report:ReplayReport,file?:Blob){this.stop();this.report=report;this.file=file;this.comparison=null;this.workspaceDirty=true;this.workspaceSaved=false;this.workspaceError=false;this.historyDepth=0;this.backLabel='';try{sessionStorage.removeItem('kw-replay-current-notes');}catch{}this.view='report';this.start=0;this.end=report.match.last_frame;this.cursor=this.end;this.search='';this.player='';this.category='';this.page=0;this.objectId='';this.cameraStream='';this.actionsOnly=false;this.tab='Overview';this.desyncIncident=0;this.desyncCheckpoint='';this.diagnosticA=0;this.diagnosticB=1;this.diagnosticQuery='';this.replaceHistory();this.render();void this.flushWorkspace();}
  private applyTheme(){const lab=this.q('.lab');if(this.theme==='system')lab.removeAttribute('data-theme');else lab.setAttribute('data-theme',this.theme);}
  private render(){
-  this.q('#shell').innerHTML=`<header class="masthead"><div class="brand"><span class="brand-title">KW Replay Lab</span><span class="mono">1.02 / ${this.options.offline?'OFFLINE REPORT':'REPLAY ANALYSIS'}</span></div><div class="header-actions">${!this.options.offline?button('Analyze replay','upload')+button('Library','library'):''}${this.report&&this.view!=='report'?button('Current report','report'):''}${button(`Theme: ${this.theme}`,'theme')}</div></header><div id="notice" class="notice ${this.error?'error':''}" role="status" ${this.notice?'':'hidden'}>${esc(this.notice)}</div><div id="busy" class="notice" role="status" hidden></div><main id="content"></main><footer>KW 1.02 only <span>Recorded commands, not game simulation.</span></footer>`;
+  this.q('#shell').innerHTML=`<header class="masthead"><div class="brand"><span class="brand-title">KW Replay Lab</span><span class="mono">1.02 / ${this.options.offline?'OFFLINE REPORT':'REPLAY ANALYSIS'}</span></div><div class="header-actions">${!this.options.offline?button('Analyze replay','upload')+button('Library','library'):''}${this.report&&this.view!=='report'?button('Resume replay','report'):''}${this.report&&!this.options.offline?button('Close replay','close-replay'):''}${button(`Theme: ${this.theme}`,'theme')}</div></header><div id="notice" class="notice ${this.error?'error':''}" role="status" ${this.notice?'':'hidden'}>${esc(this.notice)}</div><div id="busy" class="notice" role="status" hidden></div>${this.report&&this.view!=='report'?`<div class="active-replay">Current replay: <strong>${esc(this.report.file.name)}</strong>. Use Resume replay to return.</div>`:''}<main id="content"></main><footer>KW 1.02 only <span>Recorded commands, not game simulation.</span></footer>`;
   this.applyTheme();if(this.view==='upload')this.renderUpload();else if(this.view==='library')this.renderLibrary();else this.renderReport();this.setBusy();
  }
  private renderUpload(){
@@ -164,8 +217,8 @@ class ReplayLab {
   const drop=this.q('#drop-zone');drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('dragging');});drop.addEventListener('dragleave',()=>drop.classList.remove('dragging'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('dragging');const file=(e as DragEvent).dataTransfer?.files[0];if(file)void this.task(async()=>{this.openReport(await this.analyze(file),file);this.message('');}).catch(e=>this.message(e.message,true));});
  }
  private renderReport(){const r=this.report!;
-  this.q('#content').innerHTML=`<div class="report-title"><div><p class="eyebrow">REPLAY / ${esc(r.match.game_version)} / ${r.evidence.sample_kind?'SYNTHETIC FIXTURE':'RECORDED FILE'}</p><h1>${esc(r.match.title||'Untitled replay')}</h1><p>${esc(r.match.map_name)} <span class="separator">/</span> ${r.players.length} players <span class="separator">/</span> ${esc(r.match.duration)}</p></div><div class="exports">${!this.options.offline?button('Save to library','save'):''}${button('Report JSON','json')}${button('Commands CSV','commands-csv')}${button('Records CSV','records-csv')}${!this.options.offline?button('Portable HTML','html','primary'):''}</div></div><p class="evidence-note">${r.evidence.sample_kind?'Synthetic parser fixture, not a playable match. ':''}Declared 1.02. ${r.summary.decode_error_count} payload decode errors. Asset hints ${r.evidence.asset_catalog==='disabled'?'off':'enabled (unverified)'}. Commands are requests; CRCs are recorded values.</p><div class="workbench"><aside class="rail"><p class="mono">WORKSPACE</p><nav aria-label="Report sections">${tabs.map((t,i)=>`<button data-action="tab" data-tab="${t}" ${t===this.tab?'aria-current="page"':''}><span class="mono" aria-hidden="true">${String(i+1).padStart(2,'0')}</span>${t}</button>`).join('')}</nav></aside><div class="workspace"><section class="scrubber" aria-label="Synchronized timeline"><div class="scrubber-head"><strong id="scope-label"></strong><div>${button('Play timeline','play')}${button('Full match','reset-range')}</div></div><div class="range-controls"><label>Start frame<input id="range-start" type="number" min="0" max="${r.match.last_frame}" value="${this.start}"></label><label class="range-slider">Cursor <output id="cursor-label"></output><input id="cursor" aria-label="Timeline cursor" type="range" min="${this.start}" max="${this.end}" step="1" value="${this.cursor}"></label><label>End frame<input id="range-end" type="number" min="0" max="${r.match.last_frame}" value="${this.end}"></label></div><small>Shows start through cursor, inclusive. Timeline playback runs at 4x logic time.</small></section><div id="panel"></div></div></div>`;
-  this.scopeLabels();this.renderPanel();
+  this.q('#content').innerHTML=`<div class="report-title"><div><p class="eyebrow">REPLAY / ${esc(r.match.game_version)} / ${r.evidence.sample_kind?'SYNTHETIC FIXTURE':'RECORDED FILE'}</p><h1>${esc(r.match.title||'Untitled replay')}</h1><p>${esc(r.match.map_name)} <span class="separator">/</span> ${r.players.length} players <span class="separator">/</span> ${esc(r.match.duration)}</p></div><div class="exports">${!this.options.offline?button('Save to library','save'):''}${button('Report JSON','json')}${button('Commands CSV','commands-csv')}${button('Records CSV','records-csv')}${!this.options.offline?button('Portable HTML','html','primary'):''}</div></div><div class="workspace-navigation">${this.historyDepth>0?button(`Back to ${this.backLabel}`,'back-view'):''}<div><strong>${esc(r.file.name)}</strong>${!this.options.offline?'<small id="session-status"></small>':''}</div></div><p class="evidence-note">${r.evidence.sample_kind?'Synthetic parser fixture, not a playable match. ':''}Declared 1.02. ${r.summary.decode_error_count} payload decode errors. Asset hints ${r.evidence.asset_catalog==='disabled'?'off':'enabled (unverified)'}. Commands are requests; CRCs are recorded values.</p><div class="workbench"><aside class="rail"><p class="mono">WORKSPACE</p><nav aria-label="Report sections">${tabs.map((t,i)=>`<button data-action="tab" data-tab="${t}" ${t===this.tab?'aria-current="page"':''}><span class="mono" aria-hidden="true">${String(i+1).padStart(2,'0')}</span>${t}</button>`).join('')}</nav></aside><div class="workspace"><section class="scrubber" aria-label="Synchronized timeline"><div class="scrubber-head"><strong id="scope-label"></strong><div>${button('Play timeline','play')}${button('Full match','reset-range')}</div></div><div class="range-controls"><label>Start frame<input id="range-start" type="number" min="0" max="${r.match.last_frame}" value="${this.start}"></label><label class="range-slider">Cursor <output id="cursor-label"></output><input id="cursor" aria-label="Timeline cursor" type="range" min="${this.start}" max="${this.end}" step="1" value="${this.cursor}"></label><label>End frame<input id="range-end" type="number" min="0" max="${r.match.last_frame}" value="${this.end}"></label></div><small>Shows start through cursor, inclusive. Timeline playback runs at 4x logic time.</small></section><div id="panel"></div></div></div>`;
+  this.scopeLabels();this.renderPanel();this.sessionStatus();
  }
  private scopeLabels(){this.q('#scope-label').textContent=`${timeLabel(this.start)} - ${timeLabel(this.cursor)} / ${timeLabel(this.end)}`;this.q('#cursor-label').textContent=`frame ${this.cursor}`;const c=this.q<HTMLInputElement>('#cursor');c.min=String(this.start);c.max=String(this.end);c.value=String(this.cursor);this.q<HTMLInputElement>('#range-start').value=String(this.start);this.q<HTMLInputElement>('#range-end').value=String(this.end);}
  private updateScope(){this.scopeLabels();this.renderPanel();}

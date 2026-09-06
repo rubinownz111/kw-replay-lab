@@ -8,6 +8,8 @@ Open a replay and select **Desync Lab**, or choose **Try Desync Lab** for a synt
 4. Add paired DESYNC `.txt` or tagged BIN_DESYNC `.bin` files. The first differing captured field appears at the top, with values, block paths and byte offsets or line numbers below.
 5. Add notes, save the case in your library, or export JSON, Markdown notes and offline HTML.
 
+Use **Back to Desync Lab** after following an object or command link. Browser Back/Forward works too. Refresh restores the current replay, view, filters and case data. **Close replay** clears the active workspace; library copies are managed separately.
+
 ## What the result means
 
 A replay can bracket a CRC disagreement. It cannot identify the faulty player or reconstruct the state that caused it. Matching commands can produce different states. Matching checksums do not prove identical state.

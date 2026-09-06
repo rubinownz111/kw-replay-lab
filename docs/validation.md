@@ -1,6 +1,6 @@
 # Validation
 
-Version 0.3.0 was checked on Windows with Python 3.14.6 on 2026-09-06. Results and source-file hashes are in `evidence/app-validation.json` and `evidence/local-corpus-validation.json`.
+Version 0.3.1 was checked on Windows with Python 3.14.6 on 2026-09-06. Results and source-file hashes are in `evidence/app-validation.json` and `evidence/local-corpus-validation.json`.
 
 | Check | Result |
 | --- | --- |
@@ -8,6 +8,7 @@ Version 0.3.0 was checked on Windows with Python 3.14.6 on 2026-09-06. Results a
 | TypeScript comparisons | 19 tests passed; strict build passed |
 | Chromium | All 15 tabs, uploads, filters, inspector, library and exports passed |
 | Desync Lab | Windows, player comparisons, capture uploads, field differences and saved cases passed |
+| Current replay | Back/Forward, refresh, notes, raw bytes, library migration and explicit close passed |
 | Mobile and themes | 390 px layout and light/dark modes passed |
 | Offline HTML | Case recordings, captures and notes worked without network requests |
 | Release ZIP | Manifest, 54 extracted tests and local HTTP checks passed |
