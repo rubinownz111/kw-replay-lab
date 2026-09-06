@@ -1,6 +1,6 @@
 # KW Replay Lab
 
-Inspect Kane's Wrath **1.02** replays in your browser or from the command line. No game installation needed. Other versions, including 1.03, are rejected.
+Inspect Kane's Wrath **1.02** replays in your browser or from the command line. Replay analysis needs no game installation. Other versions, including 1.03, are rejected.
 
 ## Start
 
@@ -51,6 +51,7 @@ Supports complete files up to 64 MiB with headers declaring `1.2.0.0`. Commands 
 
 - [Setup, development and tests](CONTRIBUTING.md)
 - [Desync Lab](docs/desync-lab.md)
+- [Enable native CRC debugging](docs/native-crc-capture.md): create an isolated game copy and generate local state dumps during replay playback. Requires KW 1.02; full dumps currently exceed the app's import limits.
 - [1.02 format](docs/format-1.02.md) and [report schema](docs/report-schema.md)
 - [RE evidence](docs/evidence.md), [validation](docs/validation.md) and [telemetry](docs/telemetry.md)
 

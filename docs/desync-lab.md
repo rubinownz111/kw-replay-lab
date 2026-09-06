@@ -22,6 +22,8 @@ Captured field differences point to objects or modules worth checking. Capture o
 
 ## Files and limits
 
+To generate your own dumps, see [Enable native CRC diagnostics](native-crc-capture.md). The Python tool activates the game's writer in an isolated executable. Its full native dumps currently exceed the import limits below.
+
 A case holds three additional recordings and eight captures. Captures are limited to 8 MiB each, 32 MiB combined, 20,000 decoded fields and 64 nested blocks. Unsupported tags stop decoding with the partial result retained. Untagged binary captures are unsupported.
 
 JSON and HTML retain decoded case data and notes. Raw file bytes are excluded, but decoded reports can contain player names and machine details. Library storage is local to your browser.

@@ -15,6 +15,11 @@ dist/
 *.exe
 *.dll
 *.log
+DESYNC-*.txt
+BIN_DESYNC-*.bin
+capture.SkuDef
+capture-settings.json
+*.patch.json
 .DS_Store
 Thumbs.db
 
