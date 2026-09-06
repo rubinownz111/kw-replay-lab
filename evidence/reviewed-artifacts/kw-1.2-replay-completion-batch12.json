@@ -1,0 +1,23 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "756B9499F6DB7C7692738F2AFD09D27BB8E3E1495C9A514EE91AB1561C8D80BB",
+  "scope": "Replay voice runtime and codec framing boundary",
+  "applied_count": 2,
+  "applied": [
+    {
+      "ea": "0x6CD9B4",
+      "name": "ReplayVoiceRuntime_InitializeCodecAndStreams",
+      "size": 265,
+      "confidence": "very high",
+      "evidence": "Starts the voice backend, retrieves codec framing globals used by ReplayVoice_ComputePacketSpanMs, opens the two replay voice stream directions, and records whether voice runtime initialization succeeded."
+    },
+    {
+      "ea": "0x8AB0B3",
+      "name": "ReplayVoiceCodec_GetFramingParameters",
+      "size": 62,
+      "confidence": "very high",
+      "evidence": "Returns the active voice codec sample/frame and encoded-size parameters and derives the third framing value from the live codec globals."
+    }
+  ]
+}

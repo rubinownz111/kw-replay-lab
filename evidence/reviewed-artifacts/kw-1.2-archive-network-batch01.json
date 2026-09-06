@@ -1,0 +1,229 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "A019C24144FD0687E9C1A12FCB8C455482B148A23EE333D7AE78F42841106DBD",
+  "reference_commit": "a2f340195975f4f042e28a60b62561dd9a0b2700",
+  "scope": "Replay archive download, GT2 message encoding, GHTTP request lifecycle, replay metadata serialization, and match setup construction",
+  "applied_count": 24,
+  "corrected_existing_names": 0,
+  "typed_count": 0,
+  "new_local_types": {},
+  "applied": [
+    {
+      "ea": "0x58DF16",
+      "old_name": "sub_58DF16",
+      "name": "ReplayMatchSetup_Ctor",
+      "size": 114,
+      "confidence": "exact",
+      "evidence": "Constructs the 0xD0-byte replay match/setup object, initializes its owned strings and embedded collection, then calls the already recovered ReplayMatchSetup_Reset.",
+      "basis": "exact-build constructor call sites and field offsets"
+    },
+    {
+      "ea": "0x8A50F9",
+      "old_name": "sub_8A50F9",
+      "name": "KWReplayHeader_FreeMetadataBuffer",
+      "size": 22,
+      "confidence": "exact",
+      "evidence": "Frees and nulls the replay header's optional owned metadata pointer at offset 0xADC.",
+      "basis": "header size/offsets and allocator pairing"
+    },
+    {
+      "ea": "0x8B0C04",
+      "old_name": "sub_8B0C04",
+      "name": "KWReplayNetworkSendBuffer_CommitEncodedMessage",
+      "size": 45,
+      "confidence": "exact",
+      "evidence": "Writes the encoded message length as a network-order 16-bit prefix at data+used and advances used by payload length plus two.",
+      "basis": "all six replay network writer call sites and buffer invariants"
+    },
+    {
+      "ea": "0x8B0E5D",
+      "old_name": "sub_8B0E5D",
+      "name": "KWReplayProtocol_AppendIntegerKeyValue",
+      "size": 88,
+      "confidence": "exact",
+      "evidence": "Appends a NUL-terminated key followed by its NUL-terminated decimal integer value, returning bytes written or -1 on insufficient space.",
+      "basis": "majorver/minorver/build/streams/gameid/pid/tid/delay/matchtype/endmode call sites"
+    },
+    {
+      "ea": "0x8B195A",
+      "old_name": "sub_8B195A",
+      "name": "gtInternalEncodeV",
+      "size": 191,
+      "confidence": "exact",
+      "evidence": "GameSpy GT2 internal variadic message encoder, including the optional 16-bit message type and packed 'z' bit fields.",
+      "basis": "instruction-for-source match to GameSpy gt2Encode.c"
+    },
+    {
+      "ea": "0x8B1A19",
+      "old_name": "sub_8B1A19",
+      "name": "gtEncodeV",
+      "size": 32,
+      "confidence": "exact",
+      "evidence": "GameSpy GT2 typed-message va_list encoder wrapper.",
+      "basis": "instruction-for-source match to GameSpy gt2Encode.c"
+    },
+    {
+      "ea": "0x8B1A39",
+      "old_name": "sub_8B1A39",
+      "name": "gtEncode",
+      "size": 36,
+      "confidence": "exact",
+      "evidence": "GameSpy GT2 variadic typed-message encoder wrapper.",
+      "basis": "instruction-for-source match to GameSpy gt2Encode.c"
+    },
+    {
+      "ea": "0x8AD5BD",
+      "old_name": "sub_8AD5BD",
+      "name": "ghiProcessConnection",
+      "size": 287,
+      "confidence": "exact",
+      "evidence": "Runs one GameSpy GHTTP connection state-machine step, dispatches completion, closes the file/socket, and frees completed connections.",
+      "basis": "control-flow and field-for-source match to GameSpy ghttpMain.c"
+    },
+    {
+      "ea": "0x8AD6DC",
+      "old_name": "sub_8AD6DC",
+      "name": "ghttpStartup",
+      "size": 51,
+      "confidence": "exact",
+      "evidence": "Reference-counted GameSpy GHTTP SDK initialization.",
+      "basis": "instruction-for-source match to GameSpy ghttpMain.c"
+    },
+    {
+      "ea": "0x8AD70F",
+      "old_name": "sub_8AD70F",
+      "name": "ghttpCleanup",
+      "size": 56,
+      "confidence": "exact",
+      "evidence": "Reference-counted GameSpy GHTTP SDK teardown.",
+      "basis": "instruction-for-source match to GameSpy ghttpMain.c"
+    },
+    {
+      "ea": "0x8AD747",
+      "old_name": "sub_8AD747",
+      "name": "_ghttpGetEx",
+      "size": 294,
+      "confidence": "exact",
+      "evidence": "Internal GameSpy GHTTP extended GET constructor and optional blocking processing loop.",
+      "basis": "control-flow and field-for-source match to GameSpy ghttpMain.c"
+    },
+    {
+      "ea": "0x8AD86D",
+      "old_name": "sub_8AD86D",
+      "name": "_ghttpSaveEx",
+      "size": 238,
+      "confidence": "exact",
+      "evidence": "Internal GameSpy GHTTP save-to-file request constructor used by the replay archive downloader.",
+      "basis": "control-flow and field-for-source match to GameSpy ghttpMain.c"
+    },
+    {
+      "ea": "0x8AD95B",
+      "old_name": "sub_8AD95B",
+      "name": "ghttpSaveExA",
+      "size": 67,
+      "confidence": "exact",
+      "evidence": "ANSI GameSpy GHTTP extended save wrapper; converts the filename to UCS-2 for the Unicode build.",
+      "basis": "instruction-for-source match to GameSpy ghttpMain.c"
+    },
+    {
+      "ea": "0x8AD99E",
+      "old_name": "sub_8AD99E",
+      "name": "ghttpSaveExW",
+      "size": 121,
+      "confidence": "exact",
+      "evidence": "Unicode GameSpy GHTTP extended save wrapper used to download replay archives into archiveN.KWReplay.",
+      "basis": "instruction-for-source match to GameSpy ghttpMain.c and replay caller"
+    },
+    {
+      "ea": "0x8ADA17",
+      "old_name": "sub_8ADA17",
+      "name": "_ghttpStreamEx",
+      "size": 176,
+      "confidence": "exact",
+      "evidence": "Internal GameSpy GHTTP extended streaming request constructor.",
+      "basis": "control-flow and field-for-source match to GameSpy ghttpMain.c"
+    },
+    {
+      "ea": "0x8ADAC7",
+      "old_name": "sub_8ADAC7",
+      "name": "_ghttpHeadEx",
+      "size": 202,
+      "confidence": "exact",
+      "evidence": "Internal GameSpy GHTTP extended HEAD request constructor.",
+      "basis": "control-flow and field-for-source match to GameSpy ghttpMain.c"
+    },
+    {
+      "ea": "0x8ADB91",
+      "old_name": "sub_8ADB91",
+      "name": "ghttpRequestThink",
+      "size": 26,
+      "confidence": "exact",
+      "evidence": "Resolves a GHTTP request handle and processes one state-machine step.",
+      "basis": "instruction-for-source match to GameSpy ghttpMain.c"
+    },
+    {
+      "ea": "0x8ADBAB",
+      "old_name": "sub_8ADBAB",
+      "name": "ghttpCancelRequest",
+      "size": 22,
+      "confidence": "exact",
+      "evidence": "Resolves and frees an active GHTTP request.",
+      "basis": "instruction-for-source match to GameSpy ghttpMain.c"
+    },
+    {
+      "ea": "0x8ADBC1",
+      "old_name": "sub_8ADBC1",
+      "name": "ghttpGetHeaders",
+      "size": 46,
+      "confidence": "exact",
+      "evidence": "Returns the received-header pointer once the connection has reached the header state and the stored index is in bounds.",
+      "basis": "field-for-source match to GameSpy ghttpMain.c"
+    },
+    {
+      "ea": "0x8ADBF4",
+      "old_name": "sub_8ADBF4",
+      "name": "ghttpSetThrottle",
+      "size": 57,
+      "confidence": "exact",
+      "evidence": "Changes the throttle flag for an active GHTTP request and updates the live socket option when connected.",
+      "basis": "field-for-source match to GameSpy ghttpMain.c"
+    },
+    {
+      "ea": "0x8B20DD",
+      "old_name": "sub_8B20DD",
+      "name": "UCS2ToAsciiString",
+      "size": 49,
+      "confidence": "exact",
+      "evidence": "Converts a NUL-terminated UCS-2 string to an 8-bit string by copying the low byte of each code unit.",
+      "basis": "instruction-for-source match to GameSpy gsStringUtil"
+    },
+    {
+      "ea": "0x8BEE0E",
+      "old_name": "sub_8BEE0E",
+      "name": "ghiFreeConnection",
+      "size": 305,
+      "confidence": "exact",
+      "evidence": "Frees all owned GHTTP connection strings/buffers, closes file and socket resources, releases post/encryption state, and frees its slot.",
+      "basis": "field-for-source match to GameSpy ghttpConnection.c"
+    },
+    {
+      "ea": "0x8BEF3F",
+      "old_name": "sub_8BEF3F",
+      "name": "ghiRequestToConnection",
+      "size": 55,
+      "confidence": "exact",
+      "evidence": "Validates a GHTTP request index and returns its in-use connection.",
+      "basis": "instruction-for-source match to GameSpy ghttpConnection.c"
+    },
+    {
+      "ea": "0x8BF121",
+      "old_name": "sub_8BF121",
+      "name": "ghiNewConnection",
+      "size": 402,
+      "confidence": "exact",
+      "evidence": "Allocates and initializes a 0x1C0-byte GHTTP connection plus its five embedded 0x24-byte buffers.",
+      "basis": "field-for-source match to GameSpy ghttpConnection.c and allocation size"
+    }
+  ]
+}

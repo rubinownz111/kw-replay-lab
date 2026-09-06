@@ -1,0 +1,13 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "scope": "Exact list-node and memory-file sizes plus conservative XferLoad/XferSave prefixes through every field touched by their constructors",
+  "new_local_types": {
+    "KW12ListNode32_Recovered": 32,
+    "KW12ListNode40_Recovered": 40,
+    "KW12MemoryReadFile_Recovered": 32,
+    "KW12MemoryWriteFile_Recovered": 44,
+    "KW12XferLoadPrefix_Recovered": 292,
+    "KW12XferSavePrefix_Recovered": 324
+  }
+}

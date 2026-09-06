@@ -1,0 +1,107 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "D1EF86427EEBC706671823E7E5F4CED290AF5F24CDE8FF1AFB9467810E961CFF",
+  "scope": "Final replay-exclusive writer, queue, camera buffering, telestrator point, and map-transfer helpers",
+  "applied_count": 14,
+  "applied": [
+    {
+      "ea": "0x5723E0",
+      "name": "ReplayWriter_SubmitEncodedRecord",
+      "size": 78,
+      "confidence": "very high",
+      "evidence": "Submits a channel record to each active writer/encoder side subject to writer states and the live-capture routing flag."
+    },
+    {
+      "ea": "0x6BE958",
+      "name": "TelestratorPoint_DecodeFixed16",
+      "size": 48,
+      "confidence": "exact",
+      "evidence": "Decodes two unsigned 16-bit coordinates into 16.16 fixed-point values."
+    },
+    {
+      "ea": "0x585A1B",
+      "name": "ReplayVoiceQueue_PopAndCloneFront",
+      "size": 62,
+      "confidence": "exact",
+      "evidence": "Clones and removes the first VoiceStreamData queue item."
+    },
+    {
+      "ea": "0x585A59",
+      "name": "ReplayTelestratorQueue_PopAndCloneFront",
+      "size": 62,
+      "confidence": "exact",
+      "evidence": "Clones and removes the first TelestratorStreamData queue item."
+    },
+    {
+      "ea": "0x585A97",
+      "name": "ReplayMetadataQueue_PopAndCloneFront",
+      "size": 62,
+      "confidence": "exact",
+      "evidence": "Clones and removes the first MetaStreamData queue item."
+    },
+    {
+      "ea": "0x5880C7",
+      "name": "ReplayGameCommandQueue_PopAndCloneFront",
+      "size": 62,
+      "confidence": "exact",
+      "evidence": "Clones and removes the first GameCommandStreamData queue item."
+    },
+    {
+      "ea": "0x6E6B85",
+      "name": "ReplayMapTransfer_PumpNetwork",
+      "size": 44,
+      "confidence": "very high",
+      "evidence": "Pumps the active map-transfer service and incoming network packets while playback waits for embedded map resources."
+    },
+    {
+      "ea": "0x588380",
+      "name": "ReplayCameraQueue_PopReadyBuffered",
+      "size": 123,
+      "confidence": "very high",
+      "evidence": "Returns and removes the next buffered camera stream only after the configured frame-delay condition is satisfied."
+    },
+    {
+      "ea": "0x6D948B",
+      "name": "ReplayMapTransfer_StartCustomMapDownload",
+      "size": 156,
+      "confidence": "very high",
+      "evidence": "Builds and submits the identified custom_maps transfer request."
+    },
+    {
+      "ea": "0x571117",
+      "name": "ReplayEncoder_RestartWriterJob",
+      "size": 104,
+      "confidence": "very high",
+      "evidence": "After a writer job reaches terminal state, releases it and starts the next buffered writer job or records failure."
+    },
+    {
+      "ea": "0x6BFBD9",
+      "name": "ReplayOutputDescriptor_CopyFrom",
+      "size": 88,
+      "confidence": "exact",
+      "evidence": "Performs a field-aware copy of the replay output descriptor including its owned strings."
+    },
+    {
+      "ea": "0x57CAE3",
+      "name": "ReplayCameraQueue_PeekReadyBuffered",
+      "size": 51,
+      "confidence": "very high",
+      "evidence": "Peeks the next buffered camera stream when both queues are populated and the configured frame delay has elapsed."
+    },
+    {
+      "ea": "0x56D66D",
+      "name": "ReplayEncoderContext_Ctor",
+      "size": 54,
+      "confidence": "very high",
+      "evidence": "Initializes job state, retry timing, owned output/header objects, and writer state for one encoder context."
+    },
+    {
+      "ea": "0x580A34",
+      "name": "ReplayChannelSchedule_InsertBefore",
+      "size": 29,
+      "confidence": "exact",
+      "evidence": "Thin typed insertion boundary for a scheduled-channel list record."
+    }
+  ]
+}

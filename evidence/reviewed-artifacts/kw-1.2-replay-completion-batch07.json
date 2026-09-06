@@ -1,0 +1,16 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "D1EF86427EEBC706671823E7E5F4CED290AF5F24CDE8FF1AFB9467810E961CFF",
+  "scope": "Final replay-exclusive writer destination dispatcher",
+  "applied_count": 1,
+  "applied": [
+    {
+      "ea": "0x8A70A8",
+      "name": "KWReplayWriter_StartSelectedDestination",
+      "size": 67,
+      "confidence": "very high",
+      "evidence": "Dispatches writer startup by destination mode: file mode 1, or network/alternate output mode 0 selected by whether a destination name is present."
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "4F0338422BF656B7F7C51A2E8EA164032294D700A4F9F7ECCE25DDC171B25F52",
+  "scope": "Replay encoder job lifecycle plus native replay-header and output-descriptor ownership",
+  "applied_count": 10,
+  "corrected_existing_names": 3,
+  "typed_count": 0,
+  "new_local_types": {},
+  "function_types": {},
+  "applied": [
+    {
+      "ea": "0x56D6A3",
+      "old_name": "sub_56D6A3",
+      "name": "ReplayEncoderContext_Reset",
+      "size": 95,
+      "confidence": "exact",
+      "evidence": "Requests termination of an active replay job, pumps it to terminal state 7, destroys it, and resets the embedded 0x2C-byte output descriptor, 0xAE0-byte header, and lifecycle fields."
+    },
+    {
+      "ea": "0x56D702",
+      "old_name": "sub_56D702",
+      "name": "ReplayEncoderContext_Dtor",
+      "size": 27,
+      "confidence": "exact",
+      "evidence": "Resets the complete 0xB24-byte encoder context and dispatches the embedded header and output-descriptor destructors."
+    },
+    {
+      "ea": "0x56D7B8",
+      "old_name": "sub_56D7B8",
+      "name": "ReplayJobHandle_SetIfEmpty",
+      "size": 14,
+      "confidence": "exact",
+      "evidence": "Stores a replay job pointer only when the handle is currently null and returns the resulting handle."
+    },
+    {
+      "ea": "0x6BBBA7",
+      "old_name": "sub_6BBBA7",
+      "name": "KWReplayHeader_Ctor",
+      "size": 23,
+      "confidence": "exact",
+      "evidence": "Zero-initializes the complete 0xAE0-byte native replay header."
+    },
+    {
+      "ea": "0x6BBBBE",
+      "old_name": "sub_6BBBBE",
+      "name": "KWReplayHeader_Reset",
+      "size": 42,
+      "confidence": "exact",
+      "evidence": "Frees the optional owned metadata buffer at offsets 0xAD8/0xADC and zeroes the complete 0xAE0-byte replay header."
+    },
+    {
+      "ea": "0x6BBC4E",
+      "old_name": "sub_6BBC4E",
+      "name": "ReplayOutputDescriptor_Reset",
+      "size": 60,
+      "confidence": "exact",
+      "evidence": "Frees all three owned path/endpoint strings and zeroes the complete 0x2C-byte replay output descriptor."
+    },
+    {
+      "ea": "0x6BFB7B",
+      "old_name": "sub_6BFB7B",
+      "name": "KWReplayHeader_CopyAssign",
+      "size": 89,
+      "confidence": "exact",
+      "evidence": "Resets the destination, copies the fixed 0xAE0-byte header, and deep-copies the optional metadata payload."
+    },
+    {
+      "ea": "0x6BFBD4",
+      "old_name": "j_KWReplayHeader_Reset",
+      "name": "KWReplayHeader_Dtor",
+      "size": 5,
+      "confidence": "exact",
+      "evidence": "Destructor thunk that releases owned replay-header metadata and clears the header."
+    },
+    {
+      "ea": "0x6BFC31",
+      "old_name": "j_ReplayOutputDescriptor_Reset",
+      "name": "ReplayOutputDescriptor_Dtor",
+      "size": 5,
+      "confidence": "exact",
+      "evidence": "Destructor thunk that releases owned output-descriptor strings."
+    },
+    {
+      "ea": "0x8A6E8E",
+      "old_name": "__exit",
+      "name": "KWReplayJob_RequestStop",
+      "size": 17,
+      "confidence": "exact",
+      "evidence": "Transitions the replay job toward terminal state with reason 1 and immediate transport shutdown. This corrects a false CRT _exit FLIRT match; the function returns normally and is not noreturn."
+    }
+  ]
+}

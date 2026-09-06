@@ -1,0 +1,69 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "scope": "Stable pass03 prototypes backed by exact calling conventions",
+  "function_types": {
+    "0x40DB20": {
+      "name": "AptFileTransferPopup_Destroy",
+      "declaration": "void __cdecl()"
+    },
+    "0x40DB38": {
+      "name": "AptFileTransferPopup_FormatPlayerColor",
+      "declaration": "void __thiscall(KW12AptFileTransferPopup_Recovered *self, unsigned int slot_index, char *buffer, unsigned __int8 suppress)"
+    },
+    "0x452DFA": {
+      "name": "AptFileTransferPopup_Dtor",
+      "declaration": "void __thiscall(KW12AptFileTransferPopup_Recovered *self)"
+    },
+    "0x45E979": {
+      "name": "AptFileTransferPopup_Ctor",
+      "declaration": "KW12AptFileTransferPopup_Recovered *__thiscall(KW12AptFileTransferPopup_Recovered *self, KW12GameInfo_Recovered *game_info)"
+    },
+    "0x45EC4A": {
+      "name": "AptFileTransferPopup_Create",
+      "declaration": "int __cdecl(KW12GameInfo_Recovered *game_info)"
+    },
+    "0x4C2A8D": {
+      "name": "ListNode28Sentinel_Initialize",
+      "declaration": "KW12ListNode28_Recovered **__thiscall(KW12ListNode28_Recovered **self, void *allocator_tag)"
+    },
+    "0x5711B9": {
+      "name": "UnicodeStringConcatExpression_Ctor",
+      "declaration": "KW12UnicodeConcatExpression_Recovered *__cdecl(KW12UnicodeConcatExpression_Recovered *result, const void *left_operand, const unsigned __int16 *right_operand)"
+    },
+    "0x5788FD": {
+      "name": "Vector60_CopyCtor",
+      "declaration": "KW12Vector60_Recovered *__thiscall(KW12Vector60_Recovered *self, const KW12Vector60_Recovered *source)"
+    },
+    "0x57F0D4": {
+      "name": "RedBlackTree_Ctor",
+      "declaration": "KW12RedBlackTree_Recovered *__thiscall(KW12RedBlackTree_Recovered *self)"
+    },
+    "0x582E96": {
+      "name": "GameMessageVector_DestroyStorage",
+      "declaration": "void __thiscall(KW12GameMessageVector_Recovered *self)"
+    },
+    "0x6E57FF": {
+      "name": "VoiceManager_PumpAndRecord",
+      "declaration": "int __thiscall(void *voice_manager)"
+    },
+    "0x8ABC25": {
+      "name": "gsifree",
+      "declaration": "void __cdecl(void *memory)"
+    }
+  },
+  "intentionally_untyped": {
+    "0x452D29": "base object layout not yet recovered",
+    "0x57C7A6": "allocator arguments are optimized into unstable registers",
+    "0x57CA51": "concat-expression operands use compiler-generated hidden registers",
+    "0x8C275D": "whole-program optimization moved the source argument to EDI"
+  },
+  "typed_count": 12,
+  "intentionally_untyped_after_ida_9_3_checkpoint_fault": {
+    "0x8ADFFE": "exact source signature retained in comments; type apply omitted",
+    "0x8BEBBA": "exact source signature retained in comments; type apply omitted",
+    "0x8C2638": "exact source signature retained in comments; type apply omitted",
+    "0x8C298A": "exact source signature retained in comments; type apply omitted",
+    "0x8C2A03": "exact source signature retained in comments; type apply omitted"
+  }
+}

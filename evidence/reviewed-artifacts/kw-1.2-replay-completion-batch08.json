@@ -1,0 +1,23 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "D1EF86427EEBC706671823E7E5F4CED290AF5F24CDE8FF1AFB9467810E961CFF",
+  "scope": "Writer memory and file destinations",
+  "applied_count": 2,
+  "applied": [
+    {
+      "ea": "0x8A6FA3",
+      "name": "KWReplayWriter_StartMemoryDestination",
+      "size": 165,
+      "confidence": "very high",
+      "evidence": "Registers the memory destination protocol and creates/configures its buffered output object and callback."
+    },
+    {
+      "ea": "0x8A7048",
+      "name": "KWReplayWriter_StartFileDestination",
+      "size": 96,
+      "confidence": "very high",
+      "evidence": "Allocates the writer buffer, opens the target file, writes the replay header, records the body offset, and enters writer state 4."
+    }
+  ]
+}

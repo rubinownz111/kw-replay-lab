@@ -1,0 +1,20 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "reference_commit": "a2f340195975f4f042e28a60b62561dd9a0b2700",
+  "corrected_count": 2,
+  "applied": [
+    {
+      "ea": "0x8ADA17",
+      "old_name": "_ghttpStreamEx",
+      "name": "_ghttpHeadEx",
+      "evidence": "Internal GameSpy GHTTP extended HEAD request constructor. The exact binary stores request type 3 (GHIHEAD) and has the seven-argument HEAD signature."
+    },
+    {
+      "ea": "0x8ADAC7",
+      "old_name": "_ghttpHeadEx",
+      "name": "_ghttpPostEx",
+      "evidence": "Internal GameSpy GHTTP extended POST request constructor. The exact binary requires a post object, stores request type 4 (GHIPOST), and initializes posting state."
+    }
+  ]
+}

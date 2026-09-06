@@ -1,0 +1,136 @@
+{
+  "schema_version": 7,
+  "sample_provenance": "Local files; header declarations are not authentication or proof of stock assets. No captures or player data distributed.",
+  "files": [
+    {
+      "sha256": "53cab77019c4499f90cfee45d18dd6f57a0ce9534ff7a830fdf63636d6196d3b",
+      "status": "rejected",
+      "reason": "Unsupported game version 1.3.0.0; this tool supports KW 1.02 (1.2.0.0) only."
+    },
+    {
+      "sha256": "cef69d8eb73111bf2109fbe473621e9ba3a4791a91529fa8a927b2ce4cd9a63f",
+      "records": 722,
+      "commands": 247,
+      "decode_errors": 0,
+      "camera_samples": 526,
+      "status": "ok"
+    },
+    {
+      "sha256": "6d2c96209cb916e4c6c61b3ddf0bbcf3d3ec6d8b66e11fa2c5940fdf1d4a1c2e",
+      "records": 786,
+      "commands": 235,
+      "decode_errors": 0,
+      "camera_samples": 597,
+      "status": "ok"
+    },
+    {
+      "sha256": "a9eb3fd3466e60c3085028241b7941b64fdd8caa582fcfae3f1a4db83b5d5c29",
+      "records": 16,
+      "commands": 2,
+      "decode_errors": 0,
+      "camera_samples": 13,
+      "status": "ok"
+    },
+    {
+      "sha256": "22210d22edafc424a7a5ff2765832057063f8731a610edbb1f0c2dd28ca48c02",
+      "status": "rejected",
+      "reason": "invalid footer size 0"
+    },
+    {
+      "sha256": "795a7cc983177b00329cdc1df5dd1c5cb5dbd9206047a2323ddb042f96300fca",
+      "records": 4898,
+      "commands": 1438,
+      "decode_errors": 0,
+      "camera_samples": 3799,
+      "status": "ok"
+    },
+    {
+      "sha256": "f9063bad7170cfcf69d97a11f3f08edb8ff197cccce6e7465475003f0a424a41",
+      "records": 6094,
+      "commands": 2128,
+      "decode_errors": 0,
+      "camera_samples": 4615,
+      "status": "ok"
+    },
+    {
+      "sha256": "1286e6b569637afc8ddd9a0af94bce07b290c4a6acab00fd7cca464ccd1bd751",
+      "records": 4803,
+      "commands": 1624,
+      "decode_errors": 0,
+      "camera_samples": 3503,
+      "status": "ok"
+    },
+    {
+      "sha256": "d4dc0bfc484b82abe9548d529af27b39c5a7f37cfb5d5c579b26e2bc108e8220",
+      "records": 7758,
+      "commands": 1885,
+      "decode_errors": 0,
+      "camera_samples": 6311,
+      "status": "ok"
+    },
+    {
+      "sha256": "33630e7118912bec6a24c1a36da6e3fcbf6f1867d76a73a9ac1fca3ebcf30138",
+      "records": 8054,
+      "commands": 2995,
+      "decode_errors": 0,
+      "camera_samples": 5830,
+      "status": "ok"
+    },
+    {
+      "sha256": "a9164d097345307d5cb867e6392a177bf7139c62ce3c5750b82570caf0d7e61c",
+      "records": 8542,
+      "commands": 2378,
+      "decode_errors": 0,
+      "camera_samples": 6514,
+      "status": "ok"
+    },
+    {
+      "sha256": "668209f6d6a18bd82b427f499ea7bfd75d5d41b20db674925d8735a69447a4ed",
+      "records": 7739,
+      "commands": 2572,
+      "decode_errors": 0,
+      "camera_samples": 5590,
+      "status": "ok"
+    },
+    {
+      "sha256": "d39c10b2a2d377480f00f7d7629776eb36d82776bccf744b0fa8b4b16358ff7e",
+      "records": 11711,
+      "commands": 3497,
+      "decode_errors": 0,
+      "camera_samples": 9086,
+      "status": "ok"
+    },
+    {
+      "sha256": "f6d8f3e76fb7496a9924a0ddeae627ebad1675e6e6de2f6959f96a1fb222f600",
+      "records": 10878,
+      "commands": 2906,
+      "decode_errors": 0,
+      "camera_samples": 8457,
+      "status": "ok"
+    },
+    {
+      "sha256": "8c7470e23605b765cca3ff55d3651d6ed54e0e22bdceb046533c9f29cb319d80",
+      "records": 6221,
+      "commands": 1667,
+      "decode_errors": 0,
+      "camera_samples": 4921,
+      "status": "ok"
+    },
+    {
+      "sha256": "346df5a1ac16dbdb2765130a36ad99017be6c8afbbe8624af17d7245a0c6ff40",
+      "records": 12251,
+      "commands": 4899,
+      "decode_errors": 0,
+      "camera_samples": 8328,
+      "status": "ok"
+    },
+    {
+      "sha256": "f3aba60028bd6e63b3bccb27af609ca05f5e554e08c72807580ca521cc8232c2",
+      "records": 6205,
+      "commands": 1718,
+      "decode_errors": 0,
+      "camera_samples": 4868,
+      "status": "ok"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "626B1E10F07E6C98C6D1681B8C4E4B8428A4BB30CDDD2318785AD781CBFD28C4",
+  "scope": "Replay-exclusive closure after shared batch 01: job finalization, GameMessage vector copying, path expression materialization, Catmull-Rom camera math, and camera setters",
+  "applied_count": 12,
+  "typed_count": 0,
+  "new_local_types": {
+    "KW12Vector3_Recovered": 12,
+    "KW12Quaternion_Recovered": 16,
+    "UnicodeStringConcatExpr3_Recovered": 12
+  },
+  "decompile_failures": [],
+  "function_types": {},
+  "applied": [
+    {
+      "ea": "0x56F650",
+      "name": "ReplayMatchSetup_GetPlayerDisconnectFlag",
+      "size": 20,
+      "confidence": "very high",
+      "evidence": "Bounds-checks one of eight replay match/player slots and returns its stored disconnect/retention flag."
+    },
+    {
+      "ea": "0x56FB65",
+      "name": "ReplayJobPair_Reset",
+      "size": 55,
+      "confidence": "exact",
+      "evidence": "Resets two adjacent 0xB24-byte replay job handles and initializes the pair controller state and completion flags."
+    },
+    {
+      "ea": "0x56FC49",
+      "name": "ReplayJobPair_IsProcessing",
+      "size": 33,
+      "confidence": "exact",
+      "evidence": "Returns true for pair-controller states 2 through 5, the active processing/finalization interval."
+    },
+    {
+      "ea": "0x573051",
+      "name": "UnicodeStringConcatExpr3_Init",
+      "size": 43,
+      "confidence": "exact",
+      "evidence": "Builds the three-pointer expression used to concatenate replay directory, basename, and extension without copying them yet."
+    },
+    {
+      "ea": "0x57CA78",
+      "name": "UnicodeStringConcatExpr_Materialize",
+      "size": 39,
+      "confidence": "very high",
+      "evidence": "Evaluates a Unicode-string concatenation expression into the output string and releases the expression's temporary state."
+    },
+    {
+      "ea": "0x5809CA",
+      "name": "GameMessageVector_CopyCtor",
+      "size": 65,
+      "confidence": "exact",
+      "evidence": "Allocates exact capacity for the source vector and deep-copies every 132-byte GameMessage into the destination."
+    },
+    {
+      "ea": "0x6BC7B1",
+      "name": "CatmullRom_InterpolateScalar",
+      "size": 107,
+      "confidence": "exact",
+      "evidence": "Evaluates the canonical uniform Catmull-Rom cubic polynomial for four scalar samples and interpolation parameter t."
+    },
+    {
+      "ea": "0x6BC81C",
+      "name": "Vector3_CatmullRomInterpolate",
+      "size": 167,
+      "confidence": "exact",
+      "evidence": "Applies CatmullRom_InterpolateScalar independently to three vector components."
+    },
+    {
+      "ea": "0x6BC8C3",
+      "name": "Vector4_CatmullRomInterpolate",
+      "size": 215,
+      "confidence": "exact",
+      "evidence": "Applies CatmullRom_InterpolateScalar independently to four quaternion/vector components."
+    },
+    {
+      "ea": "0x744CEC",
+      "name": "Camera_SetPosition",
+      "size": 28,
+      "confidence": "exact",
+      "evidence": "Copies a three-float position to camera offsets 0x0C..0x14 and marks the transform dirty."
+    },
+    {
+      "ea": "0x744D08",
+      "name": "Camera_SetRotationQuaternion",
+      "size": 34,
+      "confidence": "exact",
+      "evidence": "Copies a four-float rotation quaternion to camera offsets 0x18..0x24 and marks the transform dirty."
+    },
+    {
+      "ea": "0x8A780E",
+      "name": "KWReplayJob_FinalizeOutput",
+      "size": 214,
+      "confidence": "very high",
+      "evidence": "Finalizes a file-backed replay immediately or emits the archive endmode record before transitioning the replay job to terminal state."
+    }
+  ]
+}

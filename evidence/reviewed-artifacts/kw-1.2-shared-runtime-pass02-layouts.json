@@ -1,0 +1,11 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "scope": "Exact Version/build-stamp fields plus the structurally exact socket transport reset boundary; unproven transport fields remain generic",
+  "new_local_types": {
+    "KW12AsciiString_Recovered": 4,
+    "KW12UnicodeString_Recovered": 4,
+    "KW12Version_Recovered": 48,
+    "KW12SocketTransport_Recovered": 36
+  }
+}

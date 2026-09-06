@@ -1,0 +1,176 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "applied_count": 27,
+  "function_type_count": 33,
+  "local_type_sizes": {
+    "KW12ReplayBodyRecordRuntime_Recovered": 12,
+    "KW12ReplayReaderOptions_Recovered": 44,
+    "KW12ReplayReaderContext_Recovered": 2996,
+    "KW12ReplayMetadataPreview_Recovered": 2800
+  },
+  "applied": [
+    {
+      "ea": "0x8B0643",
+      "name": "KWReplayFile_OpenWrite",
+      "size": 18,
+      "evidence": "Thin _wfopen(filename, L\"wb+\") wrapper."
+    },
+    {
+      "ea": "0x8B0655",
+      "name": "KWReplayFile_OpenRead",
+      "size": 18,
+      "evidence": "Thin _wfopen(filename, L\"rb\") wrapper."
+    },
+    {
+      "ea": "0x8B0679",
+      "name": "KWReplayFile_HasErrorOrEOF",
+      "size": 35,
+      "evidence": "Returns true when ferror or feof is nonzero."
+    },
+    {
+      "ea": "0x8B069C",
+      "name": "KWReplayFile_IsEOF",
+      "size": 18,
+      "evidence": "Thin feof(stream) predicate."
+    },
+    {
+      "ea": "0x8B06AE",
+      "name": "KWReplayFile_Seek",
+      "size": 27,
+      "evidence": "Returns fseek(stream, offset, origin) == 0."
+    },
+    {
+      "ea": "0x8B06C9",
+      "name": "KWReplayFile_Tell",
+      "size": 27,
+      "evidence": "Stores ftell(stream) and reports whether the result is nonnegative."
+    },
+    {
+      "ea": "0x8B06E4",
+      "name": "KWReplayFile_WriteU8",
+      "size": 22,
+      "evidence": "Writes exactly one one-byte value."
+    },
+    {
+      "ea": "0x8B06FA",
+      "name": "KWReplayFile_WriteU16",
+      "size": 22,
+      "evidence": "Writes exactly one two-byte value."
+    },
+    {
+      "ea": "0x8B0710",
+      "name": "KWReplayFile_WriteU32",
+      "size": 22,
+      "evidence": "Writes exactly one four-byte value."
+    },
+    {
+      "ea": "0x8B0726",
+      "name": "KWReplayFile_WriteUTF16Z",
+      "size": 57,
+      "evidence": "Writes UTF-16 code units through the terminating zero code unit."
+    },
+    {
+      "ea": "0x8B075F",
+      "name": "KWReplayFile_WriteAsciiBytes",
+      "size": 36,
+      "evidence": "Writes strlen(text) bytes without an extra terminator."
+    },
+    {
+      "ea": "0x8B0783",
+      "name": "KWReplayFile_WriteBytes",
+      "size": 23,
+      "evidence": "Writes an exact byte count with fwrite."
+    },
+    {
+      "ea": "0x8B079A",
+      "name": "KWReplayFile_ReadU8",
+      "size": 27,
+      "evidence": "Reads exactly one one-byte value."
+    },
+    {
+      "ea": "0x8B07B5",
+      "name": "KWReplayFile_ReadU16",
+      "size": 27,
+      "evidence": "Reads exactly one two-byte value."
+    },
+    {
+      "ea": "0x8B07D0",
+      "name": "KWReplayFile_ReadU32",
+      "size": 27,
+      "evidence": "Reads exactly one four-byte value."
+    },
+    {
+      "ea": "0x8B07EB",
+      "name": "KWReplayFile_ReadUTF16ZBounded",
+      "size": 55,
+      "evidence": "Reads UTF-16 code units until zero or the supplied capacity."
+    },
+    {
+      "ea": "0x8B0822",
+      "name": "KWReplayFile_ExpectMagic",
+      "size": 74,
+      "evidence": "Reads strlen(magic) bytes (maximum 20) and compares them exactly."
+    },
+    {
+      "ea": "0x8B086C",
+      "name": "KWReplayFile_ReadBytes",
+      "size": 32,
+      "evidence": "Reads an exact byte count with fread."
+    },
+    {
+      "ea": "0x8A6CD4",
+      "name": "KWReplayReaderContext_Create",
+      "size": 247,
+      "evidence": "Allocates and zeroes exactly 0xBB4 bytes, copies a 0x2C-byte source descriptor, and duplicates all owned source strings."
+    },
+    {
+      "ea": "0x8A6DCB",
+      "name": "KWReplayReaderContext_Destroy",
+      "size": 93,
+      "evidence": "Closes file/transport state, frees owned strings/footer data, and frees the 0xBB4-byte reader context."
+    },
+    {
+      "ea": "0x8A550B",
+      "name": "KWReplayReader_CreateAndStart",
+      "size": 110,
+      "evidence": "Creates the reader, installs three callbacks, and selects network, file, or archive-download startup from source mode 0, 1, or 2."
+    },
+    {
+      "ea": "0x8A5AC5",
+      "name": "KWReplayReader_Update",
+      "size": 147,
+      "evidence": "Updates archive-download completion, network input, or timed file records according to the reader source mode."
+    },
+    {
+      "ea": "0x8A5313",
+      "name": "KWReplayReader_StartNetworkSource",
+      "size": 59,
+      "evidence": "Initializes the network record decoder and opens the configured source."
+    },
+    {
+      "ea": "0x8A5467",
+      "name": "KWReplayReader_StartArchiveDownload",
+      "size": 164,
+      "evidence": "Builds archiveN.KWReplay when needed and starts the asynchronous archive download job."
+    },
+    {
+      "ea": "0x8A55D9",
+      "name": "KWReplayReader_ReleaseCurrentBodyRecord",
+      "size": 27,
+      "evidence": "Releases network-decoder ownership when applicable and clears the current-record-valid flag."
+    },
+    {
+      "ea": "0x8A6EC0",
+      "name": "KWReplayJob_Update",
+      "size": 24,
+      "evidence": "Dispatches the common replay job to reader or writer update by job kind."
+    },
+    {
+      "ea": "0x8A6ED8",
+      "name": "KWReplayJob_GetState",
+      "size": 8,
+      "evidence": "Returns the common replay job state at offset 0x30."
+    }
+  ]
+}

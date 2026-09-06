@@ -1,0 +1,25 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "function": "KWReplayJob_RequestStop",
+  "ea": "0x8A6E8E",
+  "flags_before": 21573,
+  "flags_after": 21572,
+  "noreturn_cleared": true,
+  "reanalyzed_callers": [
+    "0x56D6A3",
+    "0x56D71D",
+    "0x56D7C6",
+    "0x56F83F",
+    "0x57D9DE",
+    "0x58BD7D"
+  ],
+  "decompiled_character_counts": {
+    "0x56D6A3": 1284,
+    "0x56D71D": 634,
+    "0x56D7C6": 1793,
+    "0x56F83F": 533,
+    "0x57D9DE": 2953,
+    "0x58BD7D": 1207
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "scope": "Convention-verified pass04 prototypes",
+  "function_types": {
+    "0x40F3FD": {
+      "name": "GameSlot_CopyAssign",
+      "declaration": "KW12GameSlot_Recovered *__thiscall(KW12GameSlot_Recovered *self, const KW12GameSlot_Recovered *source)"
+    },
+    "0x424C34": {
+      "name": "GameInfo_Dtor",
+      "declaration": "void __thiscall(KW12GameInfo_Recovered *self)"
+    },
+    "0x47D57C": {
+      "name": "UnicodeString_FindChar",
+      "declaration": "const unsigned __int16 *__thiscall(const KW12UnicodeString_Recovered *self, unsigned __int16 character)"
+    },
+    "0x6BD0D4": {
+      "name": "GameInfo_SetInGameNotInProgress",
+      "declaration": "void __thiscall(KW12GameInfo_Recovered *self)"
+    },
+    "0x6BD19E": {
+      "name": "GameInfo_GetSeed",
+      "declaration": "int __thiscall(const KW12GameInfo_Recovered *self)"
+    },
+    "0x6CA72F": {
+      "name": "GameInfo_ClearSlotList",
+      "declaration": "void __thiscall(KW12GameInfo_Recovered *self)"
+    },
+    "0x6DCC45": {
+      "name": "GameInfo_CopyAssign",
+      "declaration": "KW12GameInfo_Recovered *__thiscall(KW12GameInfo_Recovered *self, const KW12GameInfo_Recovered *source)"
+    },
+    "0x70FE00": {
+      "name": "Vector60_PushBack",
+      "declaration": "void __thiscall(KW12Vector60_Recovered *self, const void *element)"
+    },
+    "0x859470": {
+      "name": "XferSave_Ctor",
+      "declaration": "KW12XferSavePrefix_Recovered *__thiscall(KW12XferSavePrefix_Recovered *self)"
+    }
+  },
+  "typed_count": 9,
+  "intentionally_omitted_after_ida_9_3_checkpoint_fault": [
+    "0x53AED2",
+    "0x58094F",
+    "0x7BA766"
+  ]
+}

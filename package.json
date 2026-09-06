@@ -1,0 +1,14 @@
+{
+  "name": "kw-replay-lab",
+  "version": "0.2.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit && node scripts/build_frontend.mjs",
+    "test:frontend": "node --test frontend/tests/*.test.mjs"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "esbuild": "0.28.2"
+  }
+}

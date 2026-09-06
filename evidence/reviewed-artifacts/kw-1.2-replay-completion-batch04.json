@@ -1,0 +1,338 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "D1EF86427EEBC706671823E7E5F4CED290AF5F24CDE8FF1AFB9467810E961CFF",
+  "scope": "Per-channel encoders, writer/map transfer, player/camera state, telestrator operations, timing, queues, and generic boundaries",
+  "applied_count": 47,
+  "applied": [
+    {
+      "ea": "0x56FAF4",
+      "name": "ReplayRecording_HasEligibleHumanPlayer",
+      "size": 74,
+      "confidence": "very high",
+      "evidence": "Scans eight slots and recognizes an active eligible human player."
+    },
+    {
+      "ea": "0x588105",
+      "name": "ReplayVoiceQueue_Reset",
+      "size": 34,
+      "confidence": "exact",
+      "evidence": "Destroys queued voice nodes and resets the queue cursor and counters."
+    },
+    {
+      "ea": "0x6C61C0",
+      "name": "ReplayCameraController_Reset",
+      "size": 27,
+      "confidence": "exact",
+      "evidence": "Clears the active flag and resets all eight per-player camera slots."
+    },
+    {
+      "ea": "0x57F0BC",
+      "name": "ReplayFrameSchedule_Ctor",
+      "size": 24,
+      "confidence": "high",
+      "evidence": "Constructs the shared list sentinel and initializes its cached iterator."
+    },
+    {
+      "ea": "0x6BD1D2",
+      "name": "PlayerList_SetLocalPlayerIndex",
+      "size": 13,
+      "confidence": "exact",
+      "evidence": "Stores the signed local-player slot byte at PlayerList offset 0xFC."
+    },
+    {
+      "ea": "0x585D4E",
+      "name": "ReplayRecording_EncodeMetadataChannel",
+      "size": 297,
+      "confidence": "very high",
+      "evidence": "Selects due metadata/control records, serializes them, and advances the per-channel queue and last-frame state."
+    },
+    {
+      "ea": "0x585E77",
+      "name": "ReplayRecording_EncodeVoiceChannel",
+      "size": 270,
+      "confidence": "very high",
+      "evidence": "Selects due VoiceStreamData records, serializes them, and advances the voice queue and schedule state."
+    },
+    {
+      "ea": "0x585F85",
+      "name": "ReplayRecording_EncodeTelestratorChannel",
+      "size": 270,
+      "confidence": "very high",
+      "evidence": "Selects due TelestratorStreamData records and emits channel-4 data."
+    },
+    {
+      "ea": "0x588272",
+      "name": "ReplayRecording_EncodeGameCommandChannel",
+      "size": 270,
+      "confidence": "very high",
+      "evidence": "Selects due GameCommandStreamData records and emits channel-1 data."
+    },
+    {
+      "ea": "0x589720",
+      "name": "ReplayRecording_EncodeCameraChannel",
+      "size": 267,
+      "confidence": "very high",
+      "evidence": "Selects due CameraStreamData records and emits channel-2 data."
+    },
+    {
+      "ea": "0x6ED923",
+      "name": "ReplayPlayback_ReceiveMapAsset",
+      "size": 171,
+      "confidence": "very high",
+      "evidence": "Runs the map-transfer state machine for one embedded replay map asset."
+    },
+    {
+      "ea": "0x582B98",
+      "name": "ReplayChannelSchedule_FindOrInsertFrame",
+      "size": 101,
+      "confidence": "exact",
+      "evidence": "Finds the schedule record for a frame or inserts a zeroed 0x38-byte one in frame order."
+    },
+    {
+      "ea": "0x56D743",
+      "name": "ReplayWriter_Start",
+      "size": 117,
+      "confidence": "very high",
+      "evidence": "Copies header/output state, creates the writer job, and optionally pumps it synchronously until the startup phase completes."
+    },
+    {
+      "ea": "0x6C3494",
+      "name": "ReplayTelestrator_DecodeOperation0",
+      "size": 73,
+      "confidence": "exact",
+      "evidence": "Decodes operation type 0 as two 32-bit identifiers plus one encoded point and invokes callback slot 0."
+    },
+    {
+      "ea": "0x56F702",
+      "name": "ReplayPlayback_SetFrameOrResetTiming",
+      "size": 76,
+      "confidence": "very high",
+      "evidence": "Stores the playback frame; sentinel frame values reset performance timing and release the retained voice packet."
+    },
+    {
+      "ea": "0x572288",
+      "name": "ReplayPlayerSlots_CopyFrom",
+      "size": 68,
+      "confidence": "very high",
+      "evidence": "Copies the match-level player state and all eight 92-byte player slots."
+    },
+    {
+      "ea": "0x585AD5",
+      "name": "ReplayCameraQueue_PopAndCloneFront",
+      "size": 62,
+      "confidence": "exact",
+      "evidence": "Clones the front camera payload, removes its queue node, and returns the new 20-byte CameraStreamData object."
+    },
+    {
+      "ea": "0x7453BD",
+      "name": "SpectatorCameraController_Ctor",
+      "size": 107,
+      "confidence": "exact",
+      "evidence": "Constructs the identified SpectatorCameraController and its 1064-byte owned camera implementation."
+    },
+    {
+      "ea": "0x589DB7",
+      "name": "ReplayQueues_AppendFilteredCameraStream",
+      "size": 77,
+      "confidence": "high",
+      "evidence": "Builds and appends the camera stream accepted by playback's local-player filter path, then releases temporaries."
+    },
+    {
+      "ea": "0x6BE9BC",
+      "name": "ReplayTelestrator_DecodeOperation1",
+      "size": 52,
+      "confidence": "exact",
+      "evidence": "Decodes operation type 1 point data and invokes callback slot 1."
+    },
+    {
+      "ea": "0x6BE9F0",
+      "name": "ReplayTelestrator_DecodeOperation2",
+      "size": 52,
+      "confidence": "exact",
+      "evidence": "Decodes operation type 2 point data and invokes callback slot 2."
+    },
+    {
+      "ea": "0x57EB01",
+      "name": "ReplayEncoderPair_Ctor",
+      "size": 71,
+      "confidence": "very high",
+      "evidence": "Constructs two 2852-byte encoder contexts and initializes their shared state and readiness fields."
+    },
+    {
+      "ea": "0x57117F",
+      "name": "ReplayEncoder_PumpWriterJob",
+      "size": 58,
+      "confidence": "very high",
+      "evidence": "Finalizes ready encoder output when appropriate and pumps its writer job."
+    },
+    {
+      "ea": "0x56FB3E",
+      "name": "ReplayHeader_EncodePlayerType",
+      "size": 39,
+      "confidence": "exact",
+      "evidence": "Maps engine slot states 3 through 7 to replay header codes 1 through 5."
+    },
+    {
+      "ea": "0x589CA2",
+      "name": "ReplayChannelScheduleEntry_Ctor",
+      "size": 52,
+      "confidence": "very high",
+      "evidence": "Constructs the scheduled-channel entry and initializes its frame and iterator fields."
+    },
+    {
+      "ea": "0x6BBBE8",
+      "name": "ReplayHeader_SetMetadataBlob",
+      "size": 82,
+      "confidence": "exact",
+      "evidence": "Replaces the owned replay-header metadata blob with an exact-size copy."
+    },
+    {
+      "ea": "0x6D0511",
+      "name": "GameMessageVector_ResizeForLoad",
+      "size": 51,
+      "confidence": "exact",
+      "evidence": "Allocates storage for a loaded GameMessage vector, destroys old storage, and installs the new base pointer."
+    },
+    {
+      "ea": "0x56D71D",
+      "name": "ReplayEncoderJob_Reset",
+      "size": 38,
+      "confidence": "very high",
+      "evidence": "Cancels the active encoder job handle and restores encoder state 1."
+    },
+    {
+      "ea": "0x577576",
+      "name": "ReplayPlayback_FailMatchInitialization",
+      "size": 51,
+      "confidence": "very high",
+      "evidence": "Sets the playback failure state, resets match setup, shuts down the match object, and clears the associated string."
+    },
+    {
+      "ea": "0x57A0E8",
+      "name": "UnicodeString_ConcatInto",
+      "size": 35,
+      "confidence": "high",
+      "evidence": "Finalizes a two-input UnicodeString concatenation expression into the destination; it is a generic string boundary used by replay file copy."
+    },
+    {
+      "ea": "0x5775EE",
+      "name": "ReplayMatchSetup_SetTimestampNow",
+      "size": 50,
+      "confidence": "very high",
+      "evidence": "Stores the current 64-bit time in the match setup and releases the temporary string argument."
+    },
+    {
+      "ea": "0x585BEC",
+      "name": "VoiceStreamQueueNode_Allocate",
+      "size": 33,
+      "confidence": "exact",
+      "evidence": "Allocates and copy-constructs one 28-byte VoiceStreamData list node."
+    },
+    {
+      "ea": "0x585C0D",
+      "name": "TelestratorStreamQueueNode_Allocate",
+      "size": 33,
+      "confidence": "exact",
+      "evidence": "Allocates and copy-constructs one 28-byte TelestratorStreamData node."
+    },
+    {
+      "ea": "0x585C2E",
+      "name": "MetadataStreamQueueNode_Allocate",
+      "size": 33,
+      "confidence": "exact",
+      "evidence": "Allocates and copy-constructs one 28-byte MetaStreamData list node."
+    },
+    {
+      "ea": "0x585C4F",
+      "name": "CameraStreamQueueNode_Allocate",
+      "size": 33,
+      "confidence": "exact",
+      "evidence": "Allocates and copy-constructs one 28-byte CameraStreamData list node."
+    },
+    {
+      "ea": "0x588251",
+      "name": "GameCommandQueueNode_Allocate",
+      "size": 33,
+      "confidence": "exact",
+      "evidence": "Allocates and copy-constructs one 28-byte GameCommandStreamData node."
+    },
+    {
+      "ea": "0x6C4020",
+      "name": "ObjectReferenceVector_AllocateStorage",
+      "size": 29,
+      "confidence": "exact",
+      "evidence": "Thin allocation boundary used when growing replay object references."
+    },
+    {
+      "ea": "0x6D042B",
+      "name": "CameraStateVector_Insert",
+      "size": 26,
+      "confidence": "high",
+      "evidence": "Inserts the supplied recovered camera state into the owned vector."
+    },
+    {
+      "ea": "0x8B030A",
+      "name": "KWReplayOwnedSource_Destroy",
+      "size": 31,
+      "confidence": "high",
+      "evidence": "Runs both identified owned-source subobject destructors and frees the reader's auxiliary source object."
+    },
+    {
+      "ea": "0x56F821",
+      "name": "ReplayPlayback_AdvanceTimingAccumulator",
+      "size": 30,
+      "confidence": "exact",
+      "evidence": "Converts the accumulated performance-counter interval by logic FPS and subtracts the dispatched amount."
+    },
+    {
+      "ea": "0x572763",
+      "name": "ReplayCameraEncoder_HasEmptyQueue",
+      "size": 21,
+      "confidence": "exact",
+      "evidence": "Tests the two camera encoder side queues and reports whether either is empty, as required by final drain readiness."
+    },
+    {
+      "ea": "0x56F83F",
+      "name": "ReplayPlayback_CancelActiveJob",
+      "size": 27,
+      "confidence": "very high",
+      "evidence": "Moves playback to state 5 and cancels its active job handle."
+    },
+    {
+      "ea": "0x6BDD6B",
+      "name": "ReplayVoicePacketRef_Ctor",
+      "size": 22,
+      "confidence": "exact",
+      "evidence": "Initializes the retained voice-packet reference and increments its shared reference count."
+    },
+    {
+      "ea": "0x6BEA24",
+      "name": "ReplayTelestrator_DecodeOperation3",
+      "size": 16,
+      "confidence": "exact",
+      "evidence": "Decodes operation type 3 and invokes callback slot 3."
+    },
+    {
+      "ea": "0x56D5A2",
+      "name": "ReplayBufferingControl_SetFrameLimit",
+      "size": 23,
+      "confidence": "very high",
+      "evidence": "Stores a frame limit capped at thirty seconds of the current logic FPS."
+    },
+    {
+      "ea": "0x8B10D5",
+      "name": "KWReplayNetworkRecordDecoder_ClearCounters",
+      "size": 16,
+      "confidence": "exact",
+      "evidence": "Clears the decoder's buffered, staged, and consumed counters."
+    },
+    {
+      "ea": "0x84A100",
+      "name": "ReplayDirectory_GetInitializedRoot",
+      "size": 11,
+      "confidence": "high",
+      "evidence": "Ensures the replay directory root singleton is initialized and returns it."
+    }
+  ]
+}

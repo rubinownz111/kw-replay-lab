@@ -1,0 +1,240 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "D1EF86427EEBC706671823E7E5F4CED290AF5F24CDE8FF1AFB9467810E961CFF",
+  "scope": "Network primitives, queues, vectors, recording output, header construction, and playback map/camera support",
+  "applied_count": 33,
+  "applied": [
+    {
+      "ea": "0x8B1046",
+      "name": "KWReplayNetworkRecordDecoder_PeekCurrent",
+      "size": 71,
+      "confidence": "exact",
+      "evidence": "Returns the current framed network replay record without consuming it, including the 0x40000000 control-record representation."
+    },
+    {
+      "ea": "0x8B1C0F",
+      "name": "KWReplayNetworkTransport_PollConnect",
+      "size": 120,
+      "confidence": "very high",
+      "evidence": "Polls asynchronous connection progress, completes the alternate handle path, and returns pending, connected, or failed status."
+    },
+    {
+      "ea": "0x8B1C93",
+      "name": "KWReplayNetworkTransport_FlushSendBuffer",
+      "size": 122,
+      "confidence": "exact",
+      "evidence": "Sends queued bytes on a connected nonblocking socket, compacts the remainder, and performs a write-side shutdown when requested."
+    },
+    {
+      "ea": "0x8B1D0D",
+      "name": "KWReplayNetworkTransport_Receive",
+      "size": 100,
+      "confidence": "exact",
+      "evidence": "Receives into the transport buffer and distinguishes progress, would-block, orderly close, and fatal socket errors."
+    },
+    {
+      "ea": "0x8B1B4C",
+      "name": "KWReplayNetwork_ReadU16LE",
+      "size": 23,
+      "confidence": "exact",
+      "evidence": "Loads a little-endian 16-bit protocol value from two unaligned bytes."
+    },
+    {
+      "ea": "0x8A5579",
+      "name": "KWReplayNetworkRecordDecoder_Reset",
+      "size": 27,
+      "confidence": "exact",
+      "evidence": "Clears the decoder's buffered, staged, and consumed byte counts and the reader's current-record-valid flag."
+    },
+    {
+      "ea": "0x8A77D9",
+      "name": "KWReplayReader_CloseFileSource",
+      "size": 27,
+      "confidence": "very high",
+      "evidence": "For file source mode, closes the active replay stream through the common optional-footer close path."
+    },
+    {
+      "ea": "0x578806",
+      "name": "ReplayVoiceQueue_PeekFront",
+      "size": 21,
+      "confidence": "exact",
+      "evidence": "Returns the first voice queue payload and synchronizes the cached iterator without unlinking it."
+    },
+    {
+      "ea": "0x57881B",
+      "name": "ReplayVoiceQueue_PopFront",
+      "size": 28,
+      "confidence": "exact",
+      "evidence": "Unlinks and returns the first voice queue payload, or null for an empty queue."
+    },
+    {
+      "ea": "0x588185",
+      "name": "ReplayVoiceQueue_InsertBefore",
+      "size": 37,
+      "confidence": "exact",
+      "evidence": "Allocates a voice-stream node and links it before the supplied list node."
+    },
+    {
+      "ea": "0x5881E2",
+      "name": "ReplayTelestratorQueue_InsertBefore",
+      "size": 37,
+      "confidence": "exact",
+      "evidence": "Allocates a telestrator-stream node and links it before the supplied node."
+    },
+    {
+      "ea": "0x588207",
+      "name": "ReplayMetadataQueue_InsertBefore",
+      "size": 37,
+      "confidence": "exact",
+      "evidence": "Allocates a metadata-stream node and links it before the supplied node."
+    },
+    {
+      "ea": "0x58822C",
+      "name": "ReplayCameraQueue_InsertBefore",
+      "size": 37,
+      "confidence": "exact",
+      "evidence": "Allocates a camera-stream node and links it before the supplied node."
+    },
+    {
+      "ea": "0x58938E",
+      "name": "ReplayGameCommandQueue_InsertBefore",
+      "size": 37,
+      "confidence": "exact",
+      "evidence": "Allocates a game-command batch node and links it before the supplied node."
+    },
+    {
+      "ea": "0x5805A3",
+      "name": "ReplayPlayback_AreScheduledChannelsReady",
+      "size": 111,
+      "confidence": "very high",
+      "evidence": "Gets the due channel schedule and confirms that every listed channel queue contains a record before current-frame dispatch."
+    },
+    {
+      "ea": "0x589134",
+      "name": "ReplayRecording_ClearConfiguredQueues",
+      "size": 156,
+      "confidence": "very high",
+      "evidence": "Walks the configured channel order and clears the corresponding command, voice, telestrator, metadata, camera, and control queues."
+    },
+    {
+      "ea": "0x589B9B",
+      "name": "ReplayRecording_EncodeScheduledChannelsForFrame",
+      "size": 263,
+      "confidence": "very high",
+      "evidence": "Encodes mandatory control channels and each configured replay channel for the supplied logic frame while updating per-channel schedule state."
+    },
+    {
+      "ea": "0x56F906",
+      "name": "ReplayRecordingOptions_CopyFrom",
+      "size": 273,
+      "confidence": "very high",
+      "evidence": "Performs the field-aware copy of the 204-byte replay recording options, including owned strings and embedded slot data."
+    },
+    {
+      "ea": "0x578762",
+      "name": "ReplayVersion_Parse",
+      "size": 48,
+      "confidence": "exact",
+      "evidence": "Parses the four decimal components of a dotted replay version string."
+    },
+    {
+      "ea": "0x6D0DB6",
+      "name": "GameMessageVector_Reserve",
+      "size": 126,
+      "confidence": "exact",
+      "evidence": "Grows a vector in 132-byte GameMessage elements while preserving the constructed range."
+    },
+    {
+      "ea": "0x6D50D0",
+      "name": "ReplayObjectReferenceVector_Reserve",
+      "size": 51,
+      "confidence": "exact",
+      "evidence": "Grows the replay object-reference vector to the requested capacity."
+    },
+    {
+      "ea": "0x89D6B0",
+      "name": "DebugString_AppendQuaternion",
+      "size": 125,
+      "confidence": "exact",
+      "evidence": "Formats four floating-point quaternion components into the debug stream."
+    },
+    {
+      "ea": "0x56D51E",
+      "name": "DebugString_AppendVector3",
+      "size": 103,
+      "confidence": "exact",
+      "evidence": "Formats three floating-point vector components into the debug stream."
+    },
+    {
+      "ea": "0x89D72D",
+      "name": "Xfer_Quaternion",
+      "size": 56,
+      "confidence": "exact",
+      "evidence": "Transfers all four quaternion components through the xfer interface."
+    },
+    {
+      "ea": "0x6BC9CD",
+      "name": "ReplayCameraState_CopyFrom",
+      "size": 55,
+      "confidence": "exact",
+      "evidence": "Copies the eight floating-point fields of one recovered replay camera state into another."
+    },
+    {
+      "ea": "0x56F890",
+      "name": "BufferingControl_Ctor",
+      "size": 26,
+      "confidence": "exact",
+      "evidence": "Initializes the BufferingControl vtable, counters, and configured limit."
+    },
+    {
+      "ea": "0x6D2E47",
+      "name": "ReplayCameraController_Ctor",
+      "size": 88,
+      "confidence": "very high",
+      "evidence": "Constructs eight per-player camera slots, creates the auxiliary camera object, and initializes replay camera controller state."
+    },
+    {
+      "ea": "0x58C33C",
+      "name": "ReplayRecording_EnsureOutputStarted",
+      "size": 95,
+      "confidence": "very high",
+      "evidence": "Starts the recording output immediately when requested or advances the asynchronous readiness path using the current slot state."
+    },
+    {
+      "ea": "0x577A25",
+      "name": "ReplayRecording_BeginPostFinalizeWait",
+      "size": 163,
+      "confidence": "very high",
+      "evidence": "Moves recording to state 7, records the wait timestamp, derives the retention/result class, and starts the post-finalization job."
+    },
+    {
+      "ea": "0x56FBD1",
+      "name": "ReplayRecording_StartWriterJob",
+      "size": 58,
+      "confidence": "very high",
+      "evidence": "Transitions the writer subcontext to state 2 and submits the output descriptor plus completed replay header to the writer job."
+    },
+    {
+      "ea": "0x57E362",
+      "name": "ReplayRecording_BuildHeader",
+      "size": 1784,
+      "confidence": "very high",
+      "evidence": "Populates the complete replay header from channel order, version, match, map, player, mod, metadata, and current engine state."
+    },
+    {
+      "ea": "0x58BF44",
+      "name": "ReplayRecording_BuildOutputDescriptor",
+      "size": 900,
+      "confidence": "very high",
+      "evidence": "Resolves automatic or explicit replay paths and constructs the owned output descriptor consumed by the writer job."
+    },
+    {
+      "ea": "0x6ED9CE",
+      "name": "ReplayPlayback_InstallMapResources",
+      "size": 862,
+      "confidence": "high",
+      "evidence": "Resolves the replay map path and installs embedded map image, map.ini, assets, and related resources required before match initialization."
+    }
+  ]
+}

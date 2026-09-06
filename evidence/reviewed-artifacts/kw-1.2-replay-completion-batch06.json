@@ -1,0 +1,73 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "D1EF86427EEBC706671823E7E5F4CED290AF5F24CDE8FF1AFB9467810E961CFF",
+  "scope": "Common replay job-context correction, writer context, output descriptor, queues, tree insertion, and string boundaries",
+  "applied_count": 9,
+  "corrected_existing_names": 2,
+  "applied": [
+    {
+      "ea": "0x8A6CD4",
+      "name": "KWReplayJobContext_Create",
+      "size": 247,
+      "confidence": "exact",
+      "evidence": "The same 0xBB4-byte constructor is called with job_kind 1 by the reader path and job_kind 0 by the newly recovered writer path."
+    },
+    {
+      "ea": "0x8A6DCB",
+      "name": "KWReplayJobContext_Destroy",
+      "size": 93,
+      "confidence": "exact",
+      "evidence": "The destructor is shared by both reader and writer job contexts."
+    },
+    {
+      "ea": "0x57893C",
+      "name": "StreamQueue_PopFrontNode",
+      "size": 22,
+      "confidence": "exact",
+      "evidence": "Unlinks and destroys the first common stream queue node."
+    },
+    {
+      "ea": "0x8A70EB",
+      "name": "KWReplayWriterContext_CreateAndStart",
+      "size": 152,
+      "confidence": "very high",
+      "evidence": "Builds job-kind 0 options, deep-copies the completed header, and starts the replay writer context."
+    },
+    {
+      "ea": "0x6BBC3A",
+      "name": "ReplayOutputDescriptor_Ctor",
+      "size": 20,
+      "confidence": "exact",
+      "evidence": "Zero-initializes the complete 0x2C-byte replay output descriptor."
+    },
+    {
+      "ea": "0x57F39F",
+      "name": "FrameScheduleTree_InsertOrFind",
+      "size": 312,
+      "confidence": "very high",
+      "evidence": "Performs ordered red-black-tree lookup/insertion by frame key."
+    },
+    {
+      "ea": "0x6BBAFB",
+      "name": "DuplicateWideStringOrNull",
+      "size": 100,
+      "confidence": "exact",
+      "evidence": "Allocates and copies a nonempty UTF-16 string or returns null."
+    },
+    {
+      "ea": "0x6BBB5F",
+      "name": "DuplicateAsciiStringOrNull",
+      "size": 72,
+      "confidence": "exact",
+      "evidence": "Allocates and copies a nonempty narrow string or returns null."
+    },
+    {
+      "ea": "0x5860FD",
+      "name": "CameraStreamQueueNode_RemoveAndFree",
+      "size": 44,
+      "confidence": "exact",
+      "evidence": "Unlinks and frees the selected camera stream queue node."
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "scope": "Function prototypes that survived isolated IDA 9.3 checkpoint validation; unstable aggressive prototypes are intentionally omitted",
+  "function_types": {
+    "0x58DF16": {
+      "name": "ReplayMatchSetup_Ctor",
+      "declaration": "void *__thiscall(void *self)"
+    },
+    "0x8B0C04": {
+      "name": "KWReplayNetworkSendBuffer_CommitEncodedMessage",
+      "declaration": "int __cdecl(int encoded_length, KW12NetworkSendBuffer_Recovered *buffer)"
+    },
+    "0x8B0E5D": {
+      "name": "KWReplayProtocol_AppendIntegerKeyValue",
+      "declaration": "int __cdecl(char *output, int capacity, const char *key, int value)"
+    },
+    "0x8B1A39": {
+      "name": "gtEncode",
+      "declaration": "int(KW12GTMessageType message_type, const char *format, char *output, int output_length, ...)"
+    },
+    "0x8AD5BD": {
+      "name": "ghiProcessConnection",
+      "declaration": "KW12GHTTPBool __cdecl(KW12GHIConnection_Recovered *connection)"
+    },
+    "0x8AD6DC": {
+      "name": "ghttpStartup",
+      "declaration": "void __cdecl()"
+    },
+    "0x8AD70F": {
+      "name": "ghttpCleanup",
+      "declaration": "void __cdecl()"
+    },
+    "0x8AD95B": {
+      "name": "ghttpSaveExA",
+      "declaration": "KW12GHTTPRequest __cdecl(const char *url, const char *filename, const char *headers, KW12GHTTPPost post, KW12GHTTPBool throttle, KW12GHTTPBool blocking, KW12GHTTPProgressCallback progress_callback, KW12GHTTPCompletedCallback completed_callback, void *parameter)"
+    },
+    "0x8AD99E": {
+      "name": "ghttpSaveExW",
+      "declaration": "KW12GHTTPRequest __cdecl(const unsigned __int16 *url, const unsigned __int16 *filename, const unsigned __int16 *headers, KW12GHTTPPost post, KW12GHTTPBool throttle, KW12GHTTPBool blocking, KW12GHTTPProgressCallback progress_callback, KW12GHTTPCompletedCallback completed_callback, void *parameter)"
+    },
+    "0x8ADAC7": {
+      "name": "_ghttpPostEx",
+      "declaration": "KW12GHTTPRequest __cdecl(const char *url, const char *headers, KW12GHTTPPost post, KW12GHTTPBool throttle, KW12GHTTPBool blocking, KW12GHTTPProgressCallback progress_callback, KW12GHTTPCompletedCallback completed_callback, void *parameter)"
+    },
+    "0x8ADB91": {
+      "name": "ghttpRequestThink",
+      "declaration": "KW12GHTTPBool __cdecl(KW12GHTTPRequest request)"
+    },
+    "0x8ADBAB": {
+      "name": "ghttpCancelRequest",
+      "declaration": "void __cdecl(KW12GHTTPRequest request)"
+    },
+    "0x8ADBF4": {
+      "name": "ghttpSetThrottle",
+      "declaration": "KW12GHTTPBool __cdecl(KW12GHTTPRequest request, KW12GHTTPBool throttle)"
+    },
+    "0x8B20DD": {
+      "name": "UCS2ToAsciiString",
+      "declaration": "int __cdecl(const unsigned __int16 *ucs2_string, char *ascii_string)"
+    },
+    "0x8BEF3F": {
+      "name": "ghiRequestToConnection",
+      "declaration": "KW12GHIConnection_Recovered *__cdecl(KW12GHTTPRequest request)"
+    },
+    "0x8BF121": {
+      "name": "ghiNewConnection",
+      "declaration": "KW12GHIConnection_Recovered *__cdecl()"
+    }
+  },
+  "typed_count": 16
+}

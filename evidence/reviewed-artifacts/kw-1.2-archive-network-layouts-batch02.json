@@ -1,0 +1,10 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "scope": "Exact GHTTP buffer/connection and replay network send-buffer layouts; GHIConnection fields after 0x12C remain opaque where SDK revisions differ",
+  "new_local_types": {
+    "KW12GHIBuffer_Recovered": 36,
+    "KW12GHIConnection_Recovered": 448,
+    "KW12NetworkSendBuffer_Recovered": 12
+  }
+}

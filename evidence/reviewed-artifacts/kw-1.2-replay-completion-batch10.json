@@ -1,0 +1,44 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "D1EF86427EEBC706671823E7E5F4CED290AF5F24CDE8FF1AFB9467810E961CFF",
+  "scope": "Writer record emission, timed file playback, and reader/writer runtime teardown",
+  "applied_count": 5,
+  "applied": [
+    {
+      "ea": "0x8A78E4",
+      "name": "KWReplayWriter_WriteBodyRecord",
+      "size": 134,
+      "confidence": "very high",
+      "evidence": "Writes one body record to file mode, frames network protocol message type 8 in network mode, and advances the last-written frame."
+    },
+    {
+      "ea": "0x8A7632",
+      "name": "KWReplayReader_PrefetchNextTimedRecord",
+      "size": 122,
+      "confidence": "very high",
+      "evidence": "Within a five-millisecond budget, scans record headers until the playback clock is reached, then loads the selected payload."
+    },
+    {
+      "ea": "0x8A76AC",
+      "name": "KWReplayReader_DispatchRecordsUntilFrame",
+      "size": 100,
+      "confidence": "very high",
+      "evidence": "Dispatches loaded file records through the callback until the target frame, EOF, or the five-millisecond work budget."
+    },
+    {
+      "ea": "0x8A5594",
+      "name": "KWReplayReader_DestroyRuntimeState",
+      "size": 69,
+      "confidence": "very high",
+      "evidence": "Destroys the network decoder and reader-side owned runtime buffers/jobs."
+    },
+    {
+      "ea": "0x8A77F4",
+      "name": "KWReplayWriter_DestroyRuntimeState",
+      "size": 26,
+      "confidence": "very high",
+      "evidence": "Frees the writer's file-mode body buffer and clears its pointer."
+    }
+  ]
+}

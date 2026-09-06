@@ -1,0 +1,93 @@
+{
+  "date": "2026-09-06",
+  "platform": "Windows",
+  "python": "3.14.6",
+  "dependencies": {
+    "Flask": "3.1.2",
+    "waitress": "3.0.2",
+    "playwright": "1.62.0"
+  },
+  "unit_tests": {
+    "passed": 35,
+    "failed": 0
+  },
+  "browser": {
+    "passed": true,
+    "javascript_errors": [],
+    "checks": [
+      "all_14_tabs",
+      "malformed_upload_recovery",
+      "command_filters",
+      "byte_inspector",
+      "typed_object_search",
+      "synchronized_time_range",
+      "camera_density",
+      "library_save_duplicate_reload_remove",
+      "replay_comparison",
+      "json_csv_exports",
+      "portable_html_without_network",
+      "light_dark_themes",
+      "mobile_all_tabs",
+      "html_escaping"
+    ]
+  },
+  "local_corpus": {
+    "distinct_files": 17,
+    "accepted_102": 15,
+    "unsupported_versions_rejected": 2,
+    "records": 96678,
+    "commands": 30191,
+    "decode_errors": 0
+  },
+  "not_verified": [
+    "original_engine_oracle",
+    "live_telemetry",
+    "rendered_playback",
+    "stock_asset_identity",
+    "macOS_execution"
+  ],
+  "standalone_archive": {
+    "manifest_hashes_verified": true,
+    "extracted_unit_tests_passed": 35,
+    "actual_waitress_server": [
+      "health",
+      "landing",
+      "synthetic_demo",
+      "multipart_replay_upload"
+    ],
+    "runtime_files_outside_extracted_project": false,
+    "dependencies": "existing pinned virtual environment; application files loaded from fresh temporary extraction"
+  },
+  "report_schema_version": 7,
+  "typescript": {
+    "strict_build_passed": true,
+    "analytics_tests_passed": 8
+  },
+  "github_ci": {
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "unit (ubuntu-latest, 3.11)",
+        "conclusion": "success"
+      },
+      {
+        "name": "browser",
+        "conclusion": "success"
+      },
+      {
+        "name": "unit (windows-latest, 3.13)",
+        "conclusion": "success"
+      },
+      {
+        "name": "unit (windows-latest, 3.11)",
+        "conclusion": "success"
+      },
+      {
+        "name": "unit (ubuntu-latest, 3.13)",
+        "conclusion": "success"
+      }
+    ],
+    "workflow_url": "https://github.com/rubinownz111/kw-replay-lab/actions/workflows/test.yml",
+    "scope": "Recorded validation results; see the workflow for current runs."
+  }
+}

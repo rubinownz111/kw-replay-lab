@@ -1,0 +1,31 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "D09B653244330B5ED712FD77CF1E0C843476A717D51AEDC49D8FB30F4B900360",
+  "scope": "Replay-exclusive DirectSound voice wrappers",
+  "corrected_existing_names": 3,
+  "applied_count": 3,
+  "applied": [
+    {
+      "ea": "0x8AB084",
+      "name": "VoiceBackend_InitializeDirectSound",
+      "size": 22,
+      "confidence": "exact",
+      "evidence": "Initializes the voice backend globals and DirectSound/COM runtime with the recovered 8 kHz PCM format, using the supplied or foreground window."
+    },
+    {
+      "ea": "0x8AB0AE",
+      "name": "VoiceBackend_SetDuplexEnabled",
+      "size": 5,
+      "confidence": "very high",
+      "evidence": "Thunk to the backend mode switch that tears down the previous voice path and enables the nonzero capture/playback mode used by replay voice."
+    },
+    {
+      "ea": "0x8AB0F1",
+      "name": "VoiceBackend_EnumerateDevices",
+      "size": 5,
+      "confidence": "exact",
+      "evidence": "Thunk to DirectSoundCaptureEnumerateW/DirectSoundEnumerateW with capacity and capture/playback flag arguments, returning the discovered count."
+    }
+  ]
+}

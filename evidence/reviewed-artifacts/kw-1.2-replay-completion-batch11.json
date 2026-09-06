@@ -1,0 +1,16 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "D1EF86427EEBC706671823E7E5F4CED290AF5F24CDE8FF1AFB9467810E961CFF",
+  "scope": "Network record decoder destructor",
+  "applied_count": 1,
+  "applied": [
+    {
+      "ea": "0x8B0F32",
+      "name": "KWReplayNetworkRecordDecoder_Destroy",
+      "size": 18,
+      "confidence": "exact",
+      "evidence": "Frees the decoder's 100 KiB buffer and clears its owned pointer."
+    }
+  ]
+}

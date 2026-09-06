@@ -1,0 +1,178 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "ED9A23DC44166E72AA764EC3F0E8CD258E5C149435F217505928149AE146F071",
+  "scope": "GameInfo/GameSlot shared engine boundary: native match configuration grammar, base construction/reset, slot ownership/access, state changes, and slot predicates",
+  "applied_count": 18,
+  "corrected_existing_names": 1,
+  "typed_count": 17,
+  "new_local_types": {
+    "KW12GameSlot_Recovered": 92,
+    "KW12GameInfo_Recovered": 256
+  },
+  "function_types": {
+    "0x6DA5CF": "bool __cdecl GameInfo_ParseMatchConfiguration(KW12GameInfo_Recovered *game_info, const char *options, bool parsing_mode);",
+    "0x6E3228": "void *__cdecl GameInfo_SerializeMatchConfiguration(void *out_options, const KW12GameInfo_Recovered *game_info, bool name_mode);",
+    "0x6CE31C": "KW12GameInfo_Recovered *__thiscall GameInfo_Ctor(KW12GameInfo_Recovered *self);",
+    "0x6CA62E": "void __thiscall GameInfo_Reset(KW12GameInfo_Recovered *self);",
+    "0x6CAA45": "KW12GameSlot_Recovered *__thiscall GameSlot_Ctor(KW12GameSlot_Recovered *self);",
+    "0x6BD101": "KW12GameSlot_Recovered *__thiscall GameInfo_GetSlot(KW12GameInfo_Recovered *self, unsigned int slot_index);",
+    "0x6BD0E6": "const KW12GameSlot_Recovered *__thiscall GameInfo_GetConstSlot(const KW12GameInfo_Recovered *self, unsigned int slot_index);",
+    "0x6BD11F": "void __thiscall GameInfo_SetSlotPointer(KW12GameInfo_Recovered *self, unsigned int slot_index, KW12GameSlot_Recovered *slot);",
+    "0x6BD31C": "int __cdecl GameSlot_GetIndex(const KW12GameSlot_Recovered *slot);",
+    "0x6BD345": "void __thiscall GameSlot_SaveOffOriginalInfo(KW12GameSlot_Recovered *self);",
+    "0x6BD358": "void __thiscall GameSlot_SetPlayerTemplate(KW12GameSlot_Recovered *self, int player_template_index);",
+    "0x6BD385": "void *__thiscall GameSlot_ResolvePlayerTemplate(const KW12GameSlot_Recovered *self);",
+    "0x6BD39E": "bool __thiscall GameSlot_IsHuman(const KW12GameSlot_Recovered *self);",
+    "0x6BD3A8": "bool __thiscall GameSlot_IsOccupied(const KW12GameSlot_Recovered *self);",
+    "0x6BD3D1": "bool __thiscall GameSlot_IsAI(const KW12GameSlot_Recovered *self);",
+    "0x6BD3EF": "bool __thiscall GameSlot_IsPlayerByIP(const KW12GameSlot_Recovered *self, unsigned int player_ip);",
+    "0x6BD408": "bool __thiscall GameSlot_IsOpen(const KW12GameSlot_Recovered *self);"
+  },
+  "applied": [
+    {
+      "ea": "0x6DA5CF",
+      "old_name": "sub_6DA5CF",
+      "name": "GameInfo_ParseMatchConfiguration",
+      "size": 3317,
+      "confidence": "exact",
+      "evidence": "Parses the semicolon-delimited M/MC/MS/SD/RU/GSID/GT/PC/S match configuration, validates eight slot records, and commits the result to GameInfo. It is an instruction-for-instruction Diaphora match to the named 1.03 implementation."
+    },
+    {
+      "ea": "0x6E3228",
+      "old_name": "sub_6E3228",
+      "name": "GameInfo_SerializeMatchConfiguration",
+      "size": 664,
+      "confidence": "exact",
+      "evidence": "Serializes GameInfo and eight GameSlot records into the native match-configuration grammar. It is an instruction-for-instruction Diaphora match to the named 1.03 implementation."
+    },
+    {
+      "ea": "0x6CE31C",
+      "old_name": "sub_6CE31C",
+      "name": "GameInfo_Ctor",
+      "size": 203,
+      "confidence": "exact",
+      "evidence": "Installs the GameInfo vtable, initializes the eight-slot array and all base state, then invokes the virtual reset implementation."
+    },
+    {
+      "ea": "0x6CA62E",
+      "old_name": "GameInfo__virtual_008",
+      "name": "GameInfo_Reset",
+      "size": 257,
+      "confidence": "very high",
+      "evidence": "Resets map/session state, destroys all eight owned slots, initializes defaults, randomizes the seed, and clears per-player flags. The vtable position and behavior agree with SAGE1 GameInfo::reset."
+    },
+    {
+      "ea": "0x6CAA45",
+      "old_name": "sub_6CAA45",
+      "name": "GameSlot_Ctor",
+      "size": 36,
+      "confidence": "exact",
+      "evidence": "Installs the GameSlot vtable, initializes owned string/network members, and dispatches the slot reset virtual."
+    },
+    {
+      "ea": "0x6C6D11",
+      "old_name": "sub_6C6D11",
+      "name": "GameSlot_SetState",
+      "size": 212,
+      "confidence": "very high",
+      "evidence": "Changes open/closed/AI/human state, resets incompatible selections, assigns localized default names, and copies human identity data. State constants and behavior agree with SAGE1 GameSlot::setState."
+    },
+    {
+      "ea": "0x6BD101",
+      "old_name": "sub_6BD101",
+      "name": "GameInfo_GetSlot",
+      "size": 20,
+      "confidence": "exact",
+      "evidence": "Returns one of eight mutable GameSlot pointers after a bounds check."
+    },
+    {
+      "ea": "0x6BD0E6",
+      "old_name": "sub_6BD0E6",
+      "name": "GameInfo_GetConstSlot",
+      "size": 27,
+      "confidence": "exact",
+      "evidence": "Returns one of eight read-only GameSlot pointers after null/base and index checks; call sites distinguish it from the mutable accessor."
+    },
+    {
+      "ea": "0x6BD11F",
+      "old_name": "sub_6BD11F",
+      "name": "GameInfo_SetSlotPointer",
+      "size": 20,
+      "confidence": "exact",
+      "evidence": "Stores a GameSlot pointer in one of eight positions when the index is valid, matching SAGE1 GameInfo::setSlotPointer."
+    },
+    {
+      "ea": "0x6BD31C",
+      "old_name": "sub_6BD31C",
+      "name": "GameSlot_GetIndex",
+      "size": 33,
+      "confidence": "exact",
+      "evidence": "Searches the global GameInfo's eight slots for a matching GameSlot pointer and returns its index or -1."
+    },
+    {
+      "ea": "0x6BD345",
+      "old_name": "sub_6BD345",
+      "name": "GameSlot_SaveOffOriginalInfo",
+      "size": 19,
+      "confidence": "exact",
+      "evidence": "Copies current color, start position, and player-template selection to their original-value fields, matching the SAGE1 method."
+    },
+    {
+      "ea": "0x6BD358",
+      "old_name": "sub_6BD358",
+      "name": "GameSlot_SetPlayerTemplate",
+      "size": 45,
+      "confidence": "very high",
+      "evidence": "Stores the player-template index and clears dependent selections when the resolved template is not a playable faction."
+    },
+    {
+      "ea": "0x6BD385",
+      "old_name": "sub_6BD385",
+      "name": "GameSlot_ResolvePlayerTemplate",
+      "size": 15,
+      "confidence": "very high",
+      "evidence": "Resolves the slot's player-template index through the global template store and returns the template object."
+    },
+    {
+      "ea": "0x6BD39E",
+      "old_name": "sub_6BD39E",
+      "name": "GameSlot_IsHuman",
+      "size": 10,
+      "confidence": "exact",
+      "evidence": "Tests the slot state for the human-player state value 6."
+    },
+    {
+      "ea": "0x6BD3A8",
+      "old_name": "sub_6BD3A8",
+      "name": "GameSlot_IsOccupied",
+      "size": 41,
+      "confidence": "very high",
+      "evidence": "Accepts human and all four AI states and requires the slot's enabled flag, the SAGE2 extension of SAGE1 GameSlot::isOccupied."
+    },
+    {
+      "ea": "0x6BD3D1",
+      "old_name": "sub_6BD3D1",
+      "name": "GameSlot_IsAI",
+      "size": 30,
+      "confidence": "exact",
+      "evidence": "Tests the slot state for the four SAGE2 AI difficulty values 2..5."
+    },
+    {
+      "ea": "0x6BD3EF",
+      "old_name": "sub_6BD3EF",
+      "name": "GameSlot_IsPlayerByIP",
+      "size": 25,
+      "confidence": "very high",
+      "evidence": "Requires human state and compares the stored network identity/IP field, matching the SAGE1 GameSlot::isPlayer(IP) overload."
+    },
+    {
+      "ea": "0x6BD408",
+      "old_name": "sub_6BD408",
+      "name": "GameSlot_IsOpen",
+      "size": 9,
+      "confidence": "exact",
+      "evidence": "Tests the slot state for the open-slot value 0."
+    }
+  ]
+}

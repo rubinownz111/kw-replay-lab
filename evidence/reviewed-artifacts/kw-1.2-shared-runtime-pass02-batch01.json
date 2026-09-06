@@ -1,0 +1,179 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "0BB1FD53DA6FB9A970C9F7CB072B20CBB3EEB38963F8E028CC023DC5288032A8",
+  "scope": "Shared replay runtime: Version/build metadata, localized replay naming, GameSlot disconnect state, reference counting, and socket reset",
+  "applied_count": 15,
+  "global_count": 2,
+  "corrected_existing_interpretations": 1,
+  "typed_count": 0,
+  "new_local_types": {},
+  "applied": [
+    {
+      "ea": "0x40CF21",
+      "old_name": "sub_40CF21",
+      "name": "GameSlot_IsDisconnected",
+      "size": 27,
+      "confidence": "exact",
+      "evidence": "Returns isHuman() && m_disconnected, with the disconnected byte at offset 0x48.",
+      "basis": "exact-build assembly plus the SAGE1 inline GameSlot::disconnected implementation",
+      "correction": true
+    },
+    {
+      "ea": "0x56D5B9",
+      "old_name": "sub_56D5B9",
+      "name": "Version_CopyAssign",
+      "size": 127,
+      "confidence": "exact",
+      "evidence": "Copies the four integer version components, seven owned AsciiString fields, and show-full-version byte of the 0x30-byte Version object.",
+      "basis": "all replay/GameSlot callers and the recovered Version layout",
+      "correction": false
+    },
+    {
+      "ea": "0x56DBF5",
+      "old_name": "sub_56DBF5",
+      "name": "Version_CommandLineSetShowFullVersion",
+      "size": 50,
+      "confidence": "very high",
+      "evidence": "Parses a command-line boolean and stores it in TheVersion's show_full_version byte at offset 0x2C.",
+      "basis": "TheVersion data references, atoi call, and recovered field offset",
+      "correction": false
+    },
+    {
+      "ea": "0x570592",
+      "old_name": "sub_570592",
+      "name": "Version_GetBuildGuid",
+      "size": 4,
+      "confidence": "exact",
+      "evidence": "Returns the embedded build GUID AsciiString at Version offset 0x1C.",
+      "basis": "recovered build-stamp field writes and WinMain title construction",
+      "correction": false
+    },
+    {
+      "ea": "0x577421",
+      "old_name": "sub_577421",
+      "name": "Replay_GetDefaultDisplayName",
+      "size": 53,
+      "confidence": "exact",
+      "evidence": "Returns localized GUI:LastReplay through TheGameText, falling back to the wide string 00000000 when the text manager is unavailable.",
+      "basis": "exact-build string references and all four replay recording callers",
+      "correction": false
+    },
+    {
+      "ea": "0x578682",
+      "old_name": "sub_578682",
+      "name": "Version_FormatBuildIdentifier",
+      "size": 39,
+      "confidence": "exact",
+      "evidence": "Formats the four Version integers as %d.%.2d.%d.%d.",
+      "basis": "exact-build format string, register arguments, and WinMain caller",
+      "correction": false
+    },
+    {
+      "ea": "0x5786A9",
+      "old_name": "sub_5786A9",
+      "name": "Version_GetAsciiVersion",
+      "size": 33,
+      "confidence": "exact",
+      "evidence": "Formats the public release version as major.minor.",
+      "basis": "exact-build format string and network match-state caller",
+      "correction": false
+    },
+    {
+      "ea": "0x5786CA",
+      "old_name": "sub_5786CA",
+      "name": "Version_GetUnicodeVersion",
+      "size": 62,
+      "confidence": "exact",
+      "evidence": "Formats the localized Unicode release version through Version:Format2.",
+      "basis": "exact-build string/xrefs and SAGE1 Version::getUnicodeVersion correspondence",
+      "correction": false
+    },
+    {
+      "ea": "0x578708",
+      "old_name": "sub_578708",
+      "name": "Version_GetAsciiBuildTime",
+      "size": 51,
+      "confidence": "exact",
+      "evidence": "Formats build date and time as two space-separated AsciiString fields.",
+      "basis": "exact-build offsets/format and SAGE1 Version::getAsciiBuildTime correspondence",
+      "correction": false
+    },
+    {
+      "ea": "0x57873B",
+      "old_name": "sub_57873B",
+      "name": "Version_FormatDottedFourPart",
+      "size": 39,
+      "confidence": "exact",
+      "evidence": "Formats all four Version integer components as %d.%d.%d.%d for replay metadata and network consumers.",
+      "basis": "assembly exposes all four arguments; five replay/network callers were reviewed",
+      "correction": false
+    },
+    {
+      "ea": "0x58CBA8",
+      "old_name": "sub_58CBA8",
+      "name": "Version_Ctor",
+      "size": 35,
+      "confidence": "exact",
+      "evidence": "Zero-initializes the seven AsciiString handles and delegates to the embedded build-stamp loader.",
+      "basis": "0x30-byte allocations/embeddings, field initialization, and SAGE1 Version constructor",
+      "correction": false
+    },
+    {
+      "ea": "0x58CA4B",
+      "old_name": "sub_58CA4B",
+      "name": "Version_LoadEmbeddedBuildStamp",
+      "size": 317,
+      "confidence": "exact",
+      "evidence": "Parses VERSION, ID, USER, MACHINE, GUID, TIME, DATE, and CONFIG from the executable build-stamp string into the recovered Version fields.",
+      "basis": "exact string keys, default values, field writes, and sscanf arguments",
+      "correction": false
+    },
+    {
+      "ea": "0x6BDC39",
+      "old_name": "sub_6BDC39",
+      "name": "RefCountClass_Release_Ref",
+      "size": 13,
+      "confidence": "exact",
+      "evidence": "Decrements NumRefs at offset 0x10 and invokes the virtual deleting path when it reaches zero.",
+      "basis": "instruction-for-source match to WWVegas RefCountClass::Release_Ref",
+      "correction": false
+    },
+    {
+      "ea": "0x6BDD99",
+      "old_name": "sub_6BDD99",
+      "name": "RefCountPtr_Release",
+      "size": 7,
+      "confidence": "very high",
+      "evidence": "Tail-calls RefCountClass_Release_Ref on the pointer stored by a one-field reference wrapper.",
+      "basis": "seven replay ownership callers and exact release-helper tail call",
+      "correction": false
+    },
+    {
+      "ea": "0x8CD69A",
+      "old_name": "sub_8CD69A",
+      "name": "SocketTransport_CloseAndReset",
+      "size": 39,
+      "confidence": "high",
+      "evidence": "Closes the socket at offset 0x20, sets it to INVALID_SOCKET, and zeros six transport state fields from offsets 0x08 through 0x1C.",
+      "basis": "exact-build assembly and all three replay/network ownership callers",
+      "correction": false
+    }
+  ],
+  "globals": [
+    {
+      "ea": "0xBE4FD0",
+      "old_name": "dword_BE4FD0",
+      "name": "TheVersion",
+      "confidence": "exact",
+      "evidence": "Global Version singleton; WinMain allocates a 0x30-byte Version here and the named TheVersionTypeHandler plus replay metadata consume it."
+    },
+    {
+      "ea": "0xBDD63C",
+      "old_name": "dword_BDD63C",
+      "name": "TheGameText",
+      "confidence": "exact",
+      "evidence": "Global GameText manager singleton used through its fetch virtual method by replay naming and localized Version formatting."
+    }
+  ]
+}

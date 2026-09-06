@@ -1,0 +1,97 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "D1EF86427EEBC706671823E7E5F4CED290AF5F24CDE8FF1AFB9467810E961CFF",
+  "scope": "Replay network transport, framing, handshake, decoder, source dispatch, pause/resume, and channel selection",
+  "applied_count": 11,
+  "typed_count": 8,
+  "function_types": {
+    "KWReplayNetworkTransport_Destroy": "void __cdecl KWReplayNetworkTransport_Destroy(void *transport);",
+    "KWReplayNetworkRecordDecoder_Init": "bool __cdecl KWReplayNetworkRecordDecoder_Init(void *decoder);",
+    "KWReplayNetworkRecordDecoder_ConsumeCurrent": "int __cdecl KWReplayNetworkRecordDecoder_ConsumeCurrent(void *decoder);",
+    "KWReplayNetworkTransport_RequestShutdown": "void *__cdecl KWReplayNetworkTransport_RequestShutdown(void *transport);",
+    "KWReplayReader_UpdateActiveSource": "int __cdecl KWReplayReader_UpdateActiveSource(KW12ReplayReaderContext_Recovered *self);",
+    "KWReplayReader_Pause": "int __cdecl KWReplayReader_Pause(KW12ReplayReaderContext_Recovered *self, int pause_reason);",
+    "KWReplayReader_Resume": "kw12_u32 __cdecl KWReplayReader_Resume(KW12ReplayReaderContext_Recovered *self);",
+    "KWReplayReader_SetChannelMaskAndNotifyNetwork": "int __cdecl KWReplayReader_SetChannelMaskAndNotifyNetwork(KW12ReplayReaderContext_Recovered *self, kw12_u8 channel_count, const kw12_u8 *channels);"
+  },
+  "applied": [
+    {
+      "ea": "0x8B1B63",
+      "name": "KWReplayNetworkTransport_Destroy",
+      "size": 69,
+      "confidence": "exact",
+      "evidence": "Closes the optional source handle, shuts down and closes the socket, then releases both 50 KiB buffers and the transport object."
+    },
+    {
+      "ea": "0x8B0D02",
+      "name": "KWReplayNetworkSource_ParseOnePacket",
+      "size": 81,
+      "confidence": "very high",
+      "evidence": "Reads a network-order 16-bit packet length, verifies that the complete packet is buffered, derives its message kind, dispatches it, and returns the exact consumed byte count."
+    },
+    {
+      "ea": "0x8B0D53",
+      "name": "KWReplayNetworkSource_CheckTransportState",
+      "size": 65,
+      "confidence": "very high",
+      "evidence": "Queries transport liveness/state and drives terminal transition reason 2 or completes an already deferred terminal transition."
+    },
+    {
+      "ea": "0x8B0D94",
+      "name": "KWReplayNetworkSource_AdvanceHandshake",
+      "size": 57,
+      "confidence": "very high",
+      "evidence": "Polls the connection handshake, reports failure through the job callback, or advances the replay reader to network-receive state 3."
+    },
+    {
+      "ea": "0x8B0F06",
+      "name": "KWReplayNetworkRecordDecoder_Init",
+      "size": 44,
+      "confidence": "exact",
+      "evidence": "Zero-initializes the five-field decoder and allocates its fixed 100 KiB record ring buffer."
+    },
+    {
+      "ea": "0x8B108D",
+      "name": "KWReplayNetworkRecordDecoder_ConsumeCurrent",
+      "size": 72,
+      "confidence": "very high",
+      "evidence": "Computes the current framed record size, advances the consumed offset, decrements buffered bytes, and rotates the staged region when exhausted."
+    },
+    {
+      "ea": "0x8B1C87",
+      "name": "KWReplayNetworkTransport_RequestShutdown",
+      "size": 12,
+      "confidence": "exact",
+      "evidence": "Sets transport state offset 0x30 to the shutdown-requested state used by the reader's deferred terminal path."
+    },
+    {
+      "ea": "0x8A777D",
+      "name": "KWReplayReader_UpdateActiveSource",
+      "size": 61,
+      "confidence": "very high",
+      "evidence": "Dispatches active replay input among the file/archive source and the network receive buffer according to source mode and runtime readiness."
+    },
+    {
+      "ea": "0x8A52C4",
+      "name": "KWReplayReader_Pause",
+      "size": 79,
+      "confidence": "very high",
+      "evidence": "Stops playback-clock accumulation, pauses the file source when applicable, sets stream state 2, and records the supplied pause reason."
+    },
+    {
+      "ea": "0x8A52B6",
+      "name": "KWReplayReader_Resume",
+      "size": 14,
+      "confidence": "very high",
+      "evidence": "Thin wrapper around the reader state transition that resumes playback with transition mode 1."
+    },
+    {
+      "ea": "0x8A5B58",
+      "name": "KWReplayReader_SetChannelMaskAndNotifyNetwork",
+      "size": 88,
+      "confidence": "very high",
+      "evidence": "Builds and stores the selected channel mask; for a network source it also frames and queues protocol message type 5 carrying the selection."
+    }
+  ]
+}

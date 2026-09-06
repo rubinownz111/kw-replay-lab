@@ -1,0 +1,369 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "608C4ED0943D5894B6F6B5FFC23131F339FDCDD467B9755C65CB6220D5649D07",
+  "scope": "Ranked replay-boundary runtime: strings/filesystem, map metadata, GameInfo/GameSlot, Xfer memory files, containers, camera, and sockets",
+  "applied_count": 40,
+  "applied": [
+    {
+      "ea": "0x40CF89",
+      "old_name": "sub_40CF89",
+      "name": "GameInfo_IsLocalSlot",
+      "size": 30,
+      "confidence": "very high",
+      "evidence": "Bounds-checks a slot index and compares it with GameInfo's local slot.",
+      "basis": "field offset, nine callers, slot-index range"
+    },
+    {
+      "ea": "0x40DABD",
+      "old_name": "sub_40DABD",
+      "name": "MapTransfer_ResetRuntimeSubsystems",
+      "size": 99,
+      "confidence": "high",
+      "evidence": "Resets network, engine, UI, display, and related subsystems after a map-transfer transition.",
+      "basis": "global singleton virtual calls and all replay/map-transfer callers"
+    },
+    {
+      "ea": "0x40F3FD",
+      "old_name": "sub_40F3FD",
+      "name": "GameSlot_CopyAssign",
+      "size": 177,
+      "confidence": "exact",
+      "evidence": "Copies the complete 0x5C-byte GameSlot, using owned-string assignment for its name fields.",
+      "basis": "field-for-field copy, recovered GameSlot layout, assignment callers"
+    },
+    {
+      "ea": "0x424C34",
+      "old_name": "sub_424C34",
+      "name": "GameInfo_Dtor",
+      "size": 32,
+      "confidence": "exact",
+      "evidence": "Destroys eight embedded 0x5C-byte GameSlots and then the GameInfo/Snapshot base.",
+      "basis": "array destructor stride/count, named GameInfo vtable teardown"
+    },
+    {
+      "ea": "0x4366B4",
+      "old_name": "sub_4366B4",
+      "name": "UnicodeString_FromTwoOperandConcatExpression",
+      "size": 39,
+      "confidence": "very high",
+      "evidence": "Materializes a two-operand lazy Unicode concatenation into owned UTF-16 storage.",
+      "basis": "two operand lengths, UTF-16 allocation/copy, replay filename callers"
+    },
+    {
+      "ea": "0x456223",
+      "old_name": "sub_456223",
+      "name": "AptFileTransferPopup_SetMapName",
+      "size": 99,
+      "confidence": "very high",
+      "evidence": "Publishes the transferred map name to APT:FileTransferLoadingMapName.",
+      "basis": "exact APT key, string conversion, map-transfer callers"
+    },
+    {
+      "ea": "0x456286",
+      "old_name": "sub_456286",
+      "name": "AptFileTransferPopup_UpdateProgress",
+      "size": 176,
+      "confidence": "exact",
+      "evidence": "Updates a mapped player's status text and emits the APT SetBarTo progress event.",
+      "basis": "popup row map, FileTransfer::Status key, SetBarTo arguments"
+    },
+    {
+      "ea": "0x47D57C",
+      "old_name": "sub_47D57C",
+      "name": "UnicodeString_FindChar",
+      "size": 47,
+      "confidence": "exact",
+      "evidence": "Returns the first matching UTF-16 character pointer or null.",
+      "basis": "owned UnicodeString length header and complete linear scan"
+    },
+    {
+      "ea": "0x4819B4",
+      "old_name": "sub_4819B4",
+      "name": "MapCache_GetMapDirectory",
+      "size": 94,
+      "confidence": "very high",
+      "evidence": "Builds the internal or user Maps directory according to map-cache build mode.",
+      "basis": "Data\\\\Maps\\\\Internal, user-data path, Maps component, callers"
+    },
+    {
+      "ea": "0x484EA3",
+      "old_name": "sub_484EA3",
+      "name": "MapMetaData_GetDisplayName",
+      "size": 472,
+      "confidence": "very high",
+      "evidence": "Resolves and caches a map's localized display name with map.str and save-game fallbacks.",
+      "basis": "map.str, TheGameText calls, MG:RTSSaveGameName, MapMetaData callers"
+    },
+    {
+      "ea": "0x497179",
+      "old_name": "sub_497179",
+      "name": "MapCache_WriteCacheINI",
+      "size": 1401,
+      "confidence": "exact",
+      "evidence": "Writes MapCache.ini entries, metadata, waypoints, tech/supply positions, and player positions.",
+      "basis": "instruction/string-for-source match to SAGE1 MapCache::writeCacheINI"
+    },
+    {
+      "ea": "0x53AED2",
+      "old_name": "sub_53AED2",
+      "name": "ListNode32Sentinel_Initialize",
+      "size": 27,
+      "confidence": "high",
+      "evidence": "Allocates a 32-byte list sentinel and self-links both directions.",
+      "basis": "allocation size, self-link stores, seven container callers"
+    },
+    {
+      "ea": "0x56DA4E",
+      "old_name": "sub_56DA4E",
+      "name": "Scheduler_SubmitCallback",
+      "size": 36,
+      "confidence": "high",
+      "evidence": "Submits a callback through the active scheduler object when it is in the accepting state.",
+      "basis": "scheduler pointer/state guard and sole automatic-recording caller"
+    },
+    {
+      "ea": "0x56F2C1",
+      "old_name": "sub_56F2C1",
+      "name": "RandomSubsystem_InitializeStreams",
+      "size": 69,
+      "confidence": "high",
+      "evidence": "Initializes three deterministic random-stream state arrays and their shared seed state.",
+      "basis": "three state-array writes, fixed recurrence constants, initialization callers"
+    },
+    {
+      "ea": "0x574F07",
+      "old_name": "sub_574F07",
+      "name": "UserData_BuildDocumentsDirectory",
+      "size": 229,
+      "confidence": "very high",
+      "evidence": "Builds the localized game user-data directory beneath CSIDL_PERSONAL and appends separators.",
+      "basis": "SHGetSpecialFolderPathW, localized leaf helper, replay directory callers"
+    },
+    {
+      "ea": "0x577B19",
+      "old_name": "sub_577B19",
+      "name": "ReplayRecording_UpdateAutoState",
+      "size": 193,
+      "confidence": "high",
+      "evidence": "Advances recorder automatic state from engine/network state and encoder-finalization readiness.",
+      "basis": "recorder fields, TheRecorder transitions, four recording callers"
+    },
+    {
+      "ea": "0x57EB6F",
+      "old_name": "sub_57EB6F",
+      "name": "ReplayRecording_HandleAutoScheduledRecord",
+      "size": 169,
+      "confidence": "very high",
+      "evidence": "Writes an automatically scheduled record immediately when possible, otherwise deep-copies and queues it; null signals update completion.",
+      "basis": "writer submission, 12-byte record copy, queue insertion, null callback path"
+    },
+    {
+      "ea": "0x58094F",
+      "old_name": "sub_58094F",
+      "name": "ReplayObjectRefVector_DestroyStorage",
+      "size": 30,
+      "confidence": "very high",
+      "evidence": "Releases a range of replay object references and frees its vector storage.",
+      "basis": "release-range helper, allocator pairing, 18 replay/voice callers"
+    },
+    {
+      "ea": "0x582A59",
+      "old_name": "sub_582A59",
+      "name": "ReplayRecording_AutoScheduleCallback",
+      "size": 26,
+      "confidence": "very high",
+      "evidence": "Forwards the scheduled automatic-recording callback to the active recorder.",
+      "basis": "TheRecorder guard and sole replay-recording callback target"
+    },
+    {
+      "ea": "0x582A73",
+      "old_name": "sub_582A73",
+      "name": "ReplayRecording_ClearAutoQueueAndScheduleCallback",
+      "size": 106,
+      "confidence": "very high",
+      "evidence": "Drains the automatic-recording queue, resets its state, and schedules the recorder callback.",
+      "basis": "queue ownership loop, state fields, callback target, exclusive replay caller"
+    },
+    {
+      "ea": "0x6BD0D4",
+      "old_name": "sub_6BD0D4",
+      "name": "GameInfo_SetInGameNotInProgress",
+      "size": 9,
+      "confidence": "exact",
+      "evidence": "Sets GameInfo in-game true and in-progress false.",
+      "basis": "two flag writes and SAGE1 GameInfo state semantics"
+    },
+    {
+      "ea": "0x6BD19E",
+      "old_name": "sub_6BD19E",
+      "name": "GameInfo_GetSeed",
+      "size": 4,
+      "confidence": "exact",
+      "evidence": "Returns the deterministic game seed.",
+      "basis": "recovered GameInfo offset and SAGE1 inline accessor/callers"
+    },
+    {
+      "ea": "0x6CA72F",
+      "old_name": "sub_6CA72F",
+      "name": "GameInfo_ClearSlotList",
+      "size": 63,
+      "confidence": "exact",
+      "evidence": "Sets each of the eight existing GameSlots to SLOT_CLOSED.",
+      "basis": "instruction-for-source match to SAGE1 GameInfo::clearSlotList"
+    },
+    {
+      "ea": "0x6DCC45",
+      "old_name": "GameSlot_CopyAssign",
+      "name": "GameInfo_CopyAssign",
+      "size": 475,
+      "confidence": "exact",
+      "evidence": "Deep copy-assigns complete GameInfo state, including eight owned GameSlots, map/version fields, and the optional extension.",
+      "basis": "eight-slot loop, GameSlot copy calls, GameInfo fields, 912-byte extension ownership"
+    },
+    {
+      "ea": "0x70FE00",
+      "old_name": "sub_70FE00",
+      "name": "Vector60_PushBack",
+      "size": 55,
+      "confidence": "high",
+      "evidence": "Copy-constructs a 60-byte element at end or grows the vector first.",
+      "basis": "60-byte increment, capacity branch, four metadata callers"
+    },
+    {
+      "ea": "0x745895",
+      "old_name": "sub_745895",
+      "name": "CameraControllerManager_SetActiveCamera",
+      "size": 184,
+      "confidence": "very high",
+      "evidence": "Deactivates the previous camera, switches the active index, activates the replacement, and applies its transform.",
+      "basis": "camera vtable calls, transform identity fallback, replay camera caller"
+    },
+    {
+      "ea": "0x7BA766",
+      "old_name": "sub_7BA766",
+      "name": "ListNode40Sentinel_Initialize",
+      "size": 27,
+      "confidence": "high",
+      "evidence": "Allocates a 40-byte list sentinel and self-links both directions.",
+      "basis": "allocation size, self-link stores, replay camera/container callers"
+    },
+    {
+      "ea": "0x859470",
+      "old_name": "sub_859470",
+      "name": "XferSave_Ctor",
+      "size": 73,
+      "confidence": "exact",
+      "evidence": "Constructs XferSave with save mode, empty targets/stacks, and its named vtable.",
+      "basis": "named XferSave vtable, SAGE1 constructor semantics, save callers"
+    },
+    {
+      "ea": "0x85AB05",
+      "old_name": "sub_85AB05",
+      "name": "XferLoad_Ctor",
+      "size": 78,
+      "confidence": "exact",
+      "evidence": "Constructs XferLoad with load mode, supplied memory/source fields, and its named vtable.",
+      "basis": "named XferLoad vtable, SAGE1 constructor semantics, load callers"
+    },
+    {
+      "ea": "0x85AB53",
+      "old_name": "sub_85AB53",
+      "name": "Xfer_Dtor",
+      "size": 7,
+      "confidence": "exact",
+      "evidence": "Restores the Xfer base vtable during transfer-object destruction.",
+      "basis": "named Xfer vtable and derived load/save destruction call chains"
+    },
+    {
+      "ea": "0x866473",
+      "old_name": "sub_866473",
+      "name": "FileSystem_DoesFileExistW",
+      "size": 58,
+      "confidence": "very high",
+      "evidence": "Converts a UTF-16 path to a bounded narrow path and tests it through the filesystem search path.",
+      "basis": "wide conversion, narrow existence helper, seven callers"
+    },
+    {
+      "ea": "0x86651A",
+      "old_name": "sub_86651A",
+      "name": "FileSystem_CreateDirectoryW",
+      "size": 59,
+      "confidence": "very high",
+      "evidence": "Converts a UTF-16 path to a bounded narrow path and creates it with the requested recursion flags.",
+      "basis": "wide conversion, narrow recursive create helper, ten callers"
+    },
+    {
+      "ea": "0x86726B",
+      "old_name": "sub_86726B",
+      "name": "MemoryReadFile_Ctor",
+      "size": 62,
+      "confidence": "exact",
+      "evidence": "Constructs a named MemoryReadFile over a supplied memory range.",
+      "basis": "named vtable, range fields, <MemoryReadFile> identifier"
+    },
+    {
+      "ea": "0x8672C5",
+      "old_name": "sub_8672C5",
+      "name": "MemoryReadFile_Create",
+      "size": 45,
+      "confidence": "exact",
+      "evidence": "Allocates and constructs a 32-byte MemoryReadFile when the input range is valid.",
+      "basis": "allocation size, constructor call, five stream-load callers"
+    },
+    {
+      "ea": "0x86731A",
+      "old_name": "sub_86731A",
+      "name": "MemoryWriteFile_Ctor",
+      "size": 76,
+      "confidence": "exact",
+      "evidence": "Constructs an empty MemoryWriteFile with an optional identifier.",
+      "basis": "named vtable, field initialization, <MemoryWriteFile> fallback"
+    },
+    {
+      "ea": "0x867382",
+      "old_name": "sub_867382",
+      "name": "MemoryWriteFile_Create",
+      "size": 27,
+      "confidence": "exact",
+      "evidence": "Allocates and constructs a 44-byte MemoryWriteFile.",
+      "basis": "allocation size, constructor call, eight stream-save callers"
+    },
+    {
+      "ea": "0x8B4A81",
+      "old_name": "sub_8B4A81",
+      "name": "SetSockBlocking",
+      "size": 38,
+      "confidence": "exact",
+      "evidence": "Sets a GameSpy socket blocking or nonblocking with FIONBIO and returns SDK success.",
+      "basis": "instruction-for-source match to GameSpy gsPlatformSocket.c"
+    },
+    {
+      "ea": "0x8B4B59",
+      "old_name": "sub_8B4B59",
+      "name": "GSISocketSelect",
+      "size": 248,
+      "confidence": "exact",
+      "evidence": "Polls one GameSpy socket for read, write, and exception readiness with a zero timeout.",
+      "basis": "instruction-for-source match to GameSpy gsPlatformSocket.c"
+    },
+    {
+      "ea": "0x8D70A2",
+      "old_name": "sub_8D70A2",
+      "name": "SystemTime_GetLocal",
+      "size": 8,
+      "confidence": "exact",
+      "evidence": "Writes the current local SYSTEMTIME.",
+      "basis": "single GetLocalTime call and replay timestamp callers"
+    },
+    {
+      "ea": "0x8D74CB",
+      "old_name": "sub_8D74CB",
+      "name": "SharedWorkerEvent_WaitOneMillisecond",
+      "size": 15,
+      "confidence": "high",
+      "evidence": "Poll-waits one millisecond on the shared worker synchronization handle.",
+      "basis": "exact WaitForSingleObject call and replay/map-transfer pump callers"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "D1EF86427EEBC706671823E7E5F4CED290AF5F24CDE8FF1AFB9467810E961CFF",
+  "scope": "Shared replay job, channel mask, file/network writer, socket, resolver, and buffered protocol infrastructure",
+  "applied_count": 17,
+  "applied": [
+    {
+      "ea": "0x8A6E9F",
+      "name": "KWReplayJob_Destroy",
+      "size": 33,
+      "confidence": "exact",
+      "evidence": "Dispatches reader/writer shutdown by job kind, then destroys the common 0xBB4-byte replay job context."
+    },
+    {
+      "ea": "0x56DA19",
+      "name": "ReplayWriter_SubmitRecordAtFrame",
+      "size": 53,
+      "confidence": "very high",
+      "evidence": "Enforces monotonic frame order and submits one encoded stream record to the active writer destination."
+    },
+    {
+      "ea": "0x8A526C",
+      "name": "KWReplayReader_ResumeInternal",
+      "size": 74,
+      "confidence": "very high",
+      "evidence": "Resumes reader stream state, updates accumulated pause time, and optionally notifies a network source."
+    },
+    {
+      "ea": "0x8B0BAD",
+      "name": "KWReplayChannelMask_FromList",
+      "size": 40,
+      "confidence": "exact",
+      "evidence": "Converts up to twelve channel identifiers into the protocol bit mask."
+    },
+    {
+      "ea": "0x8A7710",
+      "name": "KWReplayReader_UpdateFileSource",
+      "size": 109,
+      "confidence": "very high",
+      "evidence": "Advances normal or terminal file-source records and fires the completion callback at EOF."
+    },
+    {
+      "ea": "0x8B1BA8",
+      "name": "SocketTransport_BeginConnect",
+      "size": 103,
+      "confidence": "exact",
+      "evidence": "Starts a nonblocking IPv4 socket connection and records connecting state."
+    },
+    {
+      "ea": "0x8B1E39",
+      "name": "SocketTransport_ConnectEndpointString",
+      "size": 74,
+      "confidence": "exact",
+      "evidence": "Parses host:port text and connects the supplied socket transport."
+    },
+    {
+      "ea": "0x8B0BD5",
+      "name": "KWReplayChannelMask_ToList",
+      "size": 47,
+      "confidence": "exact",
+      "evidence": "Expands the twelve-bit channel mask into an ordered channel list."
+    },
+    {
+      "ea": "0x8A5237",
+      "name": "KWReplayNetwork_SendPlaybackControl",
+      "size": 53,
+      "confidence": "very high",
+      "evidence": "Frames and queues replay-network protocol message type 4 carrying the playback control byte."
+    },
+    {
+      "ea": "0x8A6EF8",
+      "name": "KWReplayWriter_StartNetworkDestination",
+      "size": 37,
+      "confidence": "very high",
+      "evidence": "Creates the replay network transport and connects it to the configured destination endpoint."
+    },
+    {
+      "ea": "0x8A77BA",
+      "name": "KWReplayFile_CloseWithOptionalFooter",
+      "size": 31,
+      "confidence": "exact",
+      "evidence": "Writes the optional replay footer, closes the file, and clears the owned FILE pointer."
+    },
+    {
+      "ea": "0x8B0329",
+      "name": "BufferedProtocolConnection_Pump",
+      "size": 24,
+      "confidence": "exact",
+      "evidence": "Pumps both halves of the shared buffered protocol connection."
+    },
+    {
+      "ea": "0x8B0624",
+      "name": "ProtocolRegistry_RegisterName",
+      "size": 31,
+      "confidence": "high",
+      "evidence": "Duplicates and registers a protocol name under its numeric identifier."
+    },
+    {
+      "ea": "0x8A5C4E",
+      "name": "AsyncAddressResolveJob_Destroy",
+      "size": 34,
+      "confidence": "exact",
+      "evidence": "Closes the resolver handle and frees its result buffer and job object."
+    },
+    {
+      "ea": "0x8A5C70",
+      "name": "AsyncAddressResolveJob_TakeResult",
+      "size": 48,
+      "confidence": "exact",
+      "evidence": "Waits for resolver completion, returns the resolved address, and destroys the resolver job."
+    },
+    {
+      "ea": "0x8B041E",
+      "name": "BufferedProtocolConnection_Configure",
+      "size": 234,
+      "confidence": "very high",
+      "evidence": "Builds the selected protocol chain, configures the connection, and optionally pumps synchronously until configuration completes."
+    },
+    {
+      "ea": "0x8B02A3",
+      "name": "BufferedProtocolConnection_Create",
+      "size": 103,
+      "confidence": "very high",
+      "evidence": "Normalizes three endpoint/protocol strings and creates the shared buffered connection with callbacks and limits."
+    }
+  ]
+}

@@ -1,0 +1,246 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "D1EF86427EEBC706671823E7E5F4CED290AF5F24CDE8FF1AFB9467810E961CFF",
+  "scope": "Replay completion queue: contexts, scheduling, channels, recording finalization, camera/voice/telestrator, and network source",
+  "applied_count": 32,
+  "typed_count": 10,
+  "function_types": {
+    "GameMessage_AppendIntegerArgument": "GameMessageArg12_Recovered *__thiscall GameMessage_AppendIntegerArgument(GameMessage12_Recovered *self, kw12_i32 value);",
+    "ReplayObjectReferenceVector_GetAt": "void *__thiscall ReplayObjectReferenceVector_GetAt(ReplayObjectStreamData12_Recovered *self, kw12_u32 index);",
+    "GameMessageVector_GetAt": "GameMessage12_Recovered *__thiscall GameMessageVector_GetAt(GameCommandStreamData12_Recovered *self, kw12_u32 index);",
+    "BroadcastMetadataVector_GetAt": "BroadcastMetadata12_Recovered *__thiscall BroadcastMetadataVector_GetAt(MetaStreamData12_Recovered *self, kw12_u32 index);",
+    "ReplayClass_IsCaptureRecordingActive": "bool __thiscall ReplayClass_IsCaptureRecordingActive(ReplayClass12_Recovered *self);",
+    "KWReplayNetwork_StartupWinsock": "int __cdecl KWReplayNetwork_StartupWinsock();",
+    "KWReplayReader_TransitionToTerminalState": "int __cdecl KWReplayReader_TransitionToTerminalState(KW12ReplayReaderContext_Recovered *self, int terminal_reason, int deferred_transport_shutdown);",
+    "KWReplayNetworkSource_PumpReceiveBuffer": "int __cdecl KWReplayNetworkSource_PumpReceiveBuffer(KW12ReplayReaderContext_Recovered *self, int work_budget);",
+    "ReplayVoice_ComputePacketSpanMs": "kw12_u32 __cdecl ReplayVoice_ComputePacketSpanMs(const NetVoiceDataMsg12_Recovered *first, const NetVoiceDataMsg12_Recovered *last);",
+    "ReplayTelestrator_ApplyEncodedOperations": "int __stdcall ReplayTelestrator_ApplyEncodedOperations(NetTelestratorDataMsg12_Recovered *message);"
+  },
+  "applied": [
+    {
+      "ea": "0x58901D",
+      "name": "ReplayRecordingContext_Reset",
+      "size": 279,
+      "confidence": "very high",
+      "evidence": "Called by ReplayClass_Reset and ReplayClass_StartRecording; resets every recording queue, writer, match object, pending command, state, and timer."
+    },
+    {
+      "ea": "0x58E08F",
+      "name": "ReplayRecordingContext_Ctor",
+      "size": 128,
+      "confidence": "very high",
+      "evidence": "Constructs the ReplayClass +0x20 embedded context and immediately invokes ReplayRecordingContext_Reset."
+    },
+    {
+      "ea": "0x58DF88",
+      "name": "ReplayPlaybackContext_Ctor",
+      "size": 146,
+      "confidence": "very high",
+      "evidence": "Constructs the ReplayClass +0x1BC8 embedded context and immediately invokes ReplayPlaybackContext_Reset."
+    },
+    {
+      "ea": "0x57747A",
+      "name": "ReplayMatchSetup_Reset",
+      "size": 137,
+      "confidence": "high",
+      "evidence": "Clears the 0xD0-byte match/setup object used by playback reset and header application; string and player/team fields are reset independently."
+    },
+    {
+      "ea": "0x578792",
+      "name": "ReplayObjectReferenceVector_GetAt",
+      "size": 37,
+      "confidence": "exact",
+      "evidence": "Bounds-checks and returns index*12 from ReplayObjectStreamData references."
+    },
+    {
+      "ea": "0x5787B7",
+      "name": "GameMessageVector_GetAt",
+      "size": 42,
+      "confidence": "exact",
+      "evidence": "Bounds-checks and returns index*132 from a GameMessage vector."
+    },
+    {
+      "ea": "0x5787E1",
+      "name": "BroadcastMetadataVector_GetAt",
+      "size": 37,
+      "confidence": "exact",
+      "evidence": "Bounds-checks and returns index*60 from a BroadcastMetadata vector."
+    },
+    {
+      "ea": "0x56ECE8",
+      "name": "GameMessage_AppendIntegerArgument",
+      "size": 18,
+      "confidence": "exact",
+      "evidence": "Appends a GameMessage argument, assigns type 0, and stores the signed value; byte-identical to the independently named 1.03 function."
+    },
+    {
+      "ea": "0x56F632",
+      "name": "ReplayClass_IsCaptureRecordingActive",
+      "size": 23,
+      "confidence": "exact",
+      "evidence": "Returns whether ReplayClass +0x2C28 is state 1 or 2; gates simultaneous capture while playing a replay."
+    },
+    {
+      "ea": "0x56F664",
+      "name": "ReplayChannelOrder_SetEntry",
+      "size": 23,
+      "confidence": "exact",
+      "evidence": "Stores one channel identifier at a validated index 0..11."
+    },
+    {
+      "ea": "0x57230C",
+      "name": "ReplayChannelOrder_CopyToBuffer",
+      "size": 65,
+      "confidence": "exact",
+      "evidence": "Copies the configured replay channel order, capped at twelve entries, to the caller buffer."
+    },
+    {
+      "ea": "0x577620",
+      "name": "ReplayRecording_AllEnabledQueuesEmpty",
+      "size": 124,
+      "confidence": "very high",
+      "evidence": "Checks the configured channel order and proves that every corresponding recording queue has drained."
+    },
+    {
+      "ea": "0x6BC072",
+      "name": "ReplayVoice_ComputePacketSpanMs",
+      "size": 124,
+      "confidence": "very high",
+      "evidence": "Computes voice duration from packet sequence/sample counts and the active 8 kHz voice timing configuration."
+    },
+    {
+      "ea": "0x57B896",
+      "name": "ReplayVoice_ConsumeCurrentFrame",
+      "size": 223,
+      "confidence": "very high",
+      "evidence": "Consumes voice records for the current logic frame and returns their computed playback duration."
+    },
+    {
+      "ea": "0x6C824F",
+      "name": "ReplayTelestrator_ApplyEncodedOperations",
+      "size": 105,
+      "confidence": "very high",
+      "evidence": "Walks the encoded telestrator operation buffer and dispatches operation types 0 through 3."
+    },
+    {
+      "ea": "0x6D2E9F",
+      "name": "ReplayCamera_ApplyMessage",
+      "size": 230,
+      "confidence": "very high",
+      "evidence": "Applies a camera message for player slots 0..7, honoring position and orientation presence bits."
+    },
+    {
+      "ea": "0x584B51",
+      "name": "ReplayChannelSchedule_Enqueue",
+      "size": 68,
+      "confidence": "very high",
+      "evidence": "Copies frame, count, and up to twelve channel identifiers into a 0x38-byte scheduled-channel record and enqueues it."
+    },
+    {
+      "ea": "0x57DC28",
+      "name": "ReplayChannelSchedule_GetDue",
+      "size": 146,
+      "confidence": "very high",
+      "evidence": "Finds the next channel schedule due within the playback look-ahead window and copies it for current-frame dispatch."
+    },
+    {
+      "ea": "0x8A5CDB",
+      "name": "KWReplayNetwork_StartupWinsock",
+      "size": 27,
+      "confidence": "exact",
+      "evidence": "Calls WSAStartup for Winsock 1.1 before network/archive replay sources."
+    },
+    {
+      "ea": "0x8B1D71",
+      "name": "KWReplayNetworkTransport_Create",
+      "size": 123,
+      "confidence": "very high",
+      "evidence": "Allocates the 0x3C-byte transport, two 50 KiB buffers, and a nonblocking TCP socket; unwinds all resources on failure."
+    },
+    {
+      "ea": "0x8B0DCD",
+      "name": "KWReplayNetworkSource_PumpReceiveBuffer",
+      "size": 144,
+      "confidence": "very high",
+      "evidence": "Parses complete network replay units from the receive buffer, tracks consumed bytes, and compacts the remainder."
+    },
+    {
+      "ea": "0x8A6E28",
+      "name": "KWReplayReader_TransitionToTerminalState",
+      "size": 102,
+      "confidence": "very high",
+      "evidence": "Stops the active source and transitions the reader to state 6 for deferred transport shutdown or state 7 for immediate completion/callback."
+    },
+    {
+      "ea": "0x58C2C8",
+      "name": "ReplayRecording_OpenOutput",
+      "size": 116,
+      "confidence": "high",
+      "evidence": "Builds recording output objects, opens the output pipeline, transitions to state 3 on success, and releases temporaries."
+    },
+    {
+      "ea": "0x5802FD",
+      "name": "Replay_CopyReplayFile",
+      "size": 406,
+      "confidence": "very high",
+      "evidence": "Resolves source/destination replay paths and copies the file in verified 64 KiB read/write chunks."
+    },
+    {
+      "ea": "0x58A01F",
+      "name": "ReplayRecording_PumpFrameWrites",
+      "size": 140,
+      "confidence": "high",
+      "evidence": "Advances frame-indexed recording output while respecting network lag and finalization state."
+    },
+    {
+      "ea": "0x58C442",
+      "name": "ReplayRecording_UpdateRetentionEligibility",
+      "size": 470,
+      "confidence": "high",
+      "evidence": "Recomputes whether an automatic recording should be retained from the current local, human, network, and observer slot configuration."
+    },
+    {
+      "ea": "0x57B9C9",
+      "name": "ReplayRecording_DrainEncoderOutput",
+      "size": 116,
+      "confidence": "very high",
+      "evidence": "Drains both encoder outputs and the pending encoded-record queue into the recording pipeline."
+    },
+    {
+      "ea": "0x56FA9F",
+      "name": "ReplayRecording_BeginFinalize",
+      "size": 53,
+      "confidence": "very high",
+      "evidence": "After MSG_CLEAR_GAME_DATA, closes capture input, sets recording state 6, and brackets finalization with the game pause path."
+    },
+    {
+      "ea": "0x56FAD4",
+      "name": "ReplayRecording_IsCapturingCommands",
+      "size": 32,
+      "confidence": "exact",
+      "evidence": "Returns true only for nonzero recording states other than terminal/final states 6, 7, and 8."
+    },
+    {
+      "ea": "0x56DA72",
+      "name": "ReplayJobHandle_GetStateOrTerminal",
+      "size": 18,
+      "confidence": "exact",
+      "evidence": "Returns the referenced replay job state or terminal state 7 for a null handle."
+    },
+    {
+      "ea": "0x56FB9C",
+      "name": "ReplayRecording_ResetEncoderJobs",
+      "size": 53,
+      "confidence": "very high",
+      "evidence": "Resets both encoder jobs after finalization and restores their shared ready/empty state flags."
+    },
+    {
+      "ea": "0x56FC6A",
+      "name": "ReplayRecording_EncoderReadyForFinalize",
+      "size": 27,
+      "confidence": "high",
+      "evidence": "Recognizes encoder states below 2 and state 6 as ready for the recording finalization transition."
+    }
+  ]
+}

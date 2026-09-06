@@ -1,0 +1,1226 @@
+{
+  "target": "Kane's Wrath 1.02",
+  "input_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "function": "0x575913",
+  "mapping_count": 233,
+  "cases": [
+    {
+      "id": 49,
+      "name": "MSG_META_AUTO_SAVE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 50,
+      "name": "MSG_META_BEGIN_PATH_BUILD",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 51,
+      "name": "MSG_META_END_PATH_BUILD",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 52,
+      "name": "MSG_META_TAKE_SCREENSHOT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 53,
+      "name": "MSG_META_ORDER_SYNCHRONIZE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 54,
+      "name": "MSG_META_TOGGLE_PLANNING_MODE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 55,
+      "name": "MSG_META_DEMO_PERFORM_STATISTICAL_DUMP",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 56,
+      "name": "MSG_META_RELOAD_RAPID_ITERATION_FEATURE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 57,
+      "name": "MSG_META_DEBUG_TOGGLE_SHOWVISIONEGGS",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 58,
+      "name": "MSG_META_DEBUG_TOGGLE_STRINGTAGS",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 59,
+      "name": "MSG_META_DEMO_TOGGLE_METRICS_REVERSE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 501,
+      "name": "MSG_CREATE_SELECTED_GROUP",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 502,
+      "name": "MSG_CREATE_SELECTED_GROUP_NO_SOUND",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 503,
+      "name": "MSG_CREATE_SELECTED_GROUP_IDLE_WORKER_VOICE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 504,
+      "name": "MSG_DESTROY_SELECTED_GROUP",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 505,
+      "name": "MSG_REMOVE_FROM_SELECTED_GROUP",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 506,
+      "name": "MSG_CREATE_TEAM0",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 507,
+      "name": "MSG_CREATE_TEAM1",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 508,
+      "name": "MSG_CREATE_TEAM2",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 509,
+      "name": "MSG_CREATE_TEAM3",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 510,
+      "name": "MSG_CREATE_TEAM4",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 511,
+      "name": "MSG_CREATE_TEAM5",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 512,
+      "name": "MSG_CREATE_TEAM6",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 513,
+      "name": "MSG_CREATE_TEAM7",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 514,
+      "name": "MSG_CREATE_TEAM8",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 515,
+      "name": "MSG_CREATE_TEAM9",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 516,
+      "name": "MSG_SELECT_TEAM0",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 517,
+      "name": "MSG_SELECT_TEAM1",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 518,
+      "name": "MSG_SELECT_TEAM2",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 519,
+      "name": "MSG_SELECT_TEAM3",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 520,
+      "name": "MSG_SELECT_TEAM4",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 521,
+      "name": "MSG_SELECT_TEAM5",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 522,
+      "name": "MSG_SELECT_TEAM6",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 523,
+      "name": "MSG_SELECT_TEAM7",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 524,
+      "name": "MSG_SELECT_TEAM8",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 525,
+      "name": "MSG_SELECT_TEAM9",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 526,
+      "name": "MSG_ADD_TEAM0",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 527,
+      "name": "MSG_ADD_TEAM1",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 528,
+      "name": "MSG_ADD_TEAM2",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 529,
+      "name": "MSG_ADD_TEAM3",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 530,
+      "name": "MSG_ADD_TEAM4",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 531,
+      "name": "MSG_ADD_TEAM5",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 532,
+      "name": "MSG_ADD_TEAM6",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 533,
+      "name": "MSG_ADD_TEAM7",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 534,
+      "name": "MSG_ADD_TEAM8",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 535,
+      "name": "MSG_ADD_TEAM9",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 536,
+      "name": "MSG_REMOVE_FROM_TEAM0",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 537,
+      "name": "MSG_REMOVE_FROM_TEAM1",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 538,
+      "name": "MSG_REMOVE_FROM_TEAM2",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 539,
+      "name": "MSG_REMOVE_FROM_TEAM3",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 540,
+      "name": "MSG_REMOVE_FROM_TEAM4",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 541,
+      "name": "MSG_REMOVE_FROM_TEAM5",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 542,
+      "name": "MSG_REMOVE_FROM_TEAM6",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 543,
+      "name": "MSG_REMOVE_FROM_TEAM7",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 544,
+      "name": "MSG_REMOVE_FROM_TEAM8",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 545,
+      "name": "MSG_REMOVE_FROM_TEAM9",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 546,
+      "name": "MSG_DO_ATTACKSQUAD",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 547,
+      "name": "MSG_DO_WEAPON",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 548,
+      "name": "MSG_DO_WEAPON_AT_LOCATION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 549,
+      "name": "MSG_DO_WEAPON_AT_OBJECT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 550,
+      "name": "MSG_DO_SPECIAL_POWER",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 551,
+      "name": "MSG_DO_SPECIAL_POWER_AT_LOCATION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 552,
+      "name": "MSG_DO_SPECIAL_POWER_AT_OBJECT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 553,
+      "name": "MSG_SET_RALLY_POINT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 554,
+      "name": "MSG_PURCHASE_SCIENCE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 555,
+      "name": "MSG_QUEUE_UPGRADE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 556,
+      "name": "MSG_CANCEL_UPGRADE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 557,
+      "name": "MSG_QUEUE_UNIT_CREATE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 558,
+      "name": "MSG_CANCEL_UNIT_CREATE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 559,
+      "name": "MSG_QUEUE_STRUCTURE_CREATE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 560,
+      "name": "MSG_CANCEL_STRUCTURE_CREATE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 561,
+      "name": "MSG_PLACE_STRUCTURE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 562,
+      "name": "MSG_FOUNDATION_CONSTRUCT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 563,
+      "name": "MSG_DOZER_CANCEL_CONSTRUCT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 564,
+      "name": "MSG_SELL",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 565,
+      "name": "MSG_EXIT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 566,
+      "name": "MSG_EVACUATE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 567,
+      "name": "MSG_EVACUATE_CONTESTERS",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 568,
+      "name": "MSG_SACRIFICE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 569,
+      "name": "MSG_COMBATDROP_AT_LOCATION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 570,
+      "name": "MSG_COMBATDROP_AT_OBJECT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 571,
+      "name": "MSG_COMBINE_HORDES_WITH_OBJECT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 572,
+      "name": "MSG_DO_ATTACK_OBJECT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 573,
+      "name": "MSG_DO_FORCE_ATTACK_OBJECT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 574,
+      "name": "MSG_DO_FORCE_ATTACK_GROUND",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 575,
+      "name": "MSG_GET_REPAIRED",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 576,
+      "name": "MSG_GET_HEALED",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 577,
+      "name": "MSG_DO_REPAIR",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 578,
+      "name": "MSG_RESUME_CONSTRUCTION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 579,
+      "name": "MSG_ENTER",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 580,
+      "name": "MSG_DOCK",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 581,
+      "name": "MSG_HARVEST",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 582,
+      "name": "MSG_DO_MOVETO",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 583,
+      "name": "MSG_DO_ATTACKMOVETO",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 584,
+      "name": "MSG_DO_FORCEMOVETO",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 585,
+      "name": "MSG_ADD_WAYPOINT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 586,
+      "name": "MSG_DO_GUARD_POSITION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 587,
+      "name": "MSG_DO_GUARD_OBJECT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 588,
+      "name": "MSG_DO_STOP",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 589,
+      "name": "MSG_DO_SCATTER",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 590,
+      "name": "MSG_OPEN_GATE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 591,
+      "name": "MSG_DO_CHEER",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 592,
+      "name": "MSG_CLOSE_GATE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 593,
+      "name": "MSG_SWITCH_WEAPONS",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 594,
+      "name": "MSG_CONVERT_TO_CARBOMB",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 595,
+      "name": "MSG_CAPTUREBUILDING",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 596,
+      "name": "MSG_CASTLE_UNPACK",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 597,
+      "name": "MSG_CASTLE_PACK",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 598,
+      "name": "MSG_CASTLE_UNPACK_EXPLICIT_OBJECT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 599,
+      "name": "MSG_SNIPE_VEHICLE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 600,
+      "name": "MSG_DO_SPECIAL_POWER_OVERRIDE_DESTINATION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 601,
+      "name": "MSG_DO_SALVAGE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 602,
+      "name": "MSG_CLEAR_INGAME_POPUP_MESSAGE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 603,
+      "name": "MSG_PLACE_BEACON",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 604,
+      "name": "MSG_REMOVE_BEACON",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 605,
+      "name": "MSG_SET_BEACON_TEXT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 606,
+      "name": "MSG_SET_REPLAY_CAMERA",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 607,
+      "name": "MSG_SELF_DESTRUCT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 608,
+      "name": "MSG_CREATE_FORMATION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 609,
+      "name": "MSG_LOGIC_CRC",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 610,
+      "name": "MSG_SET_MINE_CLEARING_DETAIL",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 611,
+      "name": "MSG_DO_USER1",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 612,
+      "name": "MSG_DO_USER2",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 613,
+      "name": "MSG_DO_USER3",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 614,
+      "name": "MSG_DO_USER4",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 615,
+      "name": "MSG_MOVE_ARMY_TO_POSITION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 616,
+      "name": "MSG_AUTO_SAVE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 617,
+      "name": "MSG_CHANGE_CAMERA_ARRIVED_AT_WAYPOINTID",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 618,
+      "name": "MSG_HORDE_TOGGLE_FORMATION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 619,
+      "name": "MSG_CREW_EVACUATE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 620,
+      "name": "MSG_DO_SPELLBOOK_SPECIAL_POWER",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 621,
+      "name": "MSG_WEAPONSET_TOGGLE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 622,
+      "name": "MSG_DO_AUTO_ABILITY",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 623,
+      "name": "MSG_DO_AUTO_ABILITY_WEAPON",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 624,
+      "name": "MSG_TOGGLE_NO_AUTO_ACQUIRE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 625,
+      "name": "MSG_WAKE_AUTO_PICKUP",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 626,
+      "name": "MSG_START_SELF_REPAIR",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 627,
+      "name": "MSG_STOP_SELF_REPAIR",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 628,
+      "name": "MSG_SUMMON_REINFORCEMENTS",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 629,
+      "name": "MSG_CALL_IN_REINFORCEMENTS",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 630,
+      "name": "MSG_HORDE_SET_FORMATION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 631,
+      "name": "MSG_CREATE_SELECT_ALL_GROUP",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 632,
+      "name": "MSG_ENABLE_RETALIATION_MODE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 633,
+      "name": "MSG_WALL_HUB_CONSTRUCT_SPAN",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 634,
+      "name": "MSG_DO_MOVETO_FORMATION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 635,
+      "name": "MSG_DO_MOVE_AND_ORIENTATE_OBJECTTO",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 636,
+      "name": "MSG_GIVE_MONEY",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 637,
+      "name": "MSG_DO_ROTATE_FIRINGARC",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 638,
+      "name": "MSG_CHANGE_STANCE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 639,
+      "name": "MSG_CHANGE_ORDERMODE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 640,
+      "name": "MSG_ACTIONQUEUE_EXECUTE_PLANNED",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 641,
+      "name": "MSG_ACTIONQUEUE_CLEAR_ALL",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 642,
+      "name": "MSG_ACTIONQUEUE_CLEAR_PLANNED",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 643,
+      "name": "MSG_ACTIONQUEUE_CLEAR_LAST",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 644,
+      "name": "MSG_START_NEIGHBORHOOD_REPAIR",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 645,
+      "name": "MSG_CANCEL_NEIGHBORHOOD",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 646,
+      "name": "MSG_ORDER_SYNCHRONIZE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 647,
+      "name": "MSG_ADD_ALL_FACTION_UPGRADE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 648,
+      "name": "MSG_REDIRECT_POWER",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 649,
+      "name": "MSG_TOGGLE_POWER",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 650,
+      "name": "MSG_DO_SPECIAL_POWER_AT_MULIPLE_LOCATIONS",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 651,
+      "name": "MSG_BC_MATCH_ID",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 652,
+      "name": "MSG_STATS_SESSION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 653,
+      "name": "MSG_STATS_AUTH",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 654,
+      "name": "MSG_DO_REVERSEMOVETO",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 655,
+      "name": "MSG_ANNOUNCE_RTT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 656,
+      "name": "MSG_DO_FORCEATTACKMOVETO",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 657,
+      "name": "MSG_DESTRUCT_PLAYER",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 658,
+      "name": "MSG_DO_ATTACKMOVETO_OBJECT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 659,
+      "name": "MSG_DO_FORCEATTACKMOVETO_OBJECT",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 0,
+      "name": "MSG_INVALID",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 2,
+      "name": "MSG_RAW_MOUSE_BEGIN",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 3,
+      "name": "MSG_RAW_MOUSE_POSITION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 4,
+      "name": "MSG_RAW_MOUSE_LEFT_BUTTON_DOWN",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 5,
+      "name": "MSG_RAW_MOUSE_LEFT_DOUBLE_CLICK",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 6,
+      "name": "MSG_RAW_MOUSE_LEFT_BUTTON_UP",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 7,
+      "name": "MSG_RAW_MOUSE_LEFT_CLICK",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 8,
+      "name": "MSG_RAW_MOUSE_LEFT_DRAG",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 10,
+      "name": "MSG_RAW_MOUSE_MIDDLE_BUTTON_DOWN",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 11,
+      "name": "MSG_RAW_MOUSE_MIDDLE_DOUBLE_CLICK",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 12,
+      "name": "MSG_RAW_MOUSE_MIDDLE_BUTTON_UP",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 13,
+      "name": "MSG_RAW_MOUSE_MIDDLE_DRAG",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 14,
+      "name": "MSG_RAW_MOUSE_RIGHT_BUTTON_DOWN",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 15,
+      "name": "MSG_RAW_MOUSE_RIGHT_DOUBLE_CLICK",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 16,
+      "name": "MSG_RAW_MOUSE_RIGHT_BUTTON_UP",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 18,
+      "name": "MSG_RAW_MOUSE_RIGHT_DRAG",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 21,
+      "name": "MSG_RAW_MOUSE_WHEEL",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 22,
+      "name": "MSG_RAW_MOUSE_END",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 23,
+      "name": "MSG_RAW_KEY_DOWN",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 24,
+      "name": "MSG_RAW_KEY_UP",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 25,
+      "name": "MSG_MOUSE_LEFT_CLICK",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 26,
+      "name": "MSG_MOUSE_LEFT_DOUBLE_CLICK",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 30,
+      "name": "MSG_MOUSE_MIDDLE_CLICK",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 31,
+      "name": "MSG_MOUSE_MIDDLE_DOUBLE_CLICK",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 35,
+      "name": "MSG_MOUSE_RIGHT_CLICK",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 36,
+      "name": "MSG_MOUSE_RIGHT_DOUBLE_CLICK",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 45,
+      "name": "MSG_CLEAR_GAME_DATA",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 46,
+      "name": "MSG_NEW_GAME",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 47,
+      "name": "MSG_START_LIVING_WORLD_LOGIC",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 48,
+      "name": "MSG_BEGIN_META_MESSAGES",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 60,
+      "name": "MSG_END_META_MESSAGES",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 500,
+      "name": "MSG_BEGIN_NETWORK_MESSAGES",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 1001,
+      "name": "MSG_LW_DONE_SESSION",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 1002,
+      "name": "MSG_LW_DONE_PHASE",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 1003,
+      "name": "MSG_LW_SET_CONFLICT_RESOLUTION_METHOD",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 1004,
+      "name": "MSG_LW_ARMY_MOVE_REQUEST",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 1005,
+      "name": "MSG_LW_CANCEL_ARMY_MOVE_REQUEST",
+      "method": "exact_target_case_literal"
+    },
+    {
+      "id": 1006,
+      "name": "MSG_LW_BUILD_BUILDING",
+      "string_ea": "0xa4d2d4",
+      "expression": "stru_A4CE78.raw_0454[8]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1007,
+      "name": "MSG_LW_DESTROY_BUILDING",
+      "string_ea": "0xa4d2bc",
+      "expression": "stru_A4CE78.query_host_0444",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1008,
+      "name": "MSG_LW_QUEUE_UNIT",
+      "string_ea": "0xa4d2a8",
+      "expression": "stru_A4CE78.query_state_03F0[64]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1009,
+      "name": "MSG_LW_DEQUEUE_UNIT",
+      "string_ea": "0xa4d294",
+      "expression": "stru_A4CE78.query_state_03F0[44]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1010,
+      "name": "MSG_LW_DEQUEUE_UNIT_AT_INDEX",
+      "string_ea": "0xa4d274",
+      "expression": "stru_A4CE78.query_state_03F0[12]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1011,
+      "name": "MSG_LW_SWAP_ARMY_MEMBERS",
+      "string_ea": "0xa4d258",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[248]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1012,
+      "name": "MSG_LW_CANCEL_ARMY_MEMBER_MOVE",
+      "string_ea": "0xa4d238",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[232]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1013,
+      "name": "MSG_LW_DISBAND_ARMY_MEMBER",
+      "string_ea": "0xa4d21c",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[218]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1014,
+      "name": "MSG_LW_DISBAND_ARMY",
+      "string_ea": "0xa4d208",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[208]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1015,
+      "name": "MSG_LW_CANCEL_ARMY_MEMBER_DISBAND",
+      "string_ea": "0xa4d1e4",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[190]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1016,
+      "name": "MSG_LW_SWAP_ARMIES_IN_BATTLE",
+      "string_ea": "0xa4d1c4",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[174]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1017,
+      "name": "MSG_LW_FORCE_ENTER_REALTIME_BATTLE",
+      "string_ea": "0xa4d1a0",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[156]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1018,
+      "name": "MSG_LW_DEBUG_QUICKWIN_BATTLE",
+      "string_ea": "0xa4d180",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[140]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1019,
+      "name": "MSG_LW_RESOLVE_REGION_AWARD_DISPUTE",
+      "string_ea": "0xa4d15c",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[122]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1020,
+      "name": "MSG_LW_PLAYER_SURRENDERED",
+      "string_ea": "0xa4d140",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[108]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1021,
+      "name": "MSG_LW_REQUEST_ENDGAME",
+      "string_ea": "0xa4d128",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[96]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1022,
+      "name": "MSG_LW_TRANSITION_TO_TACTICAL_COMPLETE",
+      "string_ea": "0xa4d100",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[76]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1023,
+      "name": "MSG_LW_TRANSITION_TO_STRATEGIC_COMPLETE",
+      "string_ea": "0xa4d0d8",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[56]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1024,
+      "name": "MSG_LW_SCORESCREEN_DONE",
+      "string_ea": "0xa4d0c0",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[44]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1299,
+      "name": "MSG_END_NETWORK_MESSAGES",
+      "string_ea": "0xa4d0a4",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[30]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1300,
+      "name": "MSG_TIMESTAMP",
+      "string_ea": "0xa4d094",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[22]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1301,
+      "name": "MSG_OBJECT_CREATED",
+      "string_ea": "0xa4d080",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118[12]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1302,
+      "name": "MSG_OBJECT_DESTROYED",
+      "string_ea": "0xa4d068",
+      "expression": "stru_A4CE78.usage_report_00D8.offline_file_path_0118",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1303,
+      "name": "MSG_OBJECT_POSITION",
+      "string_ea": "0xa4d054",
+      "expression": "stru_A4CE78.usage_report_00D8.service_url_0014[240]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1304,
+      "name": "MSG_OBJECT_ORIENTATION",
+      "string_ea": "0xa4d03c",
+      "expression": "stru_A4CE78.usage_report_00D8.service_url_0014[216]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    },
+    {
+      "id": 1305,
+      "name": "MSG_OBJECT_JOINED_TEAM",
+      "string_ea": "0xa4d024",
+      "expression": "stru_A4CE78.usage_report_00D8.service_url_0014[192]",
+      "method": "exact_target_case_pointer_resolved_by_member_offsets_and_raw_bytes"
+    }
+  ],
+  "historical_mapping_differences": []
+}

@@ -1,0 +1,53 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "scope": "Function prototypes that survived isolated IDA 9.3 checkpoint validation; three unstable prototypes are intentionally omitted",
+  "function_types": {
+    "0x40CF21": {
+      "name": "GameSlot_IsDisconnected",
+      "declaration": "int __thiscall(KW12GameSlot_Recovered *self)"
+    },
+    "0x56D5B9": {
+      "name": "Version_CopyAssign",
+      "declaration": "KW12Version_Recovered *__thiscall(KW12Version_Recovered *self, const KW12Version_Recovered *source)"
+    },
+    "0x570592": {
+      "name": "Version_GetBuildGuid",
+      "declaration": "KW12AsciiString_Recovered *__thiscall(KW12Version_Recovered *self)"
+    },
+    "0x577421": {
+      "name": "Replay_GetDefaultDisplayName",
+      "declaration": "KW12UnicodeString_Recovered *__cdecl(KW12UnicodeString_Recovered *result)"
+    },
+    "0x5786A9": {
+      "name": "Version_GetAsciiVersion",
+      "declaration": "KW12AsciiString_Recovered *__thiscall(KW12Version_Recovered *self, KW12AsciiString_Recovered *result)"
+    },
+    "0x5786CA": {
+      "name": "Version_GetUnicodeVersion",
+      "declaration": "KW12UnicodeString_Recovered *__thiscall(KW12Version_Recovered *self, KW12UnicodeString_Recovered *result)"
+    },
+    "0x57873B": {
+      "name": "Version_FormatDottedFourPart",
+      "declaration": "KW12AsciiString_Recovered *__thiscall(KW12Version_Recovered *self, KW12AsciiString_Recovered *result)"
+    },
+    "0x58CBA8": {
+      "name": "Version_Ctor",
+      "declaration": "KW12Version_Recovered *__thiscall(KW12Version_Recovered *self)"
+    },
+    "0x6BDC39": {
+      "name": "RefCountClass_Release_Ref",
+      "declaration": "void __thiscall(void *self)"
+    },
+    "0x6BDD99": {
+      "name": "RefCountPtr_Release",
+      "declaration": "void __thiscall(void **self)"
+    }
+  },
+  "typed_count": 10,
+  "intentionally_omitted_after_ida_checkpoint_failure": [
+    "0x578682",
+    "0x578708",
+    "0x8CD69A"
+  ]
+}

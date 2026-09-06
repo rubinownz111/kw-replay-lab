@@ -1,0 +1,109 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "scope": "replay stream queues, codecs, message payloads, and recovered in-memory layouts",
+  "applied_count": 15,
+  "function_type_count": 12,
+  "local_type_sizes": {
+    "GameCommandStreamData12_Recovered": 20,
+    "ReplayObjectStreamData12_Recovered": 20,
+    "MetaStreamData12_Recovered": 20,
+    "NetCameraDataMsg12_Recovered": 56,
+    "NetVoiceDataMsg12_Recovered": 32,
+    "NetTelestratorDataMsg12_Recovered": 32,
+    "BroadcastMetadata12_Recovered": 60,
+    "BroadcastMetadataType2Payload12_Recovered": 56
+  },
+  "applied": [
+    {
+      "ea": "0x58922D",
+      "name": "ReplayQueues_AppendVoiceStream",
+      "size": 26,
+      "evidence": "Channel-3 dispatch wrapper clones a VoiceStreamData object into its dedicated replay queue."
+    },
+    {
+      "ea": "0x589286",
+      "name": "ReplayQueues_AppendTelestratorStream",
+      "size": 26,
+      "evidence": "Channel-4 dispatch wrapper clones a TelestratorStreamData object into its dedicated replay queue."
+    },
+    {
+      "ea": "0x5892A0",
+      "name": "ReplayQueues_AppendMetadataStream",
+      "size": 26,
+      "evidence": "Channels 0xFD..0xFF dispatch wrapper clones a MetaStreamData object into the metadata replay queue."
+    },
+    {
+      "ea": "0x5892BA",
+      "name": "ReplayQueues_AppendCameraStream",
+      "size": 26,
+      "evidence": "Channel-2 dispatch wrapper clones a CameraStreamData object into its dedicated replay queue."
+    },
+    {
+      "ea": "0x6C3332",
+      "name": "ReplayObjectStreamData_Save",
+      "size": 215,
+      "evidence": "Shared Camera/Voice/Telestrator writer emits a u16 object count and then each stream ID plus serialized NetCommandMsg envelope."
+    },
+    {
+      "ea": "0x6DB546",
+      "name": "ReplayObjectStreamData_Load",
+      "size": 304,
+      "evidence": "Shared Camera/Voice/Telestrator loader reads the object count, deserializes NetCommandMsg envelopes, and appends references."
+    },
+    {
+      "ea": "0x6C3409",
+      "name": "MetaStreamData_Save",
+      "size": 139,
+      "evidence": "Writes u8 count followed by count raw 60-byte BroadcastMetadata objects."
+    },
+    {
+      "ea": "0x6DB676",
+      "name": "MetaStreamData_Load",
+      "size": 132,
+      "evidence": "Validates 1 + count*60 against payload size and copies each BroadcastMetadata object."
+    },
+    {
+      "ea": "0x6DB449",
+      "name": "GameCommandStreamData_Save",
+      "size": 117,
+      "evidence": "Channel-1 writer serializes the counted vector of 132-byte GameMessage objects through GameCommandStreamData_XferMessages."
+    },
+    {
+      "ea": "0x6C067F",
+      "name": "NetCameraDataMsg_DebugFormat",
+      "size": 101,
+      "evidence": "Formats CAMERA frame, optional pos, and optional rot fields; strings and offsets independently establish the role."
+    },
+    {
+      "ea": "0x6C06E4",
+      "name": "NetCameraDataMsg_Xfer",
+      "size": 71,
+      "evidence": "Xfers frame and update flags, followed by optional Coord3D position and four-float rotation selected by flag bits 1 and 2."
+    },
+    {
+      "ea": "0x6C0DF2",
+      "name": "NetTelestratorDataMsg_DebugFormat",
+      "size": 77,
+      "evidence": "Formats TELESTRATOR frame and byte count; literal strings and field offsets independently establish the role."
+    },
+    {
+      "ea": "0x6C60D6",
+      "name": "NetTelestratorDataMsg_Xfer",
+      "size": 73,
+      "evidence": "Xfers u32 frame, u8 data size, allocates on load, and transfers the drawing byte payload."
+    },
+    {
+      "ea": "0x6C0F0B",
+      "name": "NetVoiceDataMsg_DebugFormat",
+      "size": 89,
+      "evidence": "Formats VOICE frame, byte count, and serial; literal strings and field offsets independently establish the role."
+    },
+    {
+      "ea": "0x6C614D",
+      "name": "NetVoiceDataMsg_Xfer",
+      "size": 84,
+      "evidence": "Xfers u32 frame, u16 serial, u16 data size, allocates on load, and transfers the voice byte payload."
+    }
+  ]
+}

@@ -1,0 +1,261 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "626B1E10F07E6C98C6D1681B8C4E4B8428A4BB30CDDD2318785AD781CBFD28C4",
+  "scope": "Shared replay boundaries: GameMessage storage, stream copy constructors and queues, Xfer attachment/envelopes, recorder jobs and paths, camera/view, voice playback, map registry, and GameSlot copy semantics",
+  "applied_count": 31,
+  "typed_count": 28,
+  "new_local_types": {
+    "GameMessageVector12_Recovered": 12
+  },
+  "decompile_failures": [],
+  "function_types": {
+    "0x56D7C6": "void __thiscall ReplayJobHandle_Finalize(void *job_handle, KW12ReplayFooterMetadata_Recovered *metadata, bool wait_until_terminal);",
+    "0x56EB82": "GameMessage12_Recovered *__thiscall GameMessage_DefaultCtor(GameMessage12_Recovered *self);",
+    "0x56F865": "bool __thiscall Recorder_IsPlaybackActive(const void *recorder);",
+    "0x56F8D0": "unsigned int __thiscall ReplayRecording_MarkEndTimeAndFrame(void *recorder);",
+    "0x56FC0B": "void *__thiscall ReplayJobPair_FinalizeSlot(void *job_pair, unsigned int index, KW12ReplayFooterMetadata_Recovered *metadata);",
+    "0x56FC2C": "void *__thiscall ReplayJobPair_FinalizeAll(void *job_pair, KW12ReplayFooterMetadata_Recovered *metadata);",
+    "0x572BD0": "void *__thiscall StreamDataQueue_ClearOwnedNodes(void *queue);",
+    "0x57CA9F": "void __cdecl ReplayObjectReferenceRange_Release(void *begin, void *end);",
+    "0x57D62E": "void *__cdecl Replay_GetPostCommBaseName(void *out_name);",
+    "0x57D6C6": "void *__cdecl Replay_GenerateUniqueDefaultName(void *out_name);",
+    "0x582CC4": "ReplayObjectStreamData12_Recovered *__thiscall NetCommandStreamData_CopyCtor(ReplayObjectStreamData12_Recovered *self, const ReplayObjectStreamData12_Recovered *source);",
+    "0x582CDC": "MetaStreamData12_Recovered *__thiscall BroadcastMetadataStreamData_CopyCtor(MetaStreamData12_Recovered *self, const MetaStreamData12_Recovered *source);",
+    "0x584D23": "ReplayObjectStreamData12_Recovered *__thiscall VoiceStreamData_CopyCtor(ReplayObjectStreamData12_Recovered *self, const ReplayObjectStreamData12_Recovered *source);",
+    "0x584D3B": "ReplayObjectStreamData12_Recovered *__thiscall TelestratorStreamData_CopyCtor(ReplayObjectStreamData12_Recovered *self, const ReplayObjectStreamData12_Recovered *source);",
+    "0x584D53": "MetaStreamData12_Recovered *__thiscall MetaStreamData_CopyCtor(MetaStreamData12_Recovered *self, const MetaStreamData12_Recovered *source);",
+    "0x584D6B": "ReplayObjectStreamData12_Recovered *__thiscall CameraStreamData_CopyCtor(ReplayObjectStreamData12_Recovered *self, const ReplayObjectStreamData12_Recovered *source);",
+    "0x584D83": "GameCommandStreamData12_Recovered *__thiscall GameCommandStreamDataBase_CopyCtor(GameCommandStreamData12_Recovered *self, const GameCommandStreamData12_Recovered *source);",
+    "0x585B70": "GameCommandStreamData12_Recovered *__thiscall GameCommandStreamData_CopyCtor(GameCommandStreamData12_Recovered *self, const GameCommandStreamData12_Recovered *source);",
+    "0x585B88": "GameMessage12_Recovered *__thiscall GameMessageVector_PushBackCopy(GameMessageVector12_Recovered *self, const GameMessage12_Recovered *source);",
+    "0x6BDC46": "int __thiscall ReplayStreamObject_XferEnvelope(void *stream_object, unsigned int *last_object_id, void *xfer);",
+    "0x6C578F": "void __thiscall VoicePlayback_SubmitPacket(void *voice_backend, const NetVoiceDataMsg12_Recovered *packet);",
+    "0x6C9A6E": "void *__thiscall ReplayCamera_Interpolate(void *camera_controller);",
+    "0x6C9B7F": "void *__thiscall ReplayCamera_SelectPlayer(void *camera_controller, unsigned int player_index);",
+    "0x6D936C": "int __cdecl CustomMapRegistry_QueryRecordIdByCRC(unsigned int map_crc);",
+    "0x6DCC45": "void *__thiscall GameSlot_CopyAssign(void *self, const void *source);",
+    "0x746EA1": "int __thiscall W3DViewManager_RegisterCamera(void *view_manager, void *camera);",
+    "0x859401": "bool __thiscall XferSave_AttachOutputStream(void *xfer_save, void *output_stream);",
+    "0x85AC01": "bool __thiscall XferLoad_AttachInputStream(void *xfer_load, void *input_stream);"
+  },
+  "applied": [
+    {
+      "ea": "0x56D7C6",
+      "name": "ReplayJobHandle_Finalize",
+      "size": 213,
+      "confidence": "very high",
+      "evidence": "Updates a replay worker job to a terminal state, optionally extracts footer metadata, and can wait until state 7."
+    },
+    {
+      "ea": "0x56EB82",
+      "name": "GameMessage_DefaultCtor",
+      "size": 47,
+      "confidence": "exact",
+      "evidence": "Constructs the 132-byte GameMessage layout with the local player, zero arguments, five inline argument slots, and no owner list."
+    },
+    {
+      "ea": "0x56F865",
+      "name": "Recorder_IsPlaybackActive",
+      "size": 23,
+      "confidence": "high",
+      "evidence": "Tests the recorder mode field for the two playback-active states used by replay command dispatch."
+    },
+    {
+      "ea": "0x56F8D0",
+      "name": "ReplayRecording_MarkEndTimeAndFrame",
+      "size": 54,
+      "confidence": "exact",
+      "evidence": "Stores _time64 and the current logic frame in the recorder's ending timestamp fields."
+    },
+    {
+      "ea": "0x56FC0B",
+      "name": "ReplayJobPair_FinalizeSlot",
+      "size": 33,
+      "confidence": "exact",
+      "evidence": "Selects one of two 0xB24-byte replay job handles and finalizes it."
+    },
+    {
+      "ea": "0x56FC2C",
+      "name": "ReplayJobPair_FinalizeAll",
+      "size": 29,
+      "confidence": "exact",
+      "evidence": "Iterates both replay job slots and calls ReplayJobPair_FinalizeSlot."
+    },
+    {
+      "ea": "0x572BD0",
+      "name": "StreamDataQueue_ClearOwnedNodes",
+      "size": 50,
+      "confidence": "very high",
+      "evidence": "Walks a sentinel-linked stream queue, invokes each owned payload's destructor, frees every node, and restores the empty sentinel."
+    },
+    {
+      "ea": "0x57CA9F",
+      "name": "ReplayObjectReferenceRange_Release",
+      "size": 25,
+      "confidence": "very high",
+      "evidence": "Releases every 12-byte replay object-reference entry in a half-open range."
+    },
+    {
+      "ea": "0x57D62E",
+      "name": "Replay_GetPostCommBaseName",
+      "size": 152,
+      "confidence": "exact",
+      "evidence": "Builds the localized LastReplay basename with the literal _PostComm suffix, falling back to 00000000."
+    },
+    {
+      "ea": "0x57D6C6",
+      "name": "Replay_GenerateUniqueDefaultName",
+      "size": 282,
+      "confidence": "very high",
+      "evidence": "Builds the localized default replay name and probes numbered candidates until a non-existing replay path is found."
+    },
+    {
+      "ea": "0x582CC4",
+      "name": "NetCommandStreamData_CopyCtor",
+      "size": 24,
+      "confidence": "exact",
+      "evidence": "Copy-constructs the shared NetCommandStreamData base and installs its RTTI vtable."
+    },
+    {
+      "ea": "0x582CDC",
+      "name": "BroadcastMetadataStreamData_CopyCtor",
+      "size": 39,
+      "confidence": "exact",
+      "evidence": "Copy-constructs StreamDataTemplate<BroadcastMetadata> and copies its frame."
+    },
+    {
+      "ea": "0x584D23",
+      "name": "VoiceStreamData_CopyCtor",
+      "size": 24,
+      "confidence": "exact",
+      "evidence": "Invokes the NetCommandStreamData copy constructor and installs VoiceStreamData's vtable."
+    },
+    {
+      "ea": "0x584D3B",
+      "name": "TelestratorStreamData_CopyCtor",
+      "size": 24,
+      "confidence": "exact",
+      "evidence": "Invokes the NetCommandStreamData copy constructor and installs TelestratorStreamData's vtable."
+    },
+    {
+      "ea": "0x584D53",
+      "name": "MetaStreamData_CopyCtor",
+      "size": 24,
+      "confidence": "exact",
+      "evidence": "Invokes the broadcast-metadata stream copy constructor and installs MetaStreamData's vtable."
+    },
+    {
+      "ea": "0x584D6B",
+      "name": "CameraStreamData_CopyCtor",
+      "size": 24,
+      "confidence": "exact",
+      "evidence": "Invokes the NetCommandStreamData copy constructor and installs CameraStreamData's vtable."
+    },
+    {
+      "ea": "0x584D83",
+      "name": "GameCommandStreamDataBase_CopyCtor",
+      "size": 39,
+      "confidence": "exact",
+      "evidence": "Copy-constructs StreamDataTemplate<GameMessage> and copies its frame."
+    },
+    {
+      "ea": "0x584E44",
+      "name": "CameraStreamQueueEntry_CopyCtor",
+      "size": 29,
+      "confidence": "very high",
+      "evidence": "Copies a camera queue entry key and copy-constructs its embedded CameraStreamData."
+    },
+    {
+      "ea": "0x585B70",
+      "name": "GameCommandStreamData_CopyCtor",
+      "size": 24,
+      "confidence": "exact",
+      "evidence": "Invokes the GameMessage stream base copy constructor and installs GameCommandStreamData's vtable."
+    },
+    {
+      "ea": "0x585B88",
+      "name": "GameMessageVector_PushBackCopy",
+      "size": 59,
+      "confidence": "exact",
+      "evidence": "Appends a deep-copied 132-byte GameMessage, growing the vector when capacity is exhausted."
+    },
+    {
+      "ea": "0x585CA1",
+      "name": "VoiceStreamQueue_ClearOwnedNodes",
+      "size": 51,
+      "confidence": "very high",
+      "evidence": "Destroys each VoiceStreamData payload, frees every queue node, and restores the sentinel."
+    },
+    {
+      "ea": "0x58926C",
+      "name": "CameraStreamQueue_PushBackCopy",
+      "size": 26,
+      "confidence": "very high",
+      "evidence": "Allocates a camera-stream queue node, copy-constructs its entry, and links it before the sentinel."
+    },
+    {
+      "ea": "0x6BDC46",
+      "name": "ReplayStreamObject_XferEnvelope",
+      "size": 82,
+      "confidence": "exact",
+      "evidence": "Transfers the stream-object flags, conditionally transfers a changed object ID, then dispatches the object's virtual payload xfer."
+    },
+    {
+      "ea": "0x6C578F",
+      "name": "VoicePlayback_SubmitPacket",
+      "size": 65,
+      "confidence": "very high",
+      "evidence": "Submits replay voice bytes, payload size, stream ID, and serial to the voice backend when replay voice playback is enabled."
+    },
+    {
+      "ea": "0x6C9A6E",
+      "name": "ReplayCamera_Interpolate",
+      "size": 273,
+      "confidence": "exact",
+      "evidence": "Interpolates position and orientation from the rolling replay camera sample list and applies both transforms to the active camera."
+    },
+    {
+      "ea": "0x6C9B7F",
+      "name": "ReplayCamera_SelectPlayer",
+      "size": 40,
+      "confidence": "very high",
+      "evidence": "Selects one of eight replay camera tracks, activates the registered camera, and immediately refreshes interpolation."
+    },
+    {
+      "ea": "0x6D936C",
+      "name": "CustomMapRegistry_QueryRecordIdByCRC",
+      "size": 137,
+      "confidence": "very high",
+      "evidence": "Builds a custom_maps request with mapCRC=<decimal> and the recordid field, then submits it to the registry service."
+    },
+    {
+      "ea": "0x6DCC45",
+      "name": "GameSlot_CopyAssign",
+      "size": 475,
+      "confidence": "very high",
+      "evidence": "Deep copy-assigns a complete SAGE2 GameSlot, including strings, slot flags, player attributes, and the optional 912-byte owned extension."
+    },
+    {
+      "ea": "0x746EA1",
+      "name": "W3DViewManager_RegisterCamera",
+      "size": 67,
+      "confidence": "very high",
+      "evidence": "Adds a camera to the manager's camera vector, binds it to the managed view, selects the first registration, and returns its index."
+    },
+    {
+      "ea": "0x859401",
+      "name": "XferSave_AttachOutputStream",
+      "size": 75,
+      "confidence": "very high",
+      "evidence": "Attaches a previously unopened output stream to XferSave and resets the writer's buffers and block state."
+    },
+    {
+      "ea": "0x85AC01",
+      "name": "XferLoad_AttachInputStream",
+      "size": 41,
+      "confidence": "very high",
+      "evidence": "Attaches a previously unopened input stream to XferLoad and resets the EOF/error and cursor fields."
+    }
+  ]
+}

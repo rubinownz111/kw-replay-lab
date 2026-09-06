@@ -1,0 +1,208 @@
+{
+  "target": "Kane's Wrath 1.02 cnc3ep1.dat",
+  "target_executable_sha256": "8225BB6CE15F7D34467E7FD55ED1AD60706E62E9470A877AB3DB6AA47ADDFDF5",
+  "published_idb_sha256_before_batch": "FB44489A5300F21F5D5FBF6E6D15AE6ED5F0345D4840C77CB0C78EEF129C25E7",
+  "scope": "APT file-transfer UI, shared containers/Unicode helpers, replay voice capture, and exact GameSpy server-browser runtime",
+  "applied_count": 21,
+  "global_count": 1,
+  "applied": [
+    {
+      "ea": "0x40DB20",
+      "old_name": "sub_40DB20",
+      "name": "AptFileTransferPopup_Destroy",
+      "size": 24,
+      "confidence": "exact",
+      "evidence": "Deletes the global AptFileTransferPopup through its virtual deleting destructor and clears the singleton.",
+      "basis": "singleton xrefs, vtable ownership, constructor/destructor pair"
+    },
+    {
+      "ea": "0x40DB38",
+      "old_name": "sub_40DB38",
+      "name": "AptFileTransferPopup_FormatPlayerColor",
+      "size": 76,
+      "confidence": "very high",
+      "evidence": "APT value callback that formats a selected GameSlot player-color identifier as decimal text.",
+      "basis": "constructor callback registration, slot bounds, GameInfo/GameSlot access"
+    },
+    {
+      "ea": "0x452D29",
+      "old_name": "sub_452D29",
+      "name": "MappedCommandHandler_Ctor",
+      "size": 56,
+      "confidence": "high",
+      "evidence": "Initializes the shared mapped-command handler base used by eleven APT popup constructors.",
+      "basis": "constructor call graph and complete-object vtable initialization"
+    },
+    {
+      "ea": "0x452DFA",
+      "old_name": "sub_452DFA",
+      "name": "AptFileTransferPopup_Dtor",
+      "size": 51,
+      "confidence": "exact",
+      "evidence": "Restores the AptFileTransferPopup vtable, emits FileTransferPopUpClose, clears the singleton, and destroys the base.",
+      "basis": "named vtable store, exact APT event string, constructor pairing"
+    },
+    {
+      "ea": "0x45E979",
+      "old_name": "sub_45E979",
+      "name": "AptFileTransferPopup_Ctor",
+      "size": 721,
+      "confidence": "exact",
+      "evidence": "Constructs the 0x64-byte AptFileTransferPopup, maps the eight human GameInfo slots, registers player-color callbacks, and localizes labels.",
+      "basis": "allocation size, named vtable, APT strings, GameInfo slot loop"
+    },
+    {
+      "ea": "0x45EC4A",
+      "old_name": "sub_45EC4A",
+      "name": "AptFileTransferPopup_Create",
+      "size": 60,
+      "confidence": "exact",
+      "evidence": "Creates the singleton 0x64-byte AptFileTransferPopup when absent.",
+      "basis": "allocation size, constructor call, singleton writes and callers"
+    },
+    {
+      "ea": "0x4C2A8D",
+      "old_name": "sub_4C2A8D",
+      "name": "ListNode28Sentinel_Initialize",
+      "size": 27,
+      "confidence": "high",
+      "evidence": "Allocates a 28-byte list sentinel and self-links its forward and backward links.",
+      "basis": "allocation size, exact self-link stores, three unrelated container users"
+    },
+    {
+      "ea": "0x5711B9",
+      "old_name": "sub_5711B9",
+      "name": "UnicodeStringConcatExpression_Ctor",
+      "size": 45,
+      "confidence": "very high",
+      "evidence": "Builds the three-field lazy Unicode concatenation expression used by replay post-communication and game-state filename generation.",
+      "basis": "operand stores, Unicode length helper, all four callers"
+    },
+    {
+      "ea": "0x5788FD",
+      "old_name": "sub_5788FD",
+      "name": "Vector60_CopyCtor",
+      "size": 63,
+      "confidence": "high",
+      "evidence": "Copy-constructs a vector whose elements have a 60-byte stride.",
+      "basis": "exact end-minus-begin division by 60, reserve/copy helpers, callers"
+    },
+    {
+      "ea": "0x57C7A6",
+      "old_name": "sub_57C7A6",
+      "name": "RedBlackTree_InitializeSentinel",
+      "size": 42,
+      "confidence": "high",
+      "evidence": "Allocates and initializes the red-black-tree head sentinel: color zero, parent null, and left/right self links.",
+      "basis": "field stores and shared constructor wrapper"
+    },
+    {
+      "ea": "0x57CA51",
+      "old_name": "sub_57CA51",
+      "name": "UnicodeString_FromConcatExpression",
+      "size": 39,
+      "confidence": "very high",
+      "evidence": "Materializes a lazy Unicode concatenation expression into an owned UTF-16 string buffer.",
+      "basis": "length calculation, UTF-16 allocation/copy, replay filename callers"
+    },
+    {
+      "ea": "0x57F0D4",
+      "old_name": "sub_57F0D4",
+      "name": "RedBlackTree_Ctor",
+      "size": 25,
+      "confidence": "high",
+      "evidence": "Constructs the shared red-black-tree container by delegating to its sentinel initializer.",
+      "basis": "single helper call and three unrelated container users"
+    },
+    {
+      "ea": "0x582E96",
+      "old_name": "sub_582E96",
+      "name": "GameMessageVector_DestroyStorage",
+      "size": 30,
+      "confidence": "very high",
+      "evidence": "Destroys the GameMessage range and frees the vector's backing storage.",
+      "basis": "GameMessage range destructor, allocator pairing, seven replay callers"
+    },
+    {
+      "ea": "0x6E57FF",
+      "old_name": "sub_6E57FF",
+      "name": "VoiceManager_PumpAndRecord",
+      "size": 278,
+      "confidence": "very high",
+      "evidence": "Dequeues captured voice frames, forwards live voice when enabled, and appends VoiceStreamData to an active replay recording.",
+      "basis": "VoiceStreamData vtable, recorder gates, network forwarding, refcount releases"
+    },
+    {
+      "ea": "0x8ABC25",
+      "old_name": "sub_8ABC25",
+      "name": "gsifree",
+      "size": 14,
+      "confidence": "exact",
+      "evidence": "GameSpy SDK memory-free wrapper.",
+      "basis": "instruction behavior and 631 call sites matching the SDK allocator API"
+    },
+    {
+      "ea": "0x8ADFFE",
+      "old_name": "sub_8ADFFE",
+      "name": "SBRefStrHashCleanup",
+      "size": 40,
+      "confidence": "exact",
+      "evidence": "Frees the global shared SB reference-string table only when its count reaches zero.",
+      "basis": "instruction-for-source match to GameSpy sb_server.c"
+    },
+    {
+      "ea": "0x8BEBBA",
+      "old_name": "sub_8BEBBA",
+      "name": "ArrayFree",
+      "size": 45,
+      "confidence": "exact",
+      "evidence": "Destroys and frees a GameSpy SDK dynamic array.",
+      "basis": "instruction-for-source behavior and 22 SDK call sites"
+    },
+    {
+      "ea": "0x8C2638",
+      "old_name": "sub_8C2638",
+      "name": "SBServerListClear",
+      "size": 69,
+      "confidence": "exact",
+      "evidence": "Moves every server to the dead list, clears the server array, then frees the dead list.",
+      "basis": "instruction-for-source match to GameSpy sb_serverlist.c"
+    },
+    {
+      "ea": "0x8C275D",
+      "old_name": "sub_8C275D",
+      "name": "ServerListConnect",
+      "size": 258,
+      "confidence": "exact",
+      "evidence": "Resolves the hashed GameSpy master hostname, opens the TCP socket, and returns the SDK DNS/socket/connect status.",
+      "basis": "instruction-for-source match including hostname formula and error codes"
+    },
+    {
+      "ea": "0x8C298A",
+      "old_name": "sub_8C298A",
+      "name": "SBServerListDisconnect",
+      "size": 121,
+      "confidence": "exact",
+      "evidence": "Frees the input buffer and query state, closes the master socket, and resets key/popular-value state.",
+      "basis": "instruction-for-source match to GameSpy sb_serverlist.c"
+    },
+    {
+      "ea": "0x8C2A03",
+      "old_name": "sub_8C2A03",
+      "name": "SBServerListCleanup",
+      "size": 68,
+      "confidence": "exact",
+      "evidence": "Disconnects and clears an SBServerList, releases the shared reference string table, server array, and Unicode last-error buffer.",
+      "basis": "instruction-for-source match to GameSpy sb_serverlist.c"
+    }
+  ],
+  "globals": [
+    {
+      "ea": "0xBD74FC",
+      "old_name": "dword_BD74FC",
+      "name": "TheAptFileTransferPopup",
+      "confidence": "exact",
+      "evidence": "Global AptFileTransferPopup singleton written by its constructor/create path and cleared by its destructor/destroy path."
+    }
+  ]
+}
